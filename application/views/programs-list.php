@@ -59,9 +59,9 @@
         //alert(data);
         var temp = {
             state0: {
-                title: 'Delete Program ',
-                html: 'Do you want to Delete ' + name + ' Program?',
-                buttons: {Cancel: false, Submit: true},
+                title: 'Drop '+name,
+                html: 'Do you want to remove ' + name + '  Program?',
+                buttons: {Cancel: false, Yes: true},
                 focus: 1,
                 submit: function (e, v, m, f) {
                     if (!v)

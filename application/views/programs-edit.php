@@ -339,7 +339,7 @@
                                                 Dataelements </label>
                                         </div>
                                         <div>
-                                            <select id="rightValues" size="5" name='facilities[]' style="width:370px; height:250px;" multiple required>
+                                            <select id="rightValues" size="5" name='dataelements[]' style="width:370px; height:250px;" multiple required>
                                                 <?php
                                                 if ($program_dataelements != '') {
                                                     foreach ($program_dataelements as $row) {
@@ -432,7 +432,7 @@
 
             // Form Update Data 
             var form_data = {
-                facilities: elements,
+                dataelements: elements,
                 pname: $("#pname").val(),
                 sname: $("#sname").val(),
                 pdescription: $("#pdescription").val()
@@ -443,7 +443,7 @@
              var temp = {
                 state0: {
                     title:'Confirm Update',
-                    html:'Update Program Data Elements',
+                    html:'Do you want to update program information?',
                     buttons: { Cancel: false, YES: true },
                     focus: 1,
                     submit:function(e,v,m,f){ 
@@ -515,15 +515,13 @@
                                         <fieldset>Enter Archive Start Date.</fieldset>'+                                    
                                         "<div class='field'>\n\
                                             <label for='start_date' style='font-size:1.2em;margin-top:1em;width:8em;'>Start Date</label>\n\
-                                            <input  type='text' id='datepickerstart' value='' required pattern='[A-Za-z\s0-9]{5,}' name='start_date' placeholder='dd-mm-yyyy' style='height:30px;font-size:18px;width:10em;'/>\n\
+                                            <input  type='text' id='datepickerstart' value=''  name='start_date' placeholder='dd-mm-yyyy' style='height:30px;font-size:18px;width:10em;'/>\n\
                                             <span class='form_hint'>dd-mm-yyyy</span> \n\
                                         </div>"+
                                         '</form>');
 
-                                        $( "#datepickerstart" ).datepicker({ minDate: "-20Y", maxDate: "-1D" });
-                                        $("#format" ).change(function() {
-                                            $("#datepickerstart").datepicker( "option", "dateFormat", "dd-mm-yy");
-                                         });
+                                        $( "#datepickerstart" ).datepicker({ minDate: "-20Y", maxDate: "-1D",dateFormat:"dd-mm-yy" });
+
                                         
                                         $.prompt.goToState('state2');
 
@@ -564,7 +562,7 @@
                             });
 
                             var form_data2 = {
-                                facilities: elements,
+                                dataelements: elements,
                                 pname: $("#pname").val(),
                                 sname: $("#sname").val(),
                                 pdescription: $("#pdescription").val(),
@@ -586,7 +584,7 @@
                     }
                 },
                 finalState: {
-                    title: 'Update',
+                    title: 'Update Success',
                     html:'<p id="response"></p>',
                     buttons: {Finish: 1 },
                     focus: 0,

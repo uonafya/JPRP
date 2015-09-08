@@ -454,7 +454,7 @@
                                                 Dataelements </label>
                                         </div>
                                         <div>
-                                            <select id="rightValues" size="10" name='facilities[]' style="width:370px; height:250px;" multiple required >
+                                            <select id="rightValues" size="10" name='dataelements[]' style="width:370px; height:250px;" multiple required >
                                             </select>
                                         </div>
                                     </div>

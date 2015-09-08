@@ -120,7 +120,7 @@
 		}
 
 
-        $dataelements=$this->input->post("facilities");
+        $dataelements=$this->input->post("dataelements");
 
         if($dataelements!=false){
 
@@ -135,7 +135,10 @@
                     "program_id"=>$program_id,
                     "dataelement_name"=>$element->name,
                     "dataelement_uid"=>$datauid,
-                    "dataelement_description"=>$element->description
+                    "dataelement_description"=>$element->description,
+                    "dataelement_code"=>$element->code,
+                    "created_by"=>$this->session->userdata('useruid'),
+                    "date_created"=>date("d-m-Y H:m:s")
                 );
                 if (!$this->db->insert("attribution_programs_dataelements",$elementdets)) {
                     return "Program Members Update";
@@ -200,7 +203,7 @@
 
         $end_date = date("Y-m-d");
 
-        $dataelements = $this->input->post("facilities");
+        $dataelements = $this->input->post("dataelements");
 
         if ($dataelements != false) {
 
@@ -209,20 +212,24 @@
             if (sizeof($members->result()) >= 1) {
                 $program_dataelements = $members->result();
 
-                foreach ($program_dataelements as $dataelement) {
+                foreach ($program_dataelements as $archive_element) {
 
                     $elementdets = array(
                         "program_id" => $program_id,
-                        "dataelement_name" => $dataelement->dataelement_name,
-                        "dataelement_uid" => $dataelement->dataelement_uid,
-                        "dataelement_description" => $dataelement->dataelement_description,
+                        "dataelement_name" => $archive_element->dataelement_name,
+                        "dataelement_uid" => $archive_element->dataelement_uid,
+                        "dataelement_description" => $archive_element->dataelement_description,
+                        "dataelement_code"=>$archive_element->dataelement_code,
                         "archive_id" => $archive_id,
                         "archive_start_date" => $start_date,
-                        "archive_end_date" => $end_date
+                        "archive_end_date" => $end_date,
+                        "created_by"=>$this->session->userdata('useruid'),
+                        "date_created"=>date("d-m-Y H:m:s")
+
                     );
 
                     if (!$this->db->insert("attribution_programs_dataelements_archive", $elementdets)) {
-                        return "Program Members archive";
+                        return "Program datalements archived";
                     }
                 }
 
@@ -230,24 +237,29 @@
             }
 
             if (!$this->db->delete('attribution_programs_dataelements', array('program_id' => $program_id))) {
-                return "Deleting Program Members";
+                return "Deleting program Data Elements";
             }
 
             foreach ($dataelements as $datauid) {
+
                 $elementinfo = $this->db->get_where("dataelement", array("uid" => $datauid));
                 $element = $elementinfo->row();
                 $elementdets = array(
                     "program_id" => $program_id,
                     "dataelement_name" => $element->name,
                     "dataelement_uid" => $datauid,
-                    "dataelement_description" => $element->description
+                    "dataelement_description" => $element->description,
+                    "dataelement_code"=>$element->code
                 );
+
                 if (!$this->db->insert("attribution_programs_dataelements", $elementdets)) {
                     return "Program Members Update";
                 }
 
             }
-        } else {
+
+        
+        }else {
             return "No Dataelements supplied";
         }
 
@@ -264,7 +276,7 @@
             return TRUE;
         }
 
-        $dataelements = $this->input->post("facilities");
+        $dataelements = $this->input->post("dataelements");
 
         if ($dataelements != false) {
 
