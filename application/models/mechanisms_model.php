@@ -9,7 +9,7 @@ class Mechanisms_model extends CI_Model {
         $this->db->truncate('attribution_mechanisms'); 
     }
 	public function mechanisms_list(){
-		$mechanisms=$this->db->get_where("attribution_mechanisms", array('mechanism_status' => "active"));
+		$mechanisms=$this->db->get_where("attribution_mechanisms",array("mechanism_status"=>"active"));
 		if (sizeof($mechanisms->result())>=1) {
 			return $mechanisms->result();
 		}
@@ -17,7 +17,7 @@ class Mechanisms_model extends CI_Model {
 	}
 	
 	public function mechanism_info($id){
-		$info=$this->db->get_where("attribution_mechanisms",array("mechanism_id"=>$id));
+		$info=$this->db->get_where("attribution_mechanisms",array("datim_id"=>$id));
 		if (sizeof($info->result())==1) {
 			return $info->row();
 		}
@@ -25,7 +25,7 @@ class Mechanisms_model extends CI_Model {
 	}
 	
 	public function get_mech_programs($id){
-		$programs=$this->db->get_where("attribution_mechanisms_programs",array("mechanism_id"=>$id));
+		$programs=$this->db->get_where("attribution_mechanisms_programs",array("datim_id"=>$id));
 		if (sizeof($programs->result())>=1) {
 			return $programs->result();
 		}
@@ -52,21 +52,23 @@ class Mechanisms_model extends CI_Model {
 			}		
 	}*/
 	
-	public function mechanisms_excel_import($mechanisms_name, $partner_name, $mechanisms_id){
+	public function mechanisms_excel_import($mechanisms_name,$datim_id, $partner_name, $kepms_id){
+		echo $datim_id;
 		//Check If The Mechanism Has An Attribution Key
-		$control=sizeof($this->db->get_where("attribution_keys",array("mechanism_id"=>$mechanisms_id))->result());
+		$control=sizeof($this->db->get_where("attribution_keys",array("datim_id"=>$datim_id))->result());
 		if ($control==1) {
 			//Update Mechanisms Table
-			if (sizeof($this->db->get_where("attribution_mechanisms",array("mechanism_id"=>$mechanisms_id))->result())==0) {
-				
-				$existing_mech=$this->db->get_where("attribution_keys",array("mechanism_id"=>$mechanisms_id))->row();	
+			if (sizeof($this->db->get_where("attribution_mechanisms",array("datim_id"=>$datim_id))->result())==0) {
+				echo "id id </br>";
+				$existing_mech=$this->db->get_where("attribution_keys",array("datim_id"=>$datim_id))->row();	
 				$stored_mechanisms=array(
 					"mechanism_name"=>$existing_mech->mechanism_name,
-					"datim_id"=>$existing_mech->mechanism_id,
+					"datim_id"=>$existing_mech->datim_id,
 					"mechanism_uid"=>$existing_mech->mechanism_uid,
-					"mechanism_id"=>$existing_mech->mechanism_id,
+					"mechanism_id"=>$existing_mech->kepms_id,
 					"attribution_key"=>$existing_mech->categorycombo_id,
-					"partner_name"=>$partner_name
+					"partner_name"=>$partner_name,
+					'mechanism_status'=>$existing_mech->mechanism_status
 				);
 				$this->db->insert("attribution_mechanisms",$stored_mechanisms);				
 			}
@@ -83,7 +85,7 @@ class Mechanisms_model extends CI_Model {
 			$usergroup=array(
 				"usergroupid"=>$usergroup_id,
 				"uid"=>$usergroup_uid,
-				"code"=>$mechanisms_id,
+				"code"=>$datim_id,
 				"name"=>$partner_name,
                 'created'=>date("Y-m-d"),
                 'lastupdated'=>date("Y-m-d")				
@@ -109,7 +111,7 @@ class Mechanisms_model extends CI_Model {
 			$categoryoption=array(
 				"categoryoptionid"=>$categoryoption_id,
 				"uid"=>$categoryoption_uid,
-				"code"=>$mechanisms_id,
+				"code"=>$datim_id,
 				"name"=>$partner_name,
 				"shortname"=>substr($partner_name,0,30),
                 'created'=>date("Y-m-d"),
@@ -148,28 +150,29 @@ class Mechanisms_model extends CI_Model {
 				'categoryoptioncomboid'=>$categoryoptioncomboid
 			);
 			$this->db->insert('categorycombos_optioncombos',$categorycombos_optioncombos);		
-
+			echo "string";
 			//Step 7 Update  attribution_keys 
 			$attribution_keys=array(
-				'mechanism_id'=>$mechanisms_id,
+				'datim_id'=>$datim_id,
+				'mechanism_id'=>$kepms_id,
 				'mechanism_name'=>$partner_name,
 				'mechanism_uid'=>$usergroup_uid,
 				'usergroup_id'=>$usergroup_id,
 				'categorycombo_id'=>$categoryoptioncomboid,
 				'categoryoption_id'=>$categoryoption_id,
+				'mechanism_status'=>"active"
 			);	
 			$this->db->insert("attribution_keys",$attribution_keys);
 
 			//Step 8 : Insert Data to attribution_mechanisms	
 			$mechanisms=array(
 				"mechanism_name"=>$mechanisms_name,
-				"mechanism_id"=>$mechanisms_id,
+				"datim_id"=>$datim_id,
+				"mechanism_id"=>$kepms_id,
 				"mechanism_uid"=>$mechanisms_uid,
 				"attribution_key"=>$categoryoptioncomboid,
 				"partner_name"=>$partner_name,
-				"created_by"=>$this->session->userdata('useruid'),
-            	"date_created"=>date("d-m-Y H:m:s"),
-            	"mechanism_status"=>"active"
+				'mechanism_status'=>"active"
 			);
 			$this->db->insert("attribution_mechanisms",$mechanisms);
 		}
@@ -185,18 +188,17 @@ class Mechanisms_model extends CI_Model {
 		}
 		return "";
 	}
-
-	public function deletemechanism($mechanism_id){
+	public function deletemechanism($datim_id){
 		$details=array(
 			"mechanism_status"=>"dropped",
 		);
 
-		$this->db->where('mechanism_id', $mechanism_id);	
+		$this->db->where('datim_id', $datim_id);	
 		 	
-		if (!$this->db->update("attribution_mechanisms", $details)) {
+		if (!$this->db->update("attribution_mechanisms", $details) &&!$this->db->update("attribution_keys", $details) ) {
 			return false;
 		}	
 
 		return true;					 
-	 }
+	 }	
 }

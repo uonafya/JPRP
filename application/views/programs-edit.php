@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/js/jquery-ui.css">
-
+<link rel="stylesheet" href="<?php echo base_url(); ?>/style/chosen/chosen.min.css" type="text/css">
 <script src="<?php echo base_url(); ?>/style/js/jquery-1.10.2.js"></script>
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
 <script src="<?php echo base_url(); ?>/style/js/jquery-ui.js"></script>
@@ -188,7 +188,13 @@
 </style>
 
 <style>
-
+    .chosen-container-active.chosen-with-drop .chosen-single{
+    	width:500px;
+    }
+	.chosen-container-single .chosen-drop{
+		width:500px;
+		overflow-x: hidden
+	}
     .donor_form SELECT {
         width: 200px;
         height: 200px;
@@ -306,21 +312,18 @@
                     </div>
 
                     <div class="form-group">
-                         <label>Program Dataelements:</label>  
+
                         <div class="col-md-12">
-                            <div class="col-md-offset-1">
-                                 <input id="textbox" type="text" class="form-control" placeholder="Search Dataelements"/>
-                            </div>
-                            <!--                                    Steve: Data Sets on page -->
-                            <div>&nbsp;</div>
+                          <div>
+
                             <div>
-                                <label for="datasets" style="font-size: 16px; width: 200px">Data Sets Available </label>
+                                <label for="datasets">Data Sets Available </label>
                             </div>
 
 
-<!-- TODO: Format the CSS to have a better appearance for Chosen select -->
+							<!-- TODO: Format the CSS to have a better appearance for Chosen select -->
                             <div>
-                                <select id="datasets" class="chosen-select" style="height: 30px; width: 350px;" onchange="getElements()" tabindex="2">
+                                <select id="datasets" class="chosen-select"  style="height: 30px; width: 350px;" onchange="getElements()" tabindex="2">
                                     <option value="nil">All Data Sets</option>
                                     <?php
                                     if ($datasets!='') {
@@ -330,10 +333,22 @@
                                     }
                                     ?>
                                 </select>
-<!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
+							<!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
                             </div>
-                            <!--                                    End Steve: Data Sets on page  -->
+                            <!--                                   End Steve: Data Sets on page  -->
 
+                            
+                            <div>&nbsp;</div>
+                            <div>
+                                <label for="datasets" >Search Dataelements </label>
+                            </div>
+                            
+                            <div>
+                                 <input id="textbox" type="text" class="form-control" placeholder="Search Dataelements"/>
+                            </div>
+
+                        </div>
+                            
                             <section class="container">
                                 <div>
                                     <div>
@@ -508,8 +523,8 @@
                     }
                 },
                 state1: {
-                    title: '<h4>Backup Data Elements</h4>',
-                    html:'<p class="alert alert-info">Do you want to create an archive of the changes in the data elements of the program?</p>',
+                    title: '<h4>Program Data Elements</h4>',
+                    html:'<p class="alert alert-info">Do you want to  archive/save the  previous data elements of the program?</p>',
                     buttons: {No: false ,Yes:true },
                     focus: 1,
                     submit:function(e,v,m,f){
@@ -535,7 +550,7 @@
                                     if(!msg){
                     
                                         $('#startdateForm').html('<form id="edit_support" action="#" method="post">\n\
-                                        <fieldset>Enter Archive Start Date.</fieldset>'+                                    
+                                        <fieldset>Enter Start Date of the Archive.</fieldset>'+                                    
                                         "<div class='field'>\n\
                                             <label for='start_date' style='font-size:1.2em;margin-top:1em;width:8em;'>Start Date</label>\n\
                                             <input  type='text' id='datepickerstart' value=''  name='start_date' placeholder='dd-mm-yyyy' style='height:30px;font-size:18px;width:10em;'/>\n\
@@ -670,6 +685,7 @@
                                 }
                             });
                             if (dataElementList.length == 0){
+                                 $("#leftValues").empty();
                                 $("#leftValues").append("<option value=''>No DataElements Available for selected Data Set</option>");
                             }else{
                                 $.each(dataElementList, function(element){
@@ -695,6 +711,7 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/zebra_datepicker.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/core.js"></script>
+ <script type="text/javascript" src="<?php echo base_url(); ?>/style/chosen/chosen.jquery.min.js"></script>
 
 <script type="text/javascript" src="<?php echo base_url(); ?>/style/bootstrap-dialog/js/jquery-impromptu.js"></script>
 

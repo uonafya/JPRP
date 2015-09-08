@@ -50,7 +50,7 @@
                 }
             },
             state1: {
-                title: name + ' Delete Confirmation',
+                title: name + ' Removal Confirmation',
                 html: '<p id="response"></p>',
                 buttons: {Finish: 1},
                 focus: 0,
@@ -281,9 +281,9 @@
                         $i = 1;
                         foreach ($mechanisms as $row) {
 
-                            echo "<tr class='grade_tr' data-id='" . $row->mechanism_id . "' data-name='" . $row->mechanism_name . "'>";
+                            echo "<tr class='grade_tr' data-id='" . $row->datim_id . "' data-name='" . $row->mechanism_name . "'>";
                             echo "<td>$row->mechanism_name</td>";
-                            echo "<td>$row->mechanism_id</td>";
+                            echo "<td>$row->datim_id</td>";
                             echo "<td>$row->partner_name</td>";
                             echo "<td>$row->mechanism_id</td>";
                             echo "<td>$row->attribution_key</td>";
@@ -532,14 +532,14 @@
             $("tbody tr").removeClass("alert alert-success");
             $(this).addClass("alert alert-success");
 
-            var mechanism_id = $(this).closest('tr').data('id');
+            var datim_id = $(this).closest('tr').data('id');
             var mechanism_name = $(this).closest('tr').data('name');
 
             // Actions
-            document.getElementById("view").href = "<?php echo base_url();?>" + "mechanisms/viewmechanism/" + mechanism_id;
-            document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/editmechanism/" + mechanism_id;
-            document.getElementById("remove").setAttribute('onclick', "deleteMechanism('" + mechanism_id + "','" + mechanism_name + "')");
-            document.getElementById("attribute").href = "<?php echo base_url();?>" + "mechanisms/mechanisms_data_attribution/" + mechanism_id;
+            document.getElementById("view").href = "<?php echo base_url();?>" + "mechanisms/viewmechanism/" + datim_id;
+            document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/editmechanism/" + datim_id;
+            document.getElementById("remove").setAttribute('onclick', "deleteMechanism('" + datim_id + "','" + mechanism_name + "')");
+            document.getElementById("attribute").href = "<?php echo base_url();?>" + "mechanisms/mechanisms_data_attribution/" + datim_id;
 
         });
 

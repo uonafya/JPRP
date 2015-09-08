@@ -154,7 +154,13 @@
                 </style>
                 
                 <style>
-            
+	                .chosen-container-active.chosen-with-drop .chosen-single{
+	                	width:500px;
+	                }
+            		.chosen-container-single .chosen-drop{
+            			width:500px;
+            			overflow-x: hidden
+            		}
                     .donor_form SELECT{
                         width: 200px;
                         height:200px;
@@ -423,16 +429,8 @@
                     </div>
 
                     <div class="form-group">
-                         <label>Program Dataelements:</label>  
                         <div class="col-md-12">
-                            <div class="col-md-offset-1">
-                                 <input id="textbox" type="text" class="form-control" placeholder="Search Dataelements"/>
-                            </div>
-
-
-
-                            <!--                                    Steve: Data Sets on page -->
-                            <div>&nbsp;</div>
+                        <div>
                             <div>
                                 <label for="datasets" style="font-size: 16px; width: 200px">Data Sets Available </label>
                             </div>
@@ -440,20 +438,31 @@
 
 <!-- TODO: Format the CSS to have a better appearance for Chosen select -->
                             <div>
-                                <select id="datasets" class="chosen-select" style="height: 30px; width: 350px;" onchange="getElements()" tabindex="2">
-                                    <option value="nil">All Data Sets</option>
+                                <select id="datasets" class="chosen-select" style="height: 30px;  " onchange="getElements()" tabindex="2">
+                                    <option value="nil" >All Data Sets</option>
                                     <?php
                                     if ($datasets!='') {
                                         foreach ($datasets as $dataset_row) {
-                                            echo "<option value='$dataset_row->datasetid'>$dataset_row->name</option>";
+                                            echo "<option value='$dataset_row->datasetid' >$dataset_row->name</option>";
                                         }
                                     }
                                     ?>
                                 </select>
 <!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
                             </div>
-                            <!--                                    End Steve: Data Sets on page  -->
+                            <!--                                   End Steve: Data Sets on page  -->
 
+                            
+                            <div>&nbsp;</div>
+                            <div>
+                                <label for="datasets" style="font-size: 16px; width: 200px">Search Dataelements </label>
+                            </div>
+
+                            <div>
+                                 <input id="textbox" type="text" class="form-control" placeholder="Search Dataelements"/>
+                            </div>
+
+                        </div>
 
                             <section class="container">
 

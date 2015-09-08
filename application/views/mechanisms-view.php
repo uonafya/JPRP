@@ -171,12 +171,12 @@
                                         </div>"+                                        
                                         "<div class='field'>\n\
                                             <label for='start_date' style='font-size:1.2em;margin-top:1em;width:8em;'>Start Date</label>\n\
-                                            <input  type='text' id='datepickerstart' value='"+s_date+"'  required pattern='[A-Za-z\s0-9]{5,}' name='start_date' placeholder='yyyy/mm/dd' style='height:30px;font-size:18px;width:10em;'/>\n\
+                                            <input  type='text' id='datepickerstart' value='"+s_date+"'  required pattern='[A-Za-z\s0-9]{5,}' name='start_date' placeholder='dd-mm-yy' style='height:30px;font-size:18px;width:10em;'/>\n\
                                             <span class='form_hint'>dd-mm-yyyy</span> \n\
                                         </div>"+
                                         "<div class='field'>\n\
                                             <label for='end_date' style='font-size:1.2em;margin-top:1em;width:8em;'>End date</label>\n\
-                                            <input type='text' id='datepickerend'  required pattern='[A-Za-z\s0-9]{5,}' name='end_date' value='"+s_end+"' placeholder='yyyy/mm/dd' style='height:30px;font-size:18px;width:10em;'/>\n\
+                                            <input type='text' id='datepickerend'  required pattern='[A-Za-z\s0-9]{5,}' name='end_date' value='"+s_end+"' placeholder='dd-mm-yy' style='height:30px;font-size:18px;width:10em;'/>\n\
                                             <span class='form_hint'>dd-mm-yyyy</span> \n\
                                         </div>\n" +
                                     '</form>',
@@ -245,8 +245,8 @@
                         // $('#datepickerend').Zebra_DatePicker();
                         $("#datepickerstart").datepicker({
                               defaultDate: "+1w",
-                              changeMonth: true,
                               dateFormat:"dd-mm-yy",
+                              changeMonth: true,
                               numberOfMonths: 1,
                               onClose: function( selectedDate ) {
                                 $("#datepickerend").datepicker( "option", "minDate", selectedDate );
@@ -254,10 +254,10 @@
                             });
 
                             $("#datepickerend").datepicker({
-                                defaultDate: "+4w",
-                                changeMonth: true,
-                                dateFormat:"dd-mm-yy",
-                                numberOfMonths: 1,
+                              defaultDate: "+4w",
+                              dateFormat:"dd-mm-yy",
+                              changeMonth: true,
+                              numberOfMonths: 1,
                               onClose: function( selectedDate ) {
                                 $("#datepickerstart").datepicker( "option", "maxDate", selectedDate );
                               }
@@ -513,8 +513,8 @@
                 $("#contextMenuID").show();
                 $("#contextMenuID").css({"top":mouseCoordinates.y,"left":mouseCoordinates.x});
                 
-                $("tbody tr").removeClass("alert alert-success");
-                $(this).addClass("alert alert-success");
+                $("tbody tr").removeClass("contextMenuItemActive");
+                $(this).addClass("contextMenuItemActive");
                 var id = $(this).closest('tr').data('id');
                 var orgunit= $(this).closest('tr').data('orgunit');
                 var program= $(this).closest('tr').data('program');
@@ -529,7 +529,7 @@
             $("#btn-dismiss, thead, tfoot").click(function () {
 
                  $("#contextMenuID").hide(100);
-                 $("tr").removeClass("alert alert-success");
+                 $("tr").removeClass("contextMenuItemActive");
 
              })
 
