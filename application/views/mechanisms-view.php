@@ -246,6 +246,7 @@
                         $("#datepickerstart").datepicker({
                               defaultDate: "+1w",
                               changeMonth: true,
+                              dateFormat:"dd-mm-yy",
                               numberOfMonths: 1,
                               onClose: function( selectedDate ) {
                                 $("#datepickerend").datepicker( "option", "minDate", selectedDate );
@@ -253,9 +254,10 @@
                             });
 
                             $("#datepickerend").datepicker({
-                              defaultDate: "+4w",
-                              changeMonth: true,
-                              numberOfMonths: 1,
+                                defaultDate: "+4w",
+                                changeMonth: true,
+                                dateFormat:"dd-mm-yy",
+                                numberOfMonths: 1,
                               onClose: function( selectedDate ) {
                                 $("#datepickerstart").datepicker( "option", "maxDate", selectedDate );
                               }

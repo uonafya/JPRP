@@ -188,7 +188,7 @@ class Mechanisms_model extends CI_Model {
 
 	public function deletemechanism($mechanism_id){
 		$details=array(
-			"program_status"=>"dropped",
+			"mechanism_status"=>"dropped",
 		);
 
 		$this->db->where('mechanism_id', $mechanism_id);	
