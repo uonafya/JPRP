@@ -511,8 +511,8 @@
                 $("#contextMenuID").show();
                 $("#contextMenuID").css({"top":mouseCoordinates.y,"left":mouseCoordinates.x});
                 
-                $("tbody tr").removeClass("contextMenuItemActive");
-                $(this).addClass("contextMenuItemActive");
+                $("tbody tr").removeClass("alert alert-success");
+                $(this).addClass("alert alert-success");
                 var id = $(this).closest('tr').data('id');
                 var orgunit= $(this).closest('tr').data('orgunit');
                 var program= $(this).closest('tr').data('program');
@@ -527,7 +527,7 @@
             $("#btn-dismiss, thead, tfoot").click(function () {
 
                  $("#contextMenuID").hide(100);
-                 $("tr").removeClass("contextMenuItemActive");
+                 $("tr").removeClass("alert alert-success");
 
              })
 

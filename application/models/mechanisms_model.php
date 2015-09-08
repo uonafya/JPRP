@@ -9,7 +9,7 @@ class Mechanisms_model extends CI_Model {
         $this->db->truncate('attribution_mechanisms'); 
     }
 	public function mechanisms_list(){
-		$mechanisms=$this->db->get("attribution_mechanisms");
+		$mechanisms=$this->db->get_where("attribution_mechanisms", array('mechanism_status' => "active"));
 		if (sizeof($mechanisms->result())>=1) {
 			return $mechanisms->result();
 		}
@@ -156,7 +156,7 @@ class Mechanisms_model extends CI_Model {
 				'mechanism_uid'=>$usergroup_uid,
 				'usergroup_id'=>$usergroup_id,
 				'categorycombo_id'=>$categoryoptioncomboid,
-				'categoryoption_id'=>$categoryoption_id
+				'categoryoption_id'=>$categoryoption_id,
 			);	
 			$this->db->insert("attribution_keys",$attribution_keys);
 
@@ -166,7 +166,10 @@ class Mechanisms_model extends CI_Model {
 				"mechanism_id"=>$mechanisms_id,
 				"mechanism_uid"=>$mechanisms_uid,
 				"attribution_key"=>$categoryoptioncomboid,
-				"partner_name"=>$partner_name
+				"partner_name"=>$partner_name,
+				"created_by"=>$this->session->userdata('useruid'),
+            	"date_created"=>date("d-m-Y H:m:s"),
+            	"mechanism_status"=>"active"
 			);
 			$this->db->insert("attribution_mechanisms",$mechanisms);
 		}
@@ -182,4 +185,18 @@ class Mechanisms_model extends CI_Model {
 		}
 		return "";
 	}
+
+	public function deletemechanism($mechanism_id){
+		$details=array(
+			"program_status"=>"dropped",
+		);
+
+		$this->db->where('mechanism_id', $mechanism_id);	
+		 	
+		if (!$this->db->update("attribution_mechanisms", $details)) {
+			return false;
+		}	
+
+		return true;					 
+	 }
 }

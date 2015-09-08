@@ -197,5 +197,25 @@ class Mechanisms extends CI_Controller {
 			}       
         }									
 	}
+
+    public function deletemechanism($mechanism_id){
+        if($this->session->userdata('marker')!=1){
+            redirect($this->index());
+        }else{
+            //Check If User Has Authority(program_magement) To delete Programs
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+                if($this->programs_model->deletemechanism($mechanism_id)==TRUE){
+                    header('Content-Type: application/x-json; charset=utf-8'); 
+                    echo "The Program Has Successfully Been Deleted";
+                }else{
+                    header('Content-Type: application/x-json; charset=utf-8'); 
+                    echo "An Error Occured While Deleting The Program. Kindly Try Again";
+                }               
+            } else {
+                $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error',$data);           
+            }       
+        }           
+    }
 		
 }

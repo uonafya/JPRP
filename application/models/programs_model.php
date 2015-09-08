@@ -79,7 +79,9 @@
 			"program_name"=>$this->input->post("pname"),
 			"program_shortname"=>$this->input->post("sname"),
 			"program_description"=>$this->input->post("pdescription"),
-			"program_status"=>"active"
+			"program_status"=>"active",
+            "created_by"=>$this->session->userdata('useruid'),
+            "date_created"=>date("d-m-Y H:m:s")
 		);
 		if (!$this->db->insert("attribution_programs",$details)) {
 			return "program Creation";
@@ -163,7 +165,7 @@
         $details = array(
             "program_name" => $this->input->post("pname"),
             "program_shortname" => $this->input->post("sname"),
-            "program_description" => $this->input->post("pdescription")
+            "program_description" => $this->input->post("pdescription"),
         );
 
         if($details['program_name']!="" && $details['program_shortname']!="")

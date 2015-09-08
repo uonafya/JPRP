@@ -59,7 +59,7 @@
         //alert(data);
         var temp = {
             state0: {
-                title: 'Delete ' + name,
+                title: 'Delete Program ',
                 html: 'Do you want to Delete ' + name + ' Program?',
                 buttons: {Cancel: false, Submit: true},
                 focus: 1,
@@ -69,7 +69,7 @@
                     else {
 
                         form_url = "<?php echo base_url('programmanager/deleteprogram')?>" + "/" + data;
-                        alert(form_url);
+                        //alert(form_url);
                         $.ajax({
                             url: form_url,
                             dataType: 'text',
@@ -386,8 +386,8 @@
             $("#contextMenuID").show();
             $("#contextMenuID").css({"top": mouseCoordinates.y, "left": mouseCoordinates.x});
 
-            $("tbody tr").removeClass("contextMenuItemActive");
-            $(this).addClass("contextMenuItemActive");
+            $("tbody tr").removeClass("alert alert-success");
+            $(this).addClass("alert alert-success");
             var id = $(this).closest('tr').data('id');
             var name = $(this).closest('tr').data('name');
             var shortname = $(this).closest('tr').data('shortname');
@@ -404,7 +404,7 @@
         $("#btn-dismiss, thead, tfoot").click(function () {
 
             $("#contextMenuID").hide(100);
-            $("tr").removeClass("contextMenuItemActive");
+            $("tr").removeClass("alert alert-success");
 
         })
 

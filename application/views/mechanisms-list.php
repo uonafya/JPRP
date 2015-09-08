@@ -14,12 +14,13 @@
         
 				<script>
 					
-                    function mechanismsdelete(data, name){
-                        //alert(data);
+                    function deleteMechanism(id, name){
+                        alert(id);
                         var temp = {
                             state0: {
-                                title:'Delete mechanisms',
-                                html:'Do you want to Delete '+name+' mechanisms?',
+                                title:'Delete Mechanism',
+                                html:'Do you want to Delete '+name+' mechanism? <br>'+
+                                '<p class="alert alert-danger">Performing this action, it is irreversible</p>',
                                 buttons: { Cancel: false, Submit: true },
                                 focus: 1,
                                 submit:function(e,v,m,f){ 
@@ -27,7 +28,7 @@
                                         $.prompt.close();
                                     else { 
                                     	alert("robin");
-                                        form_url = "<?php echo base_url('mechanisms/deletemechanism')?>"+"/"+data; 
+                                        form_url = "<?php echo base_url('mechanisms/deletemechanism')?>"+"/"+id; 
                                             alert(form_url);
                                         $.ajax({ 
                                             url: form_url, 
@@ -45,8 +46,9 @@
                                     return false; 
                                 }
                             },
+                            
                             state1: {
-                                title: 'mechanisms Delete Confirmation',
+                                title: 'Mechanism Delete Confirmation',
                                 html:'<p id="response"></p>',
                                 buttons: {Finish: 1 },
                                 focus: 0,
@@ -59,22 +61,22 @@
                             }
                         };
 
-                        $.prompt(temp,{
-                            close: function(e,v,m,f){
-                                if(v !== undefined){
+                        $.prompt(temp, {
+                            close: function (e, v, m, f) {
+                                if (v !== undefined) {
                                     window.location.reload(true);
                                 }
                             },
                             classes: {
-                                    box: '',
-                                    fade: '',
-                                    prompt: '',
-                                    close: '',
-                                    title: 'lead',
-                                    message: '',
-                                    buttons: '',
-                                    button: 'btn',
-                                    defaultButton: 'btn-primary'
+                                box: '',
+                                fade: '',
+                                prompt: '',
+                                close: '',
+                                title: 'lead',
+                                message: '',
+                                buttons: '',
+                                button: 'btn',
+                                defaultButton: 'btn-primary'
                             }
                         });
                     }					
@@ -250,7 +252,7 @@
                                             <th style="width:10%">Partner Name</th>
                                             <th style="width:10%">KEPMS ID</th>
                                             <th style="width:10%">Attribution Key</th>
-                                            <th style="width:15%">Action</th>
+                                            <!-- <th style="width:15%">Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -258,18 +260,19 @@
                                     	    if ($mechanisms!='') {
                                     	    	$i=1;
                                                 foreach ($mechanisms as $row ) {
-                                                    echo "<tr>";
+
+                                                    echo "<tr class='grade_tr' data-id='" . $row->mechanism_id . "' data-name='" . $row->mechanism_name . "'>";
                                                     echo "<td>$row->mechanism_name</td>";
 													echo "<td>$row->mechanism_id</td>";
 													echo "<td>$row->partner_name</td>";
 													echo "<td>$row->mechanism_id</td>";
 													echo "<td>$row->attribution_key</td>";
-                                                    echo "<td><a href='".base_url('mechanisms/viewmechanism/'.$row->mechanism_id)."'/>View</a>&nbsp&nbsp ";
-													if($mechanisms_right){echo "<a href='".base_url('mechanisms/editmechanisms/'.$row->id)."' style='color:green'/> Edit</a>  &nbsp&nbsp ";};
-                                                    if($mechanisms_right){echo "<a href='#' onclick=\"mechanismsdelete('$row->id','$row->mechanism_name')\"  style='color:red'/> Delete</a> &nbsp&nbsp ";}; 
-													if($mechanisms_right){echo "<a href='".base_url('mechanisms/mechanisms_data_attribution'.$row->id)."' style='color:purple'/> Attribute</a> ";};
-                                                    echo " </td>";
-                                                    echo "</tr>";
+             //                                        echo "<td><a href='".base_url('mechanisms/viewmechanism/'.$row->mechanism_id)."'/>View</a>&nbsp&nbsp ";
+													// if($mechanisms_right){echo "<a href='".base_url('mechanisms/editmechanisms/'.$row->id)."' style='color:green'/> Edit</a>  &nbsp&nbsp ";};
+             //                                        if($mechanisms_right){echo "<a href='#' onclick=\"mechanismsdelete('$row->id','$row->mechanism_name')\"  style='color:red'/> Delete</a> &nbsp&nbsp ";}; 
+													// if($mechanisms_right){echo "<a href='".base_url('mechanisms/mechanisms_data_attribution'.$row->id)."' style='color:purple'/> Attribute</a> ";};
+             //                                        echo " </td>";
+             //                                        echo "</tr>";
 													$i++;
                                                 }  
 											}
@@ -403,6 +406,129 @@
     </tr>
 {% } %}
 </script>
+
+<!-- Pop over Class -->
+
+<style type="text/css">
+
+    /*table{
+        -moz-user-select: none;
+    }
+    */
+    .contextMenu {
+        position: absolute;
+        font-size: 9pt;
+        color: #000;
+        border: 1px solid #ddd;
+        padding-left: 4px;
+        padding-right: 4px;
+        width: 60px;
+        max-height: 400px;
+        overflow-y: auto;
+        background-color: #f7f7f7;
+        display: none;
+        z-index: 9;
+        filter: alpha(opacity=98);
+        opacity: 0.98;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        box-shadow: #ccc 0 1px 1px 0;
+    }
+
+    .contextMenuItemActive {
+        background-color: #246BA1 !important;
+        color: #fff !important;
+    }
+
+</style>
+
+
+<div id="contextMenuID" class="contextMenu" style="width: 200px; display:block;">
+    <button type="button" class="close" id="btn-dismiss" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    <br/>
+    <ul class="" style="list-style-type:none">
+        <?php
+        echo '<li class=""><a href="#" id="view"><i class="fa fa-plus"></i> View</a></li> <br>';
+        if ($mechanisms_right) {
+            echo '<li class=""><a href="#" id="edit"><i class="fa fa-edit"></i> Update</a></li> <br>';
+        };
+        if ($mechanisms_right) {
+            echo '<li class=""><a href="#" id="remove" onclick=""><i class="fa fa-trash-o"></i> Remove</a></li> <br>';
+        };
+        if (true) {
+            echo '<li class=""><a href="#" id="attribute"><i class="fa fa-plus"></i> Attribute</a></li> <br>';
+        };
+        ?>
+    </ul>
+</div>
+
+
+<!--  -->
+<script>
+
+    $(document).ready(function () {
+        $("#contextMenuID").hide();
+        $('#programs-table').DataTable();
+
+
+        $('body').delegate('#mechanisms-table .grade_tr', 'click', function (event) {
+
+
+            var menuHeight = $('.contextMenu').height();
+            var menuWidth = $('.contextMenu').width();
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+
+            var pageX = event.pageX;
+            var pageY = event.pageY;
+
+            if ((menuWidth + pageX) > winWidth) {
+                pageX -= menuWidth;
+            }
+
+            if ((menuHeight + pageY) > winHeight) {
+                pageY -= menuHeight;
+
+                if (pageY < 0) {
+                    pageY = event.pageY;
+                }
+            }
+
+            var mouseCoordinates = {
+                x: pageX,
+                y: pageY
+            };
+
+
+            $("#contextMenuID").show();
+            $("#contextMenuID").css({"top": mouseCoordinates.y, "left": mouseCoordinates.x});
+
+            $("tbody tr").removeClass("alert alert-success");
+            $(this).addClass("alert alert-success");
+
+            var mechanism_id = $(this).closest('tr').data('id');
+            var mechanism_name = $(this).closest('tr').data('name');
+
+            // Actions
+            document.getElementById("view").href = "<?php echo base_url();?>" + "mechanisms/viewmechanism/" + mechanism_id;
+            document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/editmechanism/" + mechanism_id;
+            document.getElementById("remove").setAttribute('onclick', "deleteMechanism('" + mechanism_id+ "','" + mechanism_name + "')");
+            document.getElementById("attribute").href="<?php echo base_url();?>" + "mechanisms/mechanisms_data_attribution/" + mechanism_id;
+
+        });
+
+        $("#btn-dismiss, thead, tfoot").click(function () {
+
+            $("#contextMenuID").hide(100);
+            $("tr").removeClass("alert alert-success");
+
+        })
+
+    });
+
+</script>
+
 
 
 
