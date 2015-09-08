@@ -311,6 +311,29 @@
                             <div class="col-md-offset-1">
                                  <input id="textbox" type="text" class="form-control" placeholder="Search Dataelements"/>
                             </div>
+                            <!--                                    Steve: Data Sets on page -->
+                            <div>&nbsp;</div>
+                            <div>
+                                <label for="datasets" style="font-size: 16px; width: 200px">Data Sets Available </label>
+                            </div>
+
+
+<!-- TODO: Format the CSS to have a better appearance for Chosen select -->
+                            <div>
+                                <select id="datasets" class="chosen-select" style="height: 30px; width: 350px;" onchange="getElements()" tabindex="2">
+                                    <option value="nil">All Data Sets</option>
+                                    <?php
+                                    if ($datasets!='') {
+                                        foreach ($datasets as $dataset_row) {
+                                            echo "<option value='$dataset_row->datasetid'>$dataset_row->name</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
+<!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
+                            </div>
+                            <!--                                    End Steve: Data Sets on page  -->
+
                             <section class="container">
                                 <div>
                                     <div>
@@ -620,6 +643,50 @@
 });
 
 </script>
+
+ </script>
+                <!--                Steve Scripts -->
+                <script>
+                    var datasets = <?php echo json_encode($datasets); ?>;
+                    var datasetmembers = <?php echo json_encode($datasetmembers); ?>;
+                    var dataelements = <?php echo json_encode($program_dataelements); ?>;
+                    function getElements() {
+                        var dataSetId = $( "#datasets option:selected" ).val();
+                        var dataElementList = [];
+
+                        if (dataSetId == 'nil'){
+                            $("#leftValues").empty();
+                            $.each(dataelements, function (e) {
+                                $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
+                            });
+                        }
+                        else {
+
+                            $("#leftValues").empty();
+
+                            $.each(datasetmembers, function (e) {
+                                if (datasetmembers[e].datasetid == dataSetId){
+                                    dataElementList.push(datasetmembers[e].dataelementid);
+                                }
+                            });
+                            if (dataElementList.length == 0){
+                                $("#leftValues").append("<option value=''>No DataElements Available for selected Data Set</option>");
+                            }else{
+                                $.each(dataElementList, function(element){
+                                    $.each(dataelements, function (e) {
+                                        if (dataelements[e].dataelementid == dataElementList[element] ){
+                                            $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
+                                        }
+                                    });
+                                });
+                            }
+
+                        }
+                    }
+                </script>
+
+
+                <!--                End Steve Scripts -->
 
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/date/css/default.css" type="text/css">

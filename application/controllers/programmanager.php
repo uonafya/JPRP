@@ -150,6 +150,10 @@ class Programmanager extends CI_Controller
                 $data["available"] = $this->programs_model->get_available_elements($programid);
                 $data['page'] = 'programs-edit';
                 $data['agencyname'] = $this->session->userdata('groupname');
+                 // Steve: Get data sets from Database
+                $data['datasets'] = $this->programs_model->get_datasets();
+                $data['datasetmembers'] = $this->programs_model->get_datasetmembers();
+//                End Steve
                 $this->load->view('template', $data);
             } else {
                 $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";
