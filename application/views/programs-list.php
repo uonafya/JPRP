@@ -333,7 +333,7 @@
             echo '<li class=""><a href="#" id="update"><i class="fa fa-edit"></i> Update</a></li> <br>';
         };
         if ($program_right) {
-            echo '<li class=""><a href="#" id="delete" onclick=""><i class="fa fa-trash-o"></i> Delete</a></li> <br>';
+            echo '<li class=""><a href="#" id="delete" onclick=""><i class="fa fa-trash-o"></i> Remove</a></li> <br>';
         };
         if ($attribution_right) {
             echo '<li class=""><a href="#" id="attribute"><i class="fa fa-plus"></i> Attribute</a></li> <br>';
