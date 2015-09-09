@@ -4,7 +4,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="<?php 
+                            <img src="<?php
                                 if ($this->session->userdata('gender')=='gender_female') {
                                     echo base_url()."/style/img/avatar3.png";
                                 } else {

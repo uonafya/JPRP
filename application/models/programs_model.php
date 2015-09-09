@@ -18,7 +18,7 @@
     }  
 	
 	public function all_programs_list(){
-		$programs=$this->db->get("attribution_programs");
+		$programs=$this->db->get_where("attribution_programs",array("program_status"=>"active"));
 		if (sizeof($programs->result())>=1) {
 			return $programs->result();
 		} else {
@@ -51,7 +51,7 @@
 			return $available->result();
 		} else {
 			return "";
-		}		
+		}
 	}
 	
 	public function get_dataelements(){
@@ -65,6 +65,8 @@
 		}
 		
 	}
+
+
 	
 	
 	public function newprogram(){
@@ -78,50 +80,22 @@
 			"uid"=>$program_uid,
 			"program_name"=>$this->input->post("pname"),
 			"program_shortname"=>$this->input->post("sname"),
-			"program_description"=>$this->input->post("pdescription")
+			"program_description"=>$this->input->post("pdescription"),
+			"program_status"=>"active"
 		);
 		if (!$this->db->insert("attribution_programs",$details)) {
 			return "program Creation";
 		}		
 		$programid=$this->db->get_where("attribution_programs",array('uid'=>$program_uid))->row()->program_id;
-		foreach ($this->input->post("facilities") as $datauid) {
+		foreach ($this->input->post("dataelements") as $datauid) {
 			$elementinfo=$this->db->get_where("dataelement",array("uid"=>$datauid));
 			$element=$elementinfo->row();
 			$elementdets=array(
 				"program_id"=>$programid,
 				"dataelement_name"=>$element->name,
 				"dataelement_uid"=>$datauid,
-				"dataelement_description"=>$element->description
-			);
-			if (!$this->db->insert("attribution_programs_members",$elementdets)) {
-				return "Program Members Update";
-			}
-			
-		}		
-		return true;
-	}
-	
-	public function update_program($program_id){
-		$details=array(
-			"program_name"=>$this->input->post("pname"),
-			"program_shortname"=>$this->input->post("sname"),
-			"program_description"=>$this->input->post("pdescription")
-		);
-		$this->db->where('program_id', $program_id);	
-		if (!$this->db->update("attribution_programs",$details)) {
-			return "Program Update";
-		}	
-		if (!$this->db->delete('attribution_programs_dataelements', array('program_id' => $program_id))) {
-			return "Deleting Program Members";
-		}	
-		foreach ($this->input->post("facilities") as $datauid) {
-			$elementinfo=$this->db->get_where("dataelement",array("uid"=>$datauid));
-			$element=$elementinfo->row();
-			$elementdets=array(
-				"program_id"=>$program_id,
-				"dataelement_name"=>$element->name,
-				"dataelement_uid"=>$datauid,
-				"dataelement_description"=>$element->description
+				"dataelement_description"=>$element->description,
+				"dataelement_code"=>$element->code
 			);
 			if (!$this->db->insert("attribution_programs_dataelements",$elementdets)) {
 				return "Program Members Update";
@@ -130,21 +104,293 @@
 		}		
 		return true;
 	}
-	 
-	 
+	
+	public function update_program($program_id){
+
+		$details=array(
+			"program_name"=>$this->input->post("pname"),
+			"program_shortname"=>$this->input->post("sname"),
+			"program_description"=>$this->input->post("pdescription")
+		);
+
+
+		$this->db->where('program_id', $program_id);	
+		if (!$this->db->update("attribution_programs",$details)) {
+			return "Program Update";
+		}
+
+
+        $dataelements=$this->input->post("facilities");
+
+        if($dataelements!=false){
+
+            if (!$this->db->delete('attribution_programs_dataelements', array('program_id' => $program_id))) {
+                return "Deleting Program Members";
+            }
+
+            foreach ($dataelements as $datauid) {
+                $elementinfo=$this->db->get_where("dataelement",array("uid"=>$datauid));
+                $element=$elementinfo->row();
+                $elementdets=array(
+                    "program_id"=>$program_id,
+                    "dataelement_name"=>$element->name,
+                    "dataelement_uid"=>$datauid,
+                    "dataelement_description"=>$element->description
+                );
+                if (!$this->db->insert("attribution_programs_dataelements",$elementdets)) {
+                    return "Program Members Update";
+                }
+
+            }
+        }
+        else{
+            return "No Dataelements supplied";
+        }
+
+
+		return true;
+	}
+
+
+    public function create_program_dataelements_archive($program_id)
+    {
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $archive_id = '';
+        for ($i = 0; $i < 14; $i++) {
+            $archive_id .= $characters[rand(0, $charactersLength - 1)];
+        };
+
+        $details = array(
+            "program_name" => $this->input->post("pname"),
+            "program_shortname" => $this->input->post("sname"),
+            "program_description" => $this->input->post("pdescription")
+        );
+
+        if($details['program_name']!="" && $details['program_shortname']!="")
+        {
+            $this->db->where('program_id', $program_id);
+            if (!$this->db->update("attribution_programs", $details)) {
+                return "Program Update";
+            }
+        }
+        else{
+
+            return "Program Name and Shortname Can't be Null";
+        }
+
+        // Calculating start date and end date of the archive
+        $start_date = false;
+        if ($this->input->post("start_date")) {
+            $start_date = $this->input->post("start_date");
+
+        }
+
+        if ($start_date === false) {
+            $this->db->order_by('archive_start_date', 'desc');
+            $query = $this->db->get_where('attribution_programs_dataelements_archive', array('program_id' => $program_id));
+
+            if ($query->num_rows() > 0) {
+                $row = $query->row();
+                $start_date = $row->archive_end_date;
+            }
+
+        }
+
+        $end_date = date("Y-m-d");
+
+        $dataelements = $this->input->post("facilities");
+
+        if ($dataelements != false) {
+
+            $program_dataelements = null;
+            $members = $this->db->get_where("attribution_programs_dataelements", array("program_id" => $program_id));
+            if (sizeof($members->result()) >= 1) {
+                $program_dataelements = $members->result();
+
+                foreach ($program_dataelements as $dataelement) {
+
+                    $elementdets = array(
+                        "program_id" => $program_id,
+                        "dataelement_name" => $dataelement->dataelement_name,
+                        "dataelement_uid" => $dataelement->dataelement_uid,
+                        "dataelement_description" => $dataelement->dataelement_description,
+                        "archive_id" => $archive_id,
+                        "archive_start_date" => $start_date,
+                        "archive_end_date" => $end_date
+                    );
+
+                    if (!$this->db->insert("attribution_programs_dataelements_archive", $elementdets)) {
+                        return "Program Members archive";
+                    }
+                }
+
+
+            }
+
+            if (!$this->db->delete('attribution_programs_dataelements', array('program_id' => $program_id))) {
+                return "Deleting Program Members";
+            }
+
+            foreach ($dataelements as $datauid) {
+                $elementinfo = $this->db->get_where("dataelement", array("uid" => $datauid));
+                $element = $elementinfo->row();
+                $elementdets = array(
+                    "program_id" => $program_id,
+                    "dataelement_name" => $element->name,
+                    "dataelement_uid" => $datauid,
+                    "dataelement_description" => $element->description
+                );
+                if (!$this->db->insert("attribution_programs_dataelements", $elementdets)) {
+                    return "Program Members Update";
+                }
+
+            }
+        } else {
+            return "No Dataelements supplied";
+        }
+
+        return true;
+    }
+
+    public function check_change_in_program_dataelements($program_id)
+    {
+        $program_dataelements = null;
+        $members = $this->db->get_where("attribution_programs_dataelements", array("program_id" => $program_id));
+        if (sizeof($members->result()) >= 1) {
+            $program_dataelements = $members->result_array();
+        } else {
+            return TRUE;
+        }
+
+        $dataelements = $this->input->post("facilities");
+
+        if ($dataelements != false) {
+
+            foreach ($dataelements as $datauid) {
+
+                $key = array_search($datauid, array_column($program_dataelements, 'dataelement_uid'), true);
+
+                if ($key === FALSE) {
+                    return FALSE;
+                    break;
+                }
+            }
+
+            foreach ($program_dataelements as $dataelement_row) {
+
+                $key = array_search($dataelement_row['dataelement_uid'], $dataelements, true);
+
+                if ($key === FALSE) {
+
+                    return FALSE;
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    public function check_program_exists_archive($program_id)
+    {
+
+        $members = $this->db->get_where("attribution_programs_dataelements_archive", array("program_id" => $program_id));
+        if (sizeof($members->result()) >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+
+    // fetches details of a program
+    public function show_program_details($program_id)
+    {
+        $number_dataelements = 0;
+        $number_archives = 0;
+        $program_startdate = "";
+        $program_created_by = "";
+        $program_name = "";
+        $program_shortname = "";
+        $program_description = "";
+
+        // Number of archives
+        $this->db->select('count(DISTINCT archive_id)');
+        $query = $this->db->get_where('attribution_programs_dataelements_archive', array('program_id' => $program_id));
+
+        if ($query) {
+            $number_archives = $query->row()->count;
+        }
+
+        // Number of Data Elements
+        $this->db->select('count(program_id)');
+        $query = $this->db->get_where('attribution_programs_dataelements', array('program_id' => $program_id));
+
+        if ($query) {
+            $number_dataelements = $query->row()->count;
+        }
+
+        // Program Name, Description and Shortname
+        $this->db->select('program_shortname, program_name, program_description');
+        $query = $this->db->get_where('attribution_programs', array('program_id' => $program_id));
+        if ($query) {
+            $row = $query->row();
+            $program_name = $row->program_name;
+            $program_shortname = $row->program_shortname;
+            $program_description = $row->program_description;
+        }
+
+
+        $data = array('number_dataelements' => $number_dataelements,
+            'number_archives' => $number_archives,
+            'program_name' => $program_name,
+            'program_shortname' => $program_shortname,
+            'program_description' => $program_description);
+
+        return $data;
+    }
 	 
 	 public function deleteprogram($program_id){
-		if (!$this->db->delete('attribution_programs_members', array('program_id' => $program_id))) {
+		$details=array(
+			"program_status"=>"dropped",
+		);
+		$this->db->where('program_id', $program_id);	
+		 	
+		if (!$this->db->update("attribution_programs",$details)) {
 			return false;
 		}	
-		if (!$this->db->delete('attribution_programs', array('program_id' => $program_id))) {
-			return false;
-		}
+
 		return true;					 
 	 }
 	 
 	 
-	 
+// Steve: Function to ge the datasets & datasetmembers
+     public function get_datasets(){
+         $this->db->select('datasetid, name');
+         $this->db->from('dataset');
+         $query=$this->db->get();
+         if (sizeof($query->result())>=1) {
+             return $query->result();
+         } else {
+             return "";
+         }
+
+     }
+
+    public function get_datasetmembers(){
+        $this->db->select('dataelementid, datasetid');
+        $this->db->from('datasetmembers');
+        $query=$this->db->get();
+        if (sizeof($query->result())>=1) {
+            return $query->result();
+        } else {
+            return "";
+        }
+
+    }
 	 
 	 
 	 

@@ -18,6 +18,7 @@ class Dataimport_model extends CI_Model {
     public function get_orgunits() {
         $data='';
         //$this->db->select('ouid');
+
         $orgunits=$this->db->get('organisationunit');
             foreach ($orgunits->result() as $row) {
                 $data[]=$row;
@@ -38,7 +39,6 @@ class Dataimport_model extends CI_Model {
         return $id;
     }
 
-    //insert the imported data in batches
     /*Dear maintainer,had to loop here one by one due to error handling limitations of mysql. I wasted a day here trying to optimise this.
     The counter below indicates the approximate number of hours wasted here. If you try to optimise it and fail, just repent and add hours wasted
     to the counter.*/

@@ -1,12 +1,17 @@
-
+				<link rel="stylesheet" href="<?php echo base_url(); ?>/style/js/jquery-ui.css">
 				<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 				<link rel="stylesheet" href="<?php echo base_url() ?>css/jquery.fileupload.css">
 				<link rel="stylesheet" href="<?php echo base_url() ?>css/jquery.fileupload-ui.css">
 				<!-- CSS adjustments for browsers with JavaScript disabled -->
 				<noscript><link rel="stylesheet" href="<?php echo base_url() ?>css/jquery.fileupload-noscript.css"></noscript>
 				<noscript><link rel="stylesheet" href="<?php echo base_url() ?>css/jquery.fileupload-ui-noscript.css"></noscript>                
-                            
 
+        <!-- Alert Css AND JS -->
+        <link href="<?php echo base_url() ?>style/alert/alerts.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url() ?>style/alert/theme.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url() ?>style/alert/theme.min.css" rel="stylesheet" type="text/css" />
+        
+        
 				<script>
 					
                     function mechanismsdelete(data, name){
@@ -112,48 +117,40 @@
                             <script>
                                 function mechanismsUpload(urls) {
                                     var file=urls;
-                                    //alert(urls);
-                                    alert(file);
-                                    
                                      // Ajax Request
                                      var r= $.ajax({
                                          type: "POST",
                                          dataType: 'json',
                                          async: false,
-                                         url: "<?php echo base_url();?>mechanisms/excelimport/?url="+file,
+                                         url: "<?php echo base_url();?>mechanisms/mechanismsexcelimport/?url="+file,
                                            cache: false,
                                            beforeSend: function () {
                                               // alert(urls);
-                                            // $('#loadScreen').show();
+                                               $('#loadScreen').show();
                                            },                
-                                          success: function (data) {  
-                                          	alert("yesy");                                            
+                                          success: function (data) { 
+                                          	  //alert(data.message);	                                           
                                               $('#loadScreen').hide();
                                               $("#infomessage").html(data.message);                     
-                                              $('#alertInfo').show();    
-                                              location.reload(); 
+                                              $('#alertInfo').show();
                                           },
-                                          error: function (data) {
-       
+                                          error: function (data) {     
                                                      alert(data.error);
                                                     $("#infomessage").html("placeHTML")
                                                     $('#loadScreen').hide();                      
                                                     $('#alertInfo').show();       
-                                              
                                                    //alert(textStatus);
                                                    //alert(errorThrown);
                                                    
-                                                }
-                                        });    
-                                        
-                                    
-                                    
+                                        }
+                                        });
                                 }
                                 
                                 //Close Custom info alert box   
                                 function closeInfoAlert() {
                                     //alert("woek");
-                                    $('#alertInfo').hide(); 
+                                    $('#alertInfo').hide();
+                                    location.reload();
                                 }
                                     
                             </script>
@@ -248,10 +245,10 @@
                                     <table id="mechanisms-table" class="table table-bordered table-striped" >                                    	
                                     <thead>
                                         <tr>
-                                            <th style="width:5%">#</th>
                                             <th style="width:20%">Mechanism Name</th>
-                                            <th style="width:10%">Mechanism ID</th>
-                                            <th style="width:10%">Mechanism UID</th>
+                                            <th style="width:10%">Datim ID</th>
+                                            <th style="width:10%">Partner Name</th>
+                                            <th style="width:10%">KEPMS ID</th>
                                             <th style="width:10%">Attribution Key</th>
                                             <th style="width:15%">Action</th>
                                         </tr>
@@ -259,20 +256,22 @@
                                     <tbody>
                                     	<?php
                                     	    if ($mechanisms!='') {
+                                    	    	$i=1;
                                                 foreach ($mechanisms as $row ) {
                                                     echo "<tr>";
-                                                    echo "<td>$row->id</td>";
                                                     echo "<td>$row->mechanism_name</td>";
 													echo "<td>$row->mechanism_id</td>";
-                                                    echo "<td>$row->mechanism_uid</td>";
+													echo "<td>$row->partner_name</td>";
+													echo "<td>$row->mechanism_id</td>";
 													echo "<td>$row->attribution_key</td>";
-                                                    echo "<td><a href='".base_url('mechanisms/viewmechanism/'.$row->id)."'/>View</a>&nbsp&nbsp ";
+                                                    echo "<td><a href='".base_url('mechanisms/viewmechanism/'.$row->mechanism_id)."'/>View</a>&nbsp&nbsp ";
 													if($mechanisms_right){echo "<a href='".base_url('mechanisms/editmechanisms/'.$row->id)."' style='color:green'/> Edit</a>  &nbsp&nbsp ";};
                                                     if($mechanisms_right){echo "<a href='#' onclick=\"mechanismsdelete('$row->id','$row->mechanism_name')\"  style='color:red'/> Delete</a> &nbsp&nbsp ";}; 
 													if($mechanisms_right){echo "<a href='".base_url('mechanisms/mechanisms_data_attribution'.$row->id)."' style='color:purple'/> Attribute</a> ";};
                                                     echo " </td>";
                                                     echo "</tr>";
-                                                }  
+													$i++;
+                                                }
 											}
 
                                     	

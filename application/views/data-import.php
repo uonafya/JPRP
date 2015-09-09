@@ -91,6 +91,17 @@
         background: #fff url(images/red_asterisk.png) no-repeat 98% center;
     }
 
+    .donor_form select:focus, input:focus, .donor_form textarea:focus {
+        background: #fff;
+        border:1px solid #555;
+        box-shadow: 0 0 3px #aaa;
+        padding-right:70px;
+    }
+
+    /* === HTML5 validation styles === */
+    .donor_form select:required,input:required, .donor_form textarea:required {
+        background: #fff url(images/red_asterisk.png) no-repeat 98% center;
+    }
     .donor_form select:required:valid, input:required:valid, .donor_form textarea:required:valid {
         background: #fff url(images/valid.png) no-repeat 98% center;
         box-shadow: 0 0 5px #5cd053;
@@ -215,7 +226,6 @@
         padding: 8px;
         overflow: auto;
     }
-
     .donor_form SECTION > DIV {
         float: left;
         padding: 4px;
@@ -395,6 +405,7 @@
                     buttons: {Prev: -1, Next: 1},
                     focus: 1,
                     position: {container: '#leftValues', x: 180, y: 10, width: 300, arrow: 'lt'},
+
                     submit: tourSubmitFunc
                 },
                 {

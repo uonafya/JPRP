@@ -32,7 +32,7 @@ class Mechanisms extends CI_Controller {
         }			
 	}
 	
-	public function excelimport(){
+	public function mechanismsexcelimport(){
 		$file_name=substr( $this->input->get('url'), strpos( $this->input->get('url'), "?file=") + 6);
         if($this->session->userdata('marker')!=1){
             redirect($this->index());
@@ -75,8 +75,7 @@ class Mechanisms extends CI_Controller {
                     //Only Get Rows With All Columns Filled
                     if ($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null && 
                     $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null &&
-                     $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null&&
-                     $objPHPExcel->getActiveSheet()->getCell("D".$count)->getValue()!=null){
+                     $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null){
                         if ($cell=="A".$count) {
                             //Get Mechanism Name    
                             $column ='A';
@@ -89,29 +88,21 @@ class Mechanisms extends CI_Controller {
                             $column ='B';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
-                            if ($row != 1 && $data_value!='' ) {
-                                $mechanisms_id = $data_value;
-                            }       
+                            if ($row != 1 && $data_value!='') {
+								$partner_name = $data_value;
+                            }         
                         }elseif($cell=="C".$count){
+                        	$count=$count+1;
                             $column ='C';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
-                            if ($row != 1 && $data_value!='') {
-								$mechanisms_uid = $data_value;
-                            }         
-                        }elseif($cell=="D".$count){
-                            //Get KEPMS categoryoptioncombo_code
-                            $count=$count+1;
-                            $column ='D';
-                            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
-                            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
-                            if ($row != 1 && $data_value!='') {
-                                    $attribution_key = $data_value;
-                                    $data_rows=$data_rows+1;
-									$this->mechanisms_model->excel_import($mechanisms_name, $mechanisms_id,$mechanisms_uid, $attribution_key);
-                            } 
+                            if ($row != 1 && $data_value!='' ) {
+                                $mechanisms_id = $data_value;
+                                $data_rows=$data_rows+1;
+								$this->mechanisms_model->mechanisms_excel_import($mechanisms_name,$partner_name, $mechanisms_id);								
+                            }
                         //Get Rows With  Partial Column Data
-                        }elseif($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null||$objPHPExcel->getActiveSheet()->getCell("D".$count)->getValue()!=null ){                       
+                        }elseif($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null ){                       
                                 $empty_cells_alert[$empty_column]="Empty Cell In Row $count";
                                 $empty_column=$empty_column+1;
                                 $count=$count+1;
@@ -119,19 +110,13 @@ class Mechanisms extends CI_Controller {
                         }
                         
                     
-                } 
-                //Insert Data to database
-               //Insert Rows With Empty Cells
-              // $this->dataelement_mapper->empty_row_cells($empty_cells_alert);
-                //echo "error";
-              
-               //return $no_empty_rows;   
+                }
 				     		       		
 			}  
                     $data = array(
-                    'message' => "Data Has Been Successfully Loaded Into The Database"
-                    );        
-                    echo json_encode("Data Has Been Successfully Loaded Into The Database") ;   
+                    'message' => "Data Has Been Successfully Uploaded Into The Database"
+                    );    
+                    echo json_encode($data) ;
         }else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
                 $this->load->view('error',$data);			

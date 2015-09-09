@@ -1,5 +1,7 @@
                 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/js/jquery-ui.css">
-                
+                <link rel="stylesheet" href="<?php echo base_url(); ?>/style/chosen/chosen.min.css" type="text/css">
+
+
                 <script src="<?php echo base_url(); ?>/style/js/jquery-1.10.2.js"></script>
                 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
                 <script src="<?php echo base_url(); ?>/style/js/jquery-ui.js"></script>
@@ -27,9 +29,7 @@
                     }
                     .required_notification {
                         color:#d45252; 
-                        margin:5px 0 0 0; 
-                        display:inline;
-                        float:right;
+                        margin:5px 0 0 0;
                     }
                     
                     /* === Form Elements === */
@@ -68,15 +68,15 @@
                     
                     /* === HTML5 validation styles === */   
                     .donor_form select:required,input:required, .donor_form textarea:required {
-                        background: #fff url(images/red_asterisk.png) no-repeat 98% center;
+                        background: #fff url(images/red_asterisk.png) no-repeat 98% left;
                     }
                     .donor_form select:required:valid, input:required:valid, .donor_form textarea:required:valid {
-                        background: #fff url(images/valid.png) no-repeat 98% center;
+                        background: #fff url(images/valid.png) no-repeat 98% left;
                         box-shadow: 0 0 5px #5cd053;
                         border-color: #28921f;
                     }
                     .donor_form select:focus:invalid,input:focus:invalid, .donor_form textarea:focus:invalid {
-                        background: #fff url(images/invalid.png) no-repeat 98% center;
+                        background: #fff url(images/invalid.png) no-repeat 98% left;
                         box-shadow: 0 0 5px #d45252;
                         border-color: #b03535
                     }
@@ -389,68 +389,116 @@
                         $('#leftValues').filterByText($('#textbox'), true);
                     }); 
                 </script>
-
+        <div class="container">
+        <div class="row">
                 <form class="donor_form" id="program_details" action="<?php echo base_url('programmanager/addnewprogram')?>" method="post">
-                    <ul>    
-                        <li>
-                             <h2>Program Details </h2>
-                             <span class="required_notification">* Denotes Required Field</span>
-                        </li>
-                        <li>
-                            <label for="name">Program Name:</label>
-                            <input type="text" name="pname" id="pname"  placeholder="Program Name"  required pattern="[A-Za-z\s]{10,}"  />
-                            <span class="form_hint">Program Name Must Be Of Atleast 10 Characters</span>
-                        </li> 
-                        <li>
-                            <label for="name">Program ShortName:</label>
-                            <input type="text" name="sname" id="sname"  placeholder="Program Short Name: PMTCT"  required pattern="[A-Za-z\s]{2,}"  />
-                            <span class="form_hint">Program Name Must Be Of Atleast 2 Characters</span>
-                        </li>                                                                     
-                        <li>
-                            <label for="name">Program Description:</label>
-                            <textarea name="pdescription" rows="4" cols="100" placeholder="Fill In Brief Details About The Program"  required pattern="[A-Za-z\s]{15,}"></textarea>
-                             <span class="form_hint">Description Must Be Of Atleast 15 Characters</span>
-                        </li>                          	                     
-                        <li>                  	
-                            <label for="name" style="font-size: 16px; width:250px;margin-left:80%">Programs Dataelements</label>
+                    <div class="form-group">
+                        <label>Program Details:</label>
+                        <span class="required_notification">* Denotes Required Field</span>   
+
+                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Program Name:</label>
+                                <input type="text" name="pname" id="pname"  placeholder="Program Name"  required pattern="[A-Za-z\s]{10,}"  />
+                                <span class="form_hint">Program Name Must Be Of Atleast 10 Characters</span>
+                            </div>
+
+                            <div class="form-group">
+                               <label for="name">Program ShortName:</label>
+                                <input type="text" name="sname" id="sname"  placeholder="Program Short Name: PMTCT"  required pattern="[A-Za-z\s]{2,}" maxlength="20" />
+                                <span class="form_hint">Program Name Must Be Of Atleast 2 Characters</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Program Description:</label>
+                                <textarea name="pdescription" rows="4" cols="100" placeholder="Fill In Brief Details About The Program"  required pattern="[A-Za-z\s]{15,}"></textarea>
+                                 <span class="form_hint">Description Must Be Of Atleast 15 Characters</span>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                         <label>Program Dataelements:</label>  
+                        <div class="col-md-12">
+                            <div class="col-md-offset-1">
+                                 <input id="textbox" type="text" class="form-control" placeholder="Search Dataelements"/>
+                            </div>
+
+
+
+                            <!--                                    Steve: Data Sets on page -->
+                            <div>&nbsp;</div>
+                            <div>
+                                <label for="datasets" style="font-size: 16px; width: 200px">Data Sets Available </label>
+                            </div>
+
+
+<!-- TODO: Format the CSS to have a better appearance for Chosen select -->
+                            <div>
+                                <select id="datasets" class="chosen-select" style="height: 30px; width: 350px;" onchange="getElements()" tabindex="2">
+                                    <option value="nil">All Data Sets</option>
+                                    <?php
+                                    if ($datasets!='') {
+                                        foreach ($datasets as $dataset_row) {
+                                            echo "<option value='$dataset_row->datasetid'>$dataset_row->name</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
+<!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
+                            </div>
+                            <!--                                    End Steve: Data Sets on page  -->
+
+
                             <section class="container">
+
                                 <div>
                                     <div>
-                                      <label for="name" style="font-size: 16px; width: 200px">Dataelements Available </label>  
+                                        <label for="name" style="font-size: 16px; width: 200px">Dataelements Available </label>
                                     </div>
                                     <div>
-                                        <input id="textbox" type="text" placeholder="Dataelement Search Box"/><br />
-                                        <select id="leftValues" size="4" multiple style="width:450px; height:250px;">
+                                        <select id="leftValues" size="10" multiple style="width:370px; height:250px;">
                                             <?php
                                                 if ($dataelements!='') {
                                                     foreach ($dataelements as $row) {
                                                         echo "<option value='$row->uid'>$row->name</option>";
                                                     }
                                                 } 
-                                            ?>                
-                                        </select>                                        
+                                            ?>
+                                        </select>
                                     </div>
-                                </div>  
-                                <div style="margin-top: 5%;">
-                                    <input type="button" id="btnRight" value="&gt;&gt;" />
-                                    <input type="button" id="btnLeft" value="&lt;&lt;" style="margin-top: 30px" />
                                 </div>
-                                <div> 
+                                <div style="margin-top: 10%;">
+                                    <input type="button" class="btn btn-md" id="btnRight" value="&gt;&gt;"/>
+                                    <input type="button" class="btn btn-md" id="btnLeft" value="&lt;&lt;" style="margin-top: 30px"/>
+                                </div>
+                                <div>
                                     <div>
                                         <div>
-                                          <label for="name" style="font-size: 16px; margin-left:45px; width: 200px">Selected Dataelements </label>  
+                                            <label for="name" style="font-size: 16px; margin-left:0px; width: 200px">Selected
+                                                Dataelements </label>
                                         </div>
                                         <div>
-                                            <select id="rightValues"  size="5" name='facilities[]' style="width:400px; height:250px"; multiple required readonly>  </select>                                    
+                                            <select id="rightValues" size="10" name='facilities[]' style="width:370px; height:250px;" multiple required >
+                                            </select>
                                         </div>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
+
                             </section>
-                        </li> 
-                        <li style="margin-left: 32%; width: 100%">
-                            <button class="submit" type="submit">Submit</button>
-                        </li>                    
+                        <div class="col-md-offset-4">
+                            <button class="submit">Submit</button>
+                        </div>
+                        </div>
+                    </div>
                 </form>
+                </div>
+                </div>
                     
        </section>
    
@@ -478,7 +526,11 @@
                     // create array to hold your data
                     submitform(); 
                 });
+
+               
+
             });
+
             $(function() {
                 $("#example1").dataTable();
                 $("#supportedorgs").dataTable();
@@ -498,12 +550,80 @@
                 this.dxEDate = edate;
             }
         </script>
-                
+
+        <script type="text/javascript">
+        $(document).ready(function () {
+
+             $('.submit').click(function() {
+                        $("#program_details").submit(function( event ) {
+
+                            $("#rightValues option").prop("selected", true);
+
+                            var elements = [];
+
+                            $('#rightValues :selected').each(function (i, selected) {
+                                elements[i] = $(selected).val();
+                            });
+                              if (element.length>0) {
+                                return;
+                              }
+
+                              $("#errorSelectedDataelements").text( "<b>No Data Elements Selected<b>").show().fadeOut(8000);
+                              event.preventDefault();
+                               
+                            });
+                    
+                });
+        })
+        </script>
+                <!--                Steve Scripts -->
+                <script>
+                    var datasets = <?php echo json_encode($datasets); ?>;
+                    var datasetmembers = <?php echo json_encode($datasetmembers); ?>;
+                    var dataelements = <?php echo json_encode($dataelements); ?>;
+                    function getElements() {
+                        var dataSetId = $( "#datasets option:selected" ).val();
+                        var dataElementList = [];
+
+                        if (dataSetId == 'nil'){
+                            $("#leftValues").empty();
+                            $.each(dataelements, function (e) {
+                                $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
+                            });
+                        }
+                        else {
+
+                            $("#leftValues").empty();
+
+                            $.each(datasetmembers, function (e) {
+                                if (datasetmembers[e].datasetid == dataSetId){
+                                    dataElementList.push(datasetmembers[e].dataelementid);
+                                }
+                            });
+                            if (dataElementList.length == 0){
+                                $("#leftValues").append("<option value=''>No DataElements Available for selected Data Set</option>");
+                            }else{
+                                $.each(dataElementList, function(element){
+                                    $.each(dataelements, function (e) {
+                                        if (dataelements[e].dataelementid == dataElementList[element] ){
+                                            $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
+                                        }
+                                    });
+                                });
+                            }
+
+                        }
+                    }
+                </script>
+
+
+                <!--                End Steve Scripts -->
                 
         <link rel="stylesheet" href="<?php echo base_url(); ?>/style/date/css/default.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>/style/bootstrap-dialog/css/base.css" type="text/css">
         
-        
+        <script type="text/javascript" src="<?php echo base_url(); ?>/style/chosen/chosen.jquery.min.js"></script>
+
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/zebra_datepicker.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/core.js"></script>                
         
@@ -518,4 +638,7 @@
         <script src="<?php echo base_url(); ?>/style/js/AdminLTE/app.js" type="text/javascript"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url(); ?>/style/js/AdminLTE/demo.js" type="text/javascript"></script>
- 
+<!--                Chosen needs to be after jquery -->
+                <script>
+                    $(".chosen-select").chosen();
+                </script>

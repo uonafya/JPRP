@@ -157,7 +157,8 @@
 
 				<script>
 				
-                    function supportedit(id,orgunit,program,s_date,s_end){  
+                    function supportedit(id,orgunit,program,s_date,s_end){
+
                         var temp = {
                             state0: {
                                 title:'Update Support For '+program,
@@ -171,12 +172,12 @@
                                         "<div class='field'>\n\
                                             <label for='start_date' style='font-size:1.2em;margin-top:1em;width:8em;'>Start Date</label>\n\
                                             <input  type='text' id='datepickerstart' value='"+s_date+"'  required pattern='[A-Za-z\s0-9]{5,}' name='start_date' placeholder='yyyy/mm/dd' style='height:30px;font-size:18px;width:10em;'/>\n\
-                                            <span class='form_hint'>yyyy/mm/dd</span> \n\
+                                            <span class='form_hint'>dd-mm-yyyy</span> \n\
                                         </div>"+
                                         "<div class='field'>\n\
                                             <label for='end_date' style='font-size:1.2em;margin-top:1em;width:8em;'>End date</label>\n\
                                             <input type='text' id='datepickerend'  required pattern='[A-Za-z\s0-9]{5,}' name='end_date' value='"+s_end+"' placeholder='yyyy/mm/dd' style='height:30px;font-size:18px;width:10em;'/>\n\
-                                            <span class='form_hint'>yyyy/mm/dd</span> \n\
+                                            <span class='form_hint'>dd-mm-yyyy</span> \n\
                                         </div>\n" +
                                     '</form>',
                                 buttons: { Cancel: false, Submit: true },
@@ -240,8 +241,26 @@
                                     defaultButton: 'btn-primary'
                             }
                         }); 
-                        $('#datepickerstart').Zebra_DatePicker();
-                        $('#datepickerend').Zebra_DatePicker();
+                        // $('#datepickerstart').Zebra_DatePicker();
+                        // $('#datepickerend').Zebra_DatePicker();
+                        $("#datepickerstart").datepicker({
+                              defaultDate: "+1w",
+                              changeMonth: true,
+                              numberOfMonths: 1,
+                              onClose: function( selectedDate ) {
+                                $("#datepickerend").datepicker( "option", "minDate", selectedDate );
+                              }
+                            });
+
+                            $("#datepickerend").datepicker({
+                              defaultDate: "+4w",
+                              changeMonth: true,
+                              numberOfMonths: 1,
+                              onClose: function( selectedDate ) {
+                                $("#datepickerstart").datepicker( "option", "maxDate", selectedDate );
+                              }
+                            });
+
                     }
 				
 				
@@ -398,7 +417,9 @@
         <script src="<?php echo base_url(); ?>/style/js/AdminLTE/app.js" type="text/javascript"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url(); ?>/style/js/AdminLTE/demo.js" type="text/javascript"></script>
- 
+        <!-- Jquery UI js -->
+        <script src="<?php echo base_url(); ?>/style/js/jquery-ui.js" type="text/javascript"></script>
+
 
 
 <!-- Pop over Class -->

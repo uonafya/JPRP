@@ -95,6 +95,10 @@ class Programmanager extends CI_Controller {
         	//Check If User Has Authority(program_magement) To Create Programs
         	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
                 $data['page']='programs-create';
+//                Steve: Get data sets from Database
+                $data['datasets']=$this->programs_model->get_datasets();
+                $data['datasetmembers']=$this->programs_model->get_datasetmembers();
+//                End Steve
                 //Get All The Dataelements From Database
                 $data['dataelements']=$this->programs_model->get_dataelements();
                 //Get programs and the implementation partners
@@ -124,7 +128,7 @@ class Programmanager extends CI_Controller {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
                 $this->load->view('error',$data);			
 			}       
-        }					
+        }
 	}
 	
 	public function editprogram($programid){
@@ -143,30 +147,85 @@ class Programmanager extends CI_Controller {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
                 $this->load->view('error',$data);			
 			}       
-        }	
+        }
 	}
 	
-	public function updateprogram($program_id){
-        if($this->session->userdata('marker')!=1){
+    public function check_program_exists_archive($program_id)
+    {
+        echo $this->programs_model->check_program_exists_archive($program_id);
+    }
+
+    public function updateprogram_archive($program_id)
+    {
+        if ($this->session->userdata('marker') != 1) {
             redirect($this->index());
-        }else{
-        	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
-				if($progress=$this->programs_model->update_program($program_id)==TRUE){
-					$message=$message="The Program Has Successfully Been Updated";
-					redirect("/programmanager/index/null/$message",'refresh');
-				}else{
-					$message="An Error Occured At The ".$progress." Stage Of Program Update. Kindly Try Again";
-					redirect("/programmanager/null/$message",'refresh');
-				}       		
-			} else {
-				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
-                $this->load->view('error',$data);			
-			}       
-        }		
-	}
-	
-	
+        } else {
+            //Check If User Has Authority(program_magement) To Create Programs
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+
+                if ($progress = $this->programs_model->create_program_dataelements_archive($program_id) == TRUE) {
+
+                    echo $message = $message = "The Program Has Successfully Been Updated and Archived";
+                   
+                } else {
+
+                    echo $message = "An Error Occured At The " . $progress . " Stage Of Program Update. Kindly Try Again";
+                }
+
+            }
+            else {
+                $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error', $data);
+            }
+        }
+    }
+
+    public function updateprogram($program_id)
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            //Check If User Has Authority(program_magement) To Create Programs
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                $progress = $this->programs_model->update_program($program_id);
+                    if ($progress=== TRUE) {
+
+                        echo $message = "The Program Has Successfully Been Updated";
+                         // echo base_url("/programmanager/index/null/".$message);
+//                        redirect("/programmanager/index/null/$message",'refresh');
+                    } else {
+
+                       echo $message = $progress . " at Stage Of Program Update. Kindly Try Again";
+					    // echo base_url("/programmanager/index/null/".$message);
+                    }
+
+            }
+            else {
+                $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error', $data);
+            }
+        }
+    }
+
+    public function check_changes_program_dataelements($program_id)
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            //Check If User Has Authority(program_magement) To Create Programs
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                if ($progress = $this->programs_model->check_change_in_program_dataelements($program_id) === TRUE) {
+//                    Data elements not changed
+                    echo 0;
+                }
+
+                if ($progress = $this->programs_model->check_change_in_program_dataelements($program_id) === FALSE) {
+//                    Data elements changed
+                    echo -1;
+                }
+            }
+        }
+    }
 	
 	
 	public function viewprogram($program_id){
@@ -184,7 +243,7 @@ class Programmanager extends CI_Controller {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
                 $this->load->view('error',$data);			
 			}       
-        }	
+        }
 	}
 	
 	
@@ -212,7 +271,22 @@ class Programmanager extends CI_Controller {
 	}
 	
 	
-	
+    // Show Program Details
+    public function show_program_details($program_id)
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            //Check If User Has Authority(program_magement)  to view details of a program
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                if ($result =$this->programs_model->show_program_details($program_id)) {
+                
+                    echo $data=json_encode($result);
+                }
+            }
+        }
+
+    }
 	
 	
     //Get Data Set Section Elements: $secid:-Section id

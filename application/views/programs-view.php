@@ -213,17 +213,19 @@
                                     <table id="dataelements-table" class="table table-bordered table-striped" >                                    	
                                     <thead>
                                         <tr>
-                                            <th style="width:10%">#</th>
+
+                                            <th style="width:10%">Dataelement Code</th>
+
                                             <th style="width:30%">Dataelement Name</th>
                                             <th style="width:50%">Dataelement Description</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<?php
-                                    	    if ($program_dataelements!='') {
+                                    	    if ($program_dataelements!=false) {
                                                 foreach ($program_dataelements as $row ) {
                                                     echo "<tr>";
-                                                    echo "<td>$row->id</td>";
+                                                    echo "<td>$row->dataelement_code</td>";
 													echo "<td>$row->dataelement_name</td>";
                                                     echo "<td>$row->dataelement_description</td>";
                                                     echo "</tr>";
@@ -269,18 +271,7 @@
                                     		<td>Nyeri Hospital</td>
                                     		<td>12/01/2015</td>
                                     		<td>12/06/2015</td>
-                                    	</tr>                                    	                                 	
-                                    	<?php
-                                    	    if ($program_dataelements=='') {
-                                                foreach ($program_dataelements as $row ) {
-                                                    echo "<tr>";
-                                                    echo "<td>$row->id</td>";
-													echo "<td>$row->dataelement_name</td>";
-                                                    echo "<td>$row->dataelement_description</td>";
-                                                    echo "</tr>";
-                                                }  
-											}
-                                    	?>
+                                    	</tr>
                                     </tbody>
     
                                     </table>

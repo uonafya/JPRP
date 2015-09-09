@@ -25,36 +25,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="programmanager.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers/programmanager.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="5355">
-              <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="picklist_v1_0.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../dhis2_cumulatives/picklist_v1_0.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4681" max-vertical-offset="10035">
-              <caret line="331" column="5" selection-start-line="331" selection-start-column="5" selection-end-line="331" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sections.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers/sections.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="3345">
-              <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="sections_model.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/models/sections_model.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -69,60 +39,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataimport_model.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dataimport_model.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/models/dataimport_model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5147059" vertical-offset="360" max-vertical-offset="1440">
-              <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+            <state vertical-scroll-proportion="13.25" vertical-offset="828" max-vertical-offset="1440">
+              <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataimport.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dataimport.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers/dataimport.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.125" vertical-offset="1323" max-vertical-offset="2580">
-              <caret line="98" column="75" selection-start-line="98" selection-start-column="75" selection-end-line="98" selection-end-column="75" />
+            <state vertical-scroll-proportion="-0.3970588" vertical-offset="1728" max-vertical-offset="2595">
+              <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="datasets.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/datasets.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.5" vertical-offset="90" max-vertical-offset="1305">
-              <caret line="34" column="60" selection-start-line="34" selection-start-column="60" selection-end-line="34" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data-import.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/data-import.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.384615" vertical-offset="8596" max-vertical-offset="9960">
-              <caret line="616" column="7" selection-start-line="616" selection-start-column="7" selection-end-line="616" selection-end-column="7" />
-              <folding>
-                <element signature="e#6#91#0#PHP" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="e#18054#18124#0#PHP" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="e#20615#20685#0#PHP" expanded="true" />
-                <element signature="n#style#0;n#li#1;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -130,10 +62,48 @@
       <file leaf-file-name="import-stats.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/import-stats.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.625" vertical-offset="240" max-vertical-offset="1440">
-              <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+            <state vertical-scroll-proportion="-15.0" vertical-offset="240" max-vertical-offset="1440">
+              <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
               <folding>
                 <element signature="e#6#90#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mechanisms_model.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/models/mechanisms_model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.625" vertical-offset="2253" max-vertical-offset="2865">
+              <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+              <folding>
+                <marker date="1441772927890" expanded="true" signature="4479:4558" placeholder="SELECT MAX(s..." />
+                <marker date="1441772927890" expanded="true" signature="5009:5075" placeholder="Select max(c..categoryoptioncombo..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data-import.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/data-import.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-99.25" vertical-offset="7398" max-vertical-offset="9990">
+              <caret line="661" column="0" selection-start-line="661" selection-start-column="0" selection-end-line="661" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#1;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="e#21017#21087#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#li#1;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,17 +114,26 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/controllers/programmanager.php" />
         <option value="$PROJECT_DIR$/application/config/database.php" />
         <option value="$PROJECT_DIR$/application/config/config.php" />
-        <option value="$PROJECT_DIR$/application/views/template/left_menu.php" />
-        <option value="$PROJECT_DIR$/application/views/programs-edit.php" />
         <option value="$PROJECT_DIR$/application/models/sections_model.php" />
-        <option value="$PROJECT_DIR$/application/views/datasets.php" />
         <option value="$PROJECT_DIR$/application/views/import-stats.php" />
-        <option value="$PROJECT_DIR$/application/views/data-import.php" />
-        <option value="$PROJECT_DIR$/application/controllers/dataimport.php" />
         <option value="$PROJECT_DIR$/application/models/dataimport_model.php" />
+        <option value="$PROJECT_DIR$/application/views/template/left_menu.php" />
+        <option value="$PROJECT_DIR$/application/views/programs-view.php" />
+        <option value="$PROJECT_DIR$/application/views/programs-list.php" />
+        <option value="$PROJECT_DIR$/application/views/programs-edit.php" />
+        <option value="$PROJECT_DIR$/application/views/programs-create.php" />
+        <option value="$PROJECT_DIR$/application/views/mechanisms-view.php" />
+        <option value="$PROJECT_DIR$/application/views/mechanisms-list.php" />
+        <option value="$PROJECT_DIR$/application/views/mechanisms-add.php" />
+        <option value="$PROJECT_DIR$/application/views/datasets.php" />
+        <option value="$PROJECT_DIR$/application/views/data-import.php" />
+        <option value="$PROJECT_DIR$/application/models/programs_model.php" />
+        <option value="$PROJECT_DIR$/application/models/mechanisms_model.php" />
+        <option value="$PROJECT_DIR$/application/controllers/programmanager.php" />
+        <option value="$PROJECT_DIR$/application/controllers/mechanisms.php" />
+        <option value="$PROJECT_DIR$/application/controllers/dataimport.php" />
       </list>
     </option>
   </component>
@@ -237,6 +216,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="attribution" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="attribution" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="template" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -394,91 +395,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/views/template/left_menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="1305">
-          <caret line="61" column="72" selection-start-line="61" selection-start-column="72" selection-end-line="61" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/dataimport.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1920">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/data-import.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6120" max-vertical-offset="8250">
-          <caret line="404" column="68" selection-start-line="404" selection-start-column="68" selection-end-line="404" selection-end-column="68" />
-          <folding>
-            <element signature="e#6#91#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#18054#18124#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#20615#20685#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#li#1;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/programs-edit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5910" max-vertical-offset="19845">
-          <caret line="394" column="28" selection-start-line="394" selection-start-column="28" selection-end-line="394" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/programmanager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1846" max-vertical-offset="5355">
-          <caret line="138" column="43" selection-start-line="138" selection-start-column="43" selection-end-line="138" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dhis2_cumulatives/picklist_v1_0.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4681" max-vertical-offset="10035">
-          <caret line="331" column="5" selection-start-line="331" selection-start-column="5" selection-end-line="331" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/sections.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="3345">
-          <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/sections_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="4770">
-          <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
-          <folding>
-            <marker date="1432736424000" expanded="true" signature="5643:5701" placeholder="Select max(a..sectionattribution..." />
-            <marker date="1432736424000" expanded="true" signature="9363:9498" placeholder="Select a.dat..dataelement..." />
-            <marker date="1432736424000" expanded="true" signature="11966:12097" placeholder="Select a.dat..dataelement..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/models/dataimport_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="420">
@@ -491,6 +407,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="410" max-vertical-offset="1140">
           <caret line="61" column="72" selection-start-line="61" selection-start-column="72" selection-end-line="61" selection-end-column="72" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -507,22 +424,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="6120" max-vertical-offset="8250">
           <caret line="404" column="68" selection-start-line="404" selection-start-column="68" selection-end-line="404" selection-end-column="68" />
           <folding>
-            <element signature="e#6#91#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#18054#18124#0#PHP" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#20615#20685#0#PHP" expanded="true" />
+            <element signature="e#21017#21087#0#PHP" expanded="true" />
             <element signature="n#style#0;n#li#1;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
           </folding>
         </state>
@@ -571,6 +485,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="410" max-vertical-offset="1140">
           <caret line="61" column="72" selection-start-line="61" selection-start-column="72" selection-end-line="61" selection-end-column="72" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -594,22 +509,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="2506" max-vertical-offset="8250">
           <caret line="192" column="14" selection-start-line="192" selection-start-column="14" selection-end-line="192" selection-end-column="25" />
           <folding>
-            <element signature="e#6#91#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#18054#18124#0#PHP" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#20615#20685#0#PHP" expanded="true" />
+            <element signature="e#21017#21087#0#PHP" expanded="true" />
             <element signature="n#style#0;n#li#1;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
           </folding>
         </state>
@@ -658,6 +570,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="410" max-vertical-offset="1140">
           <caret line="61" column="72" selection-start-line="61" selection-start-column="72" selection-end-line="61" selection-end-column="72" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -681,22 +594,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8250">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#6#91#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#18054#18124#0#PHP" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#20615#20685#0#PHP" expanded="true" />
+            <element signature="e#21017#21087#0#PHP" expanded="true" />
             <element signature="n#style#0;n#li#1;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
           </folding>
         </state>
@@ -743,14 +653,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/programs-edit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5895" max-vertical-offset="8010">
-          <caret line="393" column="28" selection-start-line="393" selection-start-column="28" selection-end-line="393" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../dhis2_cumulatives/picklist_v1_0.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4681" max-vertical-offset="10035">
@@ -774,32 +676,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/programs-list.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.9852943" vertical-offset="3663" max-vertical-offset="5175">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/models/datasets_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/programmanager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="5355">
-          <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/template/left_menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.448" vertical-offset="515" max-vertical-offset="1140">
-          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -810,54 +690,189 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/datasets.php">
+    <entry file="file://$PROJECT_DIR$/application/views/mechanisms-view.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.5" vertical-offset="90" max-vertical-offset="1305">
-          <caret line="34" column="60" selection-start-line="34" selection-start-column="60" selection-end-line="34" selection-end-column="60" />
+        <state vertical-scroll-proportion="-1.2303921" vertical-offset="7068" max-vertical-offset="8130">
+          <caret line="421" column="0" selection-start-line="421" selection-start-column="0" selection-end-line="421" selection-end-column="0" />
+          <folding>
+            <marker date="1441771746215" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441771746215" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441771746215" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441771746215" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441771746215" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1441771746215" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441771746215" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/programs-create.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.85294116" vertical-offset="9138" max-vertical-offset="9750">
+          <caret line="644" column="0" selection-start-line="644" selection-start-column="0" selection-end-line="644" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#section#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/programs-edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.82843137" vertical-offset="9243" max-vertical-offset="9855">
+          <caret line="650" column="0" selection-start-line="650" selection-start-column="0" selection-end-line="650" selection-end-column="0" />
+          <folding>
+            <marker date="1441770830027" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441770830027" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441770830027" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/programs-list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.82843137" vertical-offset="5673" max-vertical-offset="6285">
+          <caret line="412" column="9" selection-start-line="412" selection-start-column="9" selection-end-line="412" selection-end-column="9" />
+          <folding>
+            <marker date="1441770580515" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/programs-view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24019608" vertical-offset="4263" max-vertical-offset="4875">
+          <caret line="294" column="38" selection-start-line="294" selection-start-column="38" selection-end-line="294" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#section#1;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#th#3;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#section#1;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/template/left_menu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4" vertical-offset="515" max-vertical-offset="1140">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/mechanisms-list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.387255" vertical-offset="6168" max-vertical-offset="6780">
+          <caret line="273" column="0" selection-start-line="273" selection-start-column="0" selection-end-line="273" selection-end-column="0" />
+          <folding>
+            <marker date="1441771890311" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441771890311" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/mechanisms-add.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14215687" vertical-offset="7008" max-vertical-offset="7620">
+          <caret line="473" column="19" selection-start-line="473" selection-start-column="19" selection-end-line="473" selection-end-column="19" />
+          <folding>
+            <marker date="1441772010935" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441772010935" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441772010935" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441772010935" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1441772010935" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/programs_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.3284314" vertical-offset="7275" max-vertical-offset="10470">
+          <caret line="392" column="5" selection-start-line="392" selection-start-column="5" selection-end-line="392" selection-end-column="5" />
+          <folding>
+            <marker date="1441772865110" expanded="true" signature="-1:-1" placeholder="SELECT datae..dataelement..." />
+            <marker date="1441772865110" expanded="true" signature="-1:-1" placeholder="SELECT datae..attribution_programs_dataelements..." />
+            <marker date="1441772865110" expanded="true" signature="-1:-1" placeholder="Select max(a..sectionattribution..." />
+            <marker date="1441772865110" expanded="true" signature="-1:-1" placeholder="Select a.dat..dataelement..." />
+            <marker date="1441772865110" expanded="true" signature="-1:-1" placeholder="Select a.dat..dataelement..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/data-import.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.384615" vertical-offset="8596" max-vertical-offset="9960">
-          <caret line="616" column="7" selection-start-line="616" selection-start-column="7" selection-end-line="616" selection-end-column="7" />
+        <state vertical-scroll-proportion="-99.25" vertical-offset="7398" max-vertical-offset="9990">
+          <caret line="661" column="0" selection-start-line="661" selection-start-column="0" selection-end-line="661" selection-end-column="0" />
           <folding>
-            <element signature="e#6#91#0#PHP" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#0;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#18054#18124#0#PHP" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#1;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#2;n#section#1;n#li#0;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="e#20615#20685#0#PHP" expanded="true" />
+            <element signature="e#21017#21087#0#PHP" expanded="true" />
             <element signature="n#style#0;n#li#1;n#ul#0;n#form#0;n#section#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/datasets.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.208" vertical-offset="680" max-vertical-offset="1305">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/import-stats.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625" vertical-offset="240" max-vertical-offset="1440">
-          <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+        <state vertical-scroll-proportion="-15.0" vertical-offset="240" max-vertical-offset="1440">
+          <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
           <folding>
             <element signature="e#6#90#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/dataimport.php">
+    <entry file="file://$PROJECT_DIR$/application/models/mechanisms_model.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.125" vertical-offset="1323" max-vertical-offset="2580">
-          <caret line="98" column="75" selection-start-line="98" selection-start-column="75" selection-end-line="98" selection-end-column="75" />
+        <state vertical-scroll-proportion="-13.625" vertical-offset="2253" max-vertical-offset="2865">
+          <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+          <folding>
+            <marker date="1441772927890" expanded="true" signature="4479:4558" placeholder="SELECT MAX(s..." />
+            <marker date="1441772927890" expanded="true" signature="5009:5075" placeholder="Select max(c..categoryoptioncombo..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/dataimport_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.25" vertical-offset="828" max-vertical-offset="1440">
+          <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/programmanager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3627451" vertical-offset="5268" max-vertical-offset="6465">
+          <caret line="366" column="19" selection-start-line="366" selection-start-column="19" selection-end-line="366" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/mechanisms.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1813725" vertical-offset="2463" max-vertical-offset="3075">
+          <caret line="118" column="45" selection-start-line="118" selection-start-column="45" selection-end-line="118" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -874,10 +889,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/dataimport_model.php">
+    <entry file="file://$PROJECT_DIR$/application/controllers/dataimport.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5147059" vertical-offset="360" max-vertical-offset="1440">
-          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+        <state vertical-scroll-proportion="-0.3970588" vertical-offset="1728" max-vertical-offset="2595">
+          <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
           <folding />
         </state>
       </provider>

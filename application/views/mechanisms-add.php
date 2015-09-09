@@ -40,7 +40,7 @@
                         float:left;
                         padding:3px;
                     }
-                    .donor_form input, .donor_form select {
+                    .donor_form input{
                         height:30px; 
                         width:240px; 
                         padding:5px 8px;
@@ -151,13 +151,8 @@
                         height: 30px;
                         width: 17em;
                     }
-                </style>
-                
-                <style>
-            
+
                     .donor_form SELECT{
-                        width: 200px;
-                        height:200px;
                         box-sizing: border-box;
                         overflow-y:auto; overflow-x:auto;
                     }
@@ -390,88 +385,42 @@
                     }); 
                 </script>
 
-                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('Mechanismmanager/addnewMechanism')?>" method="post">
-                    <ul>    
+                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('Mechanismmanager/addnewMechanism')?>" method="post" style="margin-left: -30px ">
+                    <ul>
                         <li>
                              <h2>Mechanism Details </h2>
                              <span class="required_notification">* Denotes Required Field</span>
                         </li>
                         <li>
                             <label for="name">Mechanism Name:</label>
-                            <input type="text" name="mname" id="pname"  placeholder="South Rift Valley VCT"  required pattern="[A-Za-z\s]{10,}"  />
+                            <input type="text" name="mname" id="pname"  placeholder="9171 - South Rift Valley"  required pattern="[A-Za-z\s]{10,}"  />
                             <span class="form_hint">Mechanism Name Must Be Of Atleast 10 Characters</span>
                         </li> 
                         <li>
+                            <label for="name">Datim ID:</label>
+                            <input type="text" name="datimid" id="pname"  placeholder="11243"  required pattern="[1-9][0-9]{4,}"  />
+                            <span class="form_hint">Mechanism ID Must Be Of Atleast 4 Integer Character Long</span>
+                        </li>                         
+                        <li>
+                            <label for="name">Partner Name:</label>
+                            <input type="text" name="mname" id="pname"  placeholder="South Rift Valley VCT"  required pattern="[A-Za-z\s]{10,}"  />
+                            <span class="form_hint">Partner Name Must Be Of Atleast 10 Characters</span>
+                        </li>                         
+                        <li>
                             <label for="name">Mechanism ID:</label>
-                            <input type="text" name="mid" id="sname"  placeholder="124"  required pattern="[1-9][0-9]{2,}"  />
+                            <input type="text" name="mid" id="sname"  placeholder="124"   pattern="[1-9][0-9]{1,}"  />
                             <span class="form_hint">Mechanism ID Must Be Of Atleast 1 Integer Character Long</span>
-                        </li>     
-                        <li>
-                            <label for="name">Mechanism UID:</label>
-                            <input type="text" name="muid" id="sname"  placeholder="tY0i12P0v5L"  required pattern="[A-Za-z1-9]{11,14}"  />
-                            <span class="form_hint">Mechanism UID Must Be Of 14 Characters</span>
-                        </li>   
-                        <li>
-                            <label for="name">Attribution Key:</label>
-                            <input type="text" name="akey" id="sname"  placeholder="12345"  required pattern="[1-9][0-9]{1,}"  />
-                            <span class="form_hint">Attribution Key Must Be Of Atleast 1 Integer Character Long</span>
-                        </li>   
-                        <li>
-                        	<label for="name">Program:</label>
-                            <select style="min-width:250px; max-width: 400px; height:auto;">
-                                <?php
-                                    if ($programs!='') {
-                                        foreach ($programs as $row) {
-                                            echo "<option value='$row->program_id'>$row->program_name</option>";
-                                        }
-                                    } 
-                                ?>                
-                            </select>                         	
-                        </li>                                                                                                                                        	                     
-                        <li>                  	
-                            <label for="name" style="font-size: 16px; width:250px;margin-left:80%">Implementing Organization Units</label>
-                            <section class="container">
-                                <div>
-                                    <div>
-                                      <label for="name" style="font-size: 16px; width: 200px">Organization Units Available </label>  
-                                    </div>
-                                    <div>
-                                        <input id="textbox" type="text" placeholder="Organization Unit Search"/><br />
-                                        <select id="leftValues" size="4" multiple style="width:450px; height:250px;">
-                                            <?php
-                                                if ($orgunits!='') {
-                                                    foreach ($orgunits as $row) {
-                                                        echo "<option value='$row->uid'>$row->name</option>";
-                                                    }
-                                                } 
-                                            ?>                
-                                        </select>                                        
-                                    </div>
-                                </div>  
-                                <div style="margin-top: 5%;">
-                                    <input type="button" id="btnRight" value="&gt;&gt;" />
-                                    <input type="button" id="btnLeft" value="&lt;&lt;" style="margin-top: 30px" />
-                                </div>
-                                <div> 
-                                    <div>
-                                        <div>
-                                          <label for="name" style="font-size: 16px; margin-left:45px; width: 200px">Selected Organization Units </label>  
-                                        </div>
-                                        <div>
-                                            <select id="rightValues"  size="5" name='facilities[]' style="width:400px; height:250px"; multiple required readonly>  </select>                                    
-                                        </div>
-                                    </div> 
-                                </div> 
-                            </section>
-                        </li> 
+                        </li>                                                                                                                                              	                                             
                         <li style="margin-left: 32%; width: 100%">
                             <button class="submit" type="submit">Submit</button>
-                        </li>                    
+                        </li>
+                   </ul> 
+                                     
                 </form>
-                    
+        
        </section>
-   
-                
+
+
         <script type="text/javascript"> 
             $(document).ready(function () { 
                 $("#btnLeft").click(function () {
@@ -499,13 +448,29 @@
             $(function() {
                 $("#example1").dataTable();
                 $("#supportedorgs").dataTable();
-                $('#example2').dataTable({
+                $('#edit_facilities').dataTable({
                     "bPaginate": true,
                     "bLengthChange": false,
                     "bFilter": false,
                     "bSort": true,
                     "bInfo": true,
                     "bAutoWidth": false
+                });
+                $("#select").click(function () {
+                    $("#sel_table").html("");
+                    var html = '';
+                    $("#facility-edit tbody tr").not(':first').not(':last').remove(); 
+                    var i=1;
+                    $.each( $("#rightValues option:selected"), function(id, name){
+                        //console.log(id + '=' + name.value + '->' + $(this).text()); 
+                        html += '<tr id="row_'+ i +'"> <td> <input name="'+ i +'_uuid" DISABLED value="' + name.value + '" style="width:7em"></td><td> <div style="width:200px">' + $(this).text() + 
+                                '</div></td><td>'+ <?php if ($programs!='') {echo '\'<select style="min-width:150px; max-width: 200px; height:30px;">'; foreach ($programs as $row) { echo '<option value="'.$row->program_id.'">'.$row->program_name.'</option>';}echo '</select>\'';}?>  +
+                                '</td><td><select style="min-width:150px; max-width: 200px; height:30px;"><option value="TA">TA</option><option value="DSD" >DSD</option></select> </td><td><input style="width:150px" type="text" class="datepicker" id="'+ i +'" onclick="$(this).datepicker().datepicker('+"'option',"+"'dateFormat',"+"'yy-mm-dd'"+').datepicker('+"'show'"+')" required> </td>' +
+                                '<td> <input style="width:150px" type="text" class="datepicker" id="'+ i +'_b" onclick="checkPrev('+i+'); $(this).datepicker().datepicker('+"'option',"+"'dateFormat',"+"'yy-mm-dd'"+').datepicker('+"'show'"+')" required> </td> </tr>'; 
+                        i++;
+                    });
+                    //html += '</tbody> </table>';
+                    $("#sel_table").append(html);
                 });
             });
             // object to hold table data
