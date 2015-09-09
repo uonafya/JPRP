@@ -335,6 +335,7 @@
                                 </select>
 							<!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
                             </div>
+                            <span class="required_notification" id="dataset_error_notification"></span>
                             <!--                                   End Steve: Data Sets on page  -->
 
                             
@@ -523,8 +524,8 @@
                     }
                 },
                 state1: {
-                    title: '<h4>Program Data Elements</h4>',
-                    html:'<p class="alert alert-info">Do you want to  archive/save the  previous data elements of the program?</p>',
+                    title: '<h4>Backup Data Elements</h4>',
+                    html:'<p class="alert alert-info">Do you want to create an archive of the changes in the data elements of the program?</p>',
                     buttons: {No: false ,Yes:true },
                     focus: 1,
                     submit:function(e,v,m,f){
@@ -550,7 +551,7 @@
                                     if(!msg){
                     
                                         $('#startdateForm').html('<form id="edit_support" action="#" method="post">\n\
-                                        <fieldset>Enter Start Date of the Archive.</fieldset>'+                                    
+                                        <fieldset>Enter Archive Start Date.</fieldset>'+                                    
                                         "<div class='field'>\n\
                                             <label for='start_date' style='font-size:1.2em;margin-top:1em;width:8em;'>Start Date</label>\n\
                                             <input  type='text' id='datepickerstart' value=''  name='start_date' placeholder='dd-mm-yyyy' style='height:30px;font-size:18px;width:10em;'/>\n\
@@ -660,46 +661,47 @@
 </script>
 
  </script>
-                <!--                Steve Scripts -->
-                <script>
-                    var datasets = <?php echo json_encode($datasets); ?>;
-                    var datasetmembers = <?php echo json_encode($datasetmembers); ?>;
-                    var dataelements = <?php echo json_encode($program_dataelements); ?>;
-                    function getElements() {
-                        var dataSetId = $( "#datasets option:selected" ).val();
-                        var dataElementList = [];
+<!--                Steve Scripts -->
+<script>
+    var datasets = <?php echo json_encode($datasets); ?>;
+    var datasetmembers = <?php echo json_encode($datasetmembers); ?>;
+    var dataelements = <?php echo json_encode($program_dataelements); ?>;
+    function getElements() {
+        var dataSetId = $( "#datasets option:selected" ).val();
+        var dataElementList = [];
 
-                        if (dataSetId == 'nil'){
-                            $("#leftValues").empty();
-                            $.each(dataelements, function (e) {
-                                $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
-                            });
+        $("#dataset_error_notification").empty();
+        $("#leftValues").empty();
+
+        if (dataSetId == 'nil'){
+            $.each(dataelements, function (e) {
+                $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
+            });
+        }
+        else {
+            $.each(datasetmembers, function (e) {
+                if (datasetmembers[e].datasetid == dataSetId){
+                    dataElementList.push(datasetmembers[e].dataelementid);
+                }
+            });
+            if (dataElementList.length == 0){
+                $("#dataset_error_notification").append("*No DataElements Available for selected Data Set");
+            }else{
+                $.each(dataElementList, function(element){
+                    $.each(dataelements, function (e) {
+                        if (dataelements[e].dataelementid == dataElementList[element] ){
+                            $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
                         }
-                        else {
+                    });
+                });
+            }
 
-                            $("#leftValues").empty();
+        }
+    }
+</script>
 
-                            $.each(datasetmembers, function (e) {
-                                if (datasetmembers[e].datasetid == dataSetId){
-                                    dataElementList.push(datasetmembers[e].dataelementid);
-                                }
-                            });
-                            if (dataElementList.length == 0){
-                                 $("#leftValues").empty();
-                                $("#leftValues").append("<option value=''>No DataElements Available for selected Data Set</option>");
-                            }else{
-                                $.each(dataElementList, function(element){
-                                    $.each(dataelements, function (e) {
-                                        if (dataelements[e].dataelementid == dataElementList[element] ){
-                                            $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
-                                        }
-                                    });
-                                });
-                            }
 
-                        }
-                    }
-                </script>
+<!--                End Steve Scripts -->
 
 
                 <!--                End Steve Scripts -->

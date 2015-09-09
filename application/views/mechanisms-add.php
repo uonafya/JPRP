@@ -430,7 +430,7 @@
         
        </section>
 
-
+                
         <script type="text/javascript"> 
             $(document).ready(function () { 
                 $("#btnLeft").click(function () {
@@ -466,7 +466,7 @@
                     "bInfo": true,
                     "bAutoWidth": false
                 });
-                $("#select").click(function () {
+                $("#select").click(function () { 
                     $("#sel_table").html("");
                     var html = '';
                     $("#facility-edit tbody tr").not(':first').not(':last').remove(); 
@@ -481,7 +481,7 @@
                     });
                     //html += '</tbody> </table>';
                     $("#sel_table").append(html);
-                });
+                });                 
             });
             // object to hold table data
             function dataRow(id,sdate,edate) {
