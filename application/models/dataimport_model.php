@@ -18,7 +18,7 @@ class Dataimport_model extends CI_Model {
     public function get_orgunits() {
         $data='';
         //$this->db->select('ouid');
-        $orgunits=$this->db->get('attribution_orgunits');
+        $orgunits=$this->db->get('organisationunit');
             foreach ($orgunits->result() as $row) {
                 $data[]=$row;
             }
@@ -39,14 +39,58 @@ class Dataimport_model extends CI_Model {
     }
 
     //insert the imported data in batches
-    public function bulk_dumb($data) {
-        $this->db->insert_batch('datavalue',$data);
+    /*Dear maintainer,had to loop here one by one due to error handling limitations of mysql. I wasted a day here trying to optimise this.
+    The counter below indicates the approximate number of hours wasted here. If you try to optimise it and fail, just repent and add hours wasted
+    to the counter.*/
+    public function bulk_dumb($data_array, $update_array) {
+
+                $temp = json_decode(json_encode($data_array));
+
+                foreach($temp as $row){
+                    $if_exists = $this->db->get_where('datavalue', array('updateid'=>$row->updateid))->row()->updateid;
+                    //echo $if_exists;die();
+                    if(isset($if_exists)){
+                        $this->db->where('updateid', $row->updateid);
+                        $this->db->update('datavalue', $row);
+                    }else{
+                        $this->db->insert('datavalue', $row);
+                    }
+                }
+
     }
 
     public function get_dataset($id){
         $name = $this->db->get_where('dataset',array('uid'=>$id))->row()->name;
         return $name;
+    }
 
+    public function check_period($period){
+        $year = substr($period,0,4);
+        $month = substr($period,-2);
+        $start_date = $year."-".$month."-"."01";
+        //$period_id = ;
 
+        if(empty($this->db->get_where('period',array('startdate'=>$start_date))->row()->periodid)){
+            $this->db->select_max('periodid');
+            $max_id = $this->db->get('period')->row()->periodid;
+            $new_id = $max_id + 1;
+            $period_type = 3;
+            $end_date = $year."-".$month."-"."30";
+
+            $data = array(
+                'periodid' => $new_id ,
+                'periodtypeid' => $period_type,
+                'startdate' => date($start_date),
+                'enddate' => date($end_date)
+            );
+
+            $this->db->insert('period',$data);
+
+            $this->db->select_max('periodid');
+            $max_id = $this->db->get('period')->row()->periodid;
+            return $max_id;
+        }else{
+            return $this->db->get_where('period',array('startdate'=>$start_date))->row()->periodid;
+        }
     }
 }

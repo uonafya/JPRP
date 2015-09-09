@@ -20,12 +20,14 @@ class Dataimport extends CI_Controller
     {
         $data['page'] = 'data-import';
         $data['agencyname'] = $this->session->userdata('groupname');
+        $data['orgUnits'] = $this->dataimport_model->get_orgunits();
         $this->load->view('template', $data);
     }
 
     function fetch_data()
     {
         $data_array = "";
+        $update_array = "";
         $stats_array = "";
         $total_fetched = 0;
         $success = 0;
@@ -40,8 +42,11 @@ class Dataimport extends CI_Controller
 
         $period = $this->input->post('startDate');
 
+
+        $periodid = $this->dataimport_model->check_period($period);
+
         //get orgunits from dataimport_model and loop fetching data for each
-        $orgUnits = $this->dataimport_model->get_orgunits();
+        $orgUnits = $this->input->post('orgUnits');
         foreach ($datasets as $key => $value) {
             $dataset = $value;
 
@@ -49,7 +54,7 @@ class Dataimport extends CI_Controller
 
                 //HTTP GET request -Using Curl -Response JSON
 
-                $orgUnit = $value->ouid;
+                $orgUnit = $value;
 
                 // $url ="http://test.hiskenya.org/api/dataSets/"."$dataset"."/dataValueSet?";
                 $url = "http://test.hiskenya.org/api/dataValueSets.json?dataSet=" . $dataset . "&period=" . $period . "&orgUnit=" . $orgUnit . "&children=false";
@@ -84,7 +89,6 @@ class Dataimport extends CI_Controller
                         foreach ($json['dataValues'] as $key => $val) {
                             //echo ."  ".." ".$val["period"]."  ".$val["value"];
                             $dataelementid = $this->dataimport_model->get_dataelement_id($val["dataElement"]);
-                            $periodid = 22594;
                             $categoryoptioncomboid = 16;
                             $attributeoptioncomboid = 16;
                             $sourceid = $this->dataimport_model->get_orgunit_id($val["orgUnit"]);
@@ -92,6 +96,7 @@ class Dataimport extends CI_Controller
                             $lastupdated = $val["lastUpdated"];
                             $value = $val["value"];
                             $followup = $val["followUp"];
+                            $updateid = $dataelementid.$sourceid.$periodid;
                             if(isset($value)){
                                 $data_array[$count] = array(
                                     "dataelementid" => $dataelementid,
@@ -103,8 +108,18 @@ class Dataimport extends CI_Controller
                                     "storedby" => $storedby,
                                     "created" => $lastupdated,
                                     "lastupdated" => $lastupdated,
-                                    "followup" => "false"
+                                    "followup" => "false",
+                                    "updateid" => $updateid
                                 );
+
+                                $update_array[$count] = array(
+                                    "value" => $value,
+                                    "storedby" => $storedby,
+                                    "created" => $lastupdated,
+                                    "lastupdated" => $lastupdated,
+                                    "updateid" => $updateid
+                                );
+
                             }else{
                                 $blank_values = $blank_values + 1;
                             }
@@ -113,14 +128,14 @@ class Dataimport extends CI_Controller
 
                             if ($count == 1000) {
                                 $success = $success + 1000;
-                                $this->dataimport_model->bulk_dumb($data_array);
+                                $this->dataimport_model->bulk_dumb($data_array, $update_array);
                                 $count = 0;
                                 unset($data_array);
                             }
                         }
                         if ($data_array != "") {
                             $success = $success + sizeof($data_array);
-                            $this->dataimport_model->bulk_dumb($data_array);
+                            $this->dataimport_model->bulk_dumb($data_array, $update_array);
                             unset($data_array);
                         }
 
