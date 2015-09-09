@@ -18,12 +18,12 @@
 
 <script>
 
-    function deleteMechanism(id, name) {
+    function dropsupport(id, org, name, support, period) {
 //        alert(id);
         var temp = {
             state0: {
                 title: 'Drop '+name +  '.',
-                html: "<p>Do you want to drop "+ name +"Mechanism?</p>",
+                html: "<p style='font-size:14px'>Do you want to drop <div style='color: red; font-size:15px; font-weight: bold;'> "+ name +" :  "+ support +"  Support In  "+ org +"  For Period "+ period +" ? </div></p>",
                 buttons: {Cancel: false, Yes: true},
                 focus: 1,
                 submit: function (e, v, m, f) {
@@ -31,7 +31,7 @@
                         $.prompt.close();
                     else {
 
-                        form_url = "<?php echo base_url('mechanisms/deletemechanism')?>" + "/" + id;
+                        form_url = "<?php echo base_url('mechanisms/drop_mechanism_support')?>" + "/" + id;
                         //alert(form_url);
                         $.ajax({
                             url: form_url,
@@ -50,7 +50,7 @@
                 }
             },
             state1: {
-                title: name + ' Removal Confirmation',
+                title: name + ' Delete Confirmation',
                 html: '<p id="response"></p>',
                 buttons: {Finish: 1},
                 focus: 0,
@@ -136,7 +136,7 @@
             type: "POST",
             dataType: 'json',
             async: false,
-            url: "<?php echo base_url();?>mechanisms/mechanismsexcelimport/?url=" + file,
+            url: "<?php echo base_url();?>mechanisms/supportexcelimport/?url=" + file,
             cache: false,
             beforeSend: function () {
                 // alert(urls);
@@ -173,12 +173,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Mechanisms
+        Mechanisms Support Import
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Mechanisms</a></li>
-        <li class="active">Mechanisms Table</li>
+        <li class="active">Support Import</li>
     </ol>
 </section>
 
@@ -191,10 +191,10 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Mechanisms Import Excel</h3>
+                    <h3 class="panel-title">Mechanisms Support Import Excel</h3>
                 </div>
                 <blockquote style="text-height: 14px;">
-                    File Upload Mechanisms Excel file:
+                    File Upload Mechanisms Support Excel file:
                 </blockquote>
 
                 <!-- The file upload form used as target for the file upload widget -->
@@ -253,12 +253,12 @@
     <div class="row">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Mechanisms Table</h3>
+                <h3 class="box-title">Mechanisms Support Table</h3>
                 <?php if ($mechanisms_right) {
-                    echo '<h1 id="message" style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
+                    echo '<h1 style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: red">' . $error_message . '</h1>';
                 } ?>
                 <?php if ($mechanisms_right) {
-                    echo '<a href="' . base_url('mechanisms/addmechanism') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Mechanism</a>';
+                    echo '<a href="' . base_url('mechanisms/addmechanism') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Mechanism Support</a>';
                 } ?>
 
             </div>
@@ -267,32 +267,28 @@
                 <table id="mechanisms-table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                    	<th style="width:20%">Organization Unit</th>
                         <th style="width:20%">Mechanism Name</th>
                         <th style="width:10%">Datim ID</th>
-                        <th style="width:10%">Partner Name</th>
-                        <th style="width:10%">KEPMS ID</th>
-                        <th style="width:10%">Attribution Key</th>
-                        <!-- <th style="width:15%">Action</th> -->
+                        <th style="width:10%">Program Name</th>
+                        <th style="width:10%">Support Type</th>
+                        <th style="width:10%">Start Date</th>
+                        <th style="width:10%">Stop Date</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                    if ($mechanisms != '') {
+                    if ($support != '') {
                         $i = 1;
-                        foreach ($mechanisms as $row) {
-
-                            echo "<tr class='grade_tr' data-id='" . $row->datim_id . "' data-name='" . $row->mechanism_name . "'>";
+                        foreach ($support as $row) {
+                            echo "<tr class='grade_tr' data-id='" . $row->id . "' data-name='" . $row->mechanism_name . "' data-org='".$row->organization_name."' data-period='".$row->start_date." to ".$row->stop_date."' data-support='".$row->support_type."'>";
+                            echo "<td>$row->organization_name</td>";
                             echo "<td>$row->mechanism_name</td>";
                             echo "<td>$row->datim_id</td>";
-                            echo "<td>$row->partner_name</td>";
-                            echo "<td>$row->mechanism_id</td>";
-                            echo "<td>$row->attribution_key</td>";
-                            //                                        echo "<td><a href='".base_url('mechanisms/viewmechanism/'.$row->mechanism_id)."'/>View</a>&nbsp&nbsp ";
-                            // if($mechanisms_right){echo "<a href='".base_url('mechanisms/editmechanisms/'.$row->id)."' style='color:green'/> Edit</a>  &nbsp&nbsp ";};
-                            //                                        if($mechanisms_right){echo "<a href='#' onclick=\"mechanismsdelete('$row->id','$row->mechanism_name')\"  style='color:red'/> Delete</a> &nbsp&nbsp ";};
-                            // if($mechanisms_right){echo "<a href='".base_url('mechanisms/mechanisms_data_attribution'.$row->id)."' style='color:purple'/> Attribute</a> ";};
-                            //                                        echo " </td>";
-                            //                                        echo "</tr>";
+                            echo "<td>$row->program_name</td>";
+							echo "<td>$row->support_type</td>";
+                            echo "<td>$row->start_date</td>";
+                            echo "<td>$row->stop_date</td>";
                             $i++;
                         }
                     }
@@ -307,6 +303,48 @@
         </div>
         <!-- /.box -->
     </div>
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Support Import Errors Table</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+                <table id="supporterrors-table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                    	<th style="width:20%">Organization Unit</th>
+                        <th style="width:20%">Mechanism Name</th>
+                        <th style="width:10%">Program Name</th>
+                        <th style="width:10%">Support Type</th>
+                        <th style="width:10%">Period</th>
+                        <th style="width:10%">Error</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if ($import_errors != '') {
+                        $i = 1;
+                        foreach ($import_errors as $row) {
+                            echo "<tr>";
+                            echo "<td>$row->organization_name</td>";
+                            echo "<td>$row->mechanism_name</td>";
+                            echo "<td>$row->program_name</td>";
+							echo "<td>$row->support_type</td>";
+                            echo "<td>$row->start_date to $row->stop_date</td>";
+                            echo "<td>$row->import_error</td>";
+                            $i++;
+                        }
+                    }
+                    ?>
+                    </tbody>
+
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>    
     </div>
 
 </section><!-- /.content -->
@@ -335,7 +373,7 @@
 <script type="text/javascript">
     $(function () {
         $("#mechanisms-table").dataTable();
-        $('#mechanisms-tables').dataTable({
+        $('#supporterrors-table').dataTable({
             "bPaginate": true,
             "bLengthChange": true,
             "bFilter": true,
@@ -479,89 +517,14 @@
             echo '<li class=""><a href="#" id="edit"><i class="fa fa-edit"></i> Update</a></li> <br>';
         };
         if ($mechanisms_right) {
-            echo '<li class=""><a href="#" id="remove" onclick=""><i class="fa fa-trash-o"></i> Remove</a></li> <br>';
+            echo '<li class=""><a href="#" id="remove" onclick=""><i class="fa fa-trash-o"></i> Drop Support</a></li> <br>';
         };
         if (true) {
             echo '<li class=""><a href="#" id="attribute"><i class="fa fa-plus"></i> Attribute</a></li> <br>';
         };
-         if (true) {
-            echo '<li class=""><a href="#" id="showdetails"><i class="fa fa-info-circle"></i> Show Details</a></li> <br>';
-        };
         ?>
     </ul>
 </div>
-
-<!-- Show Details pop up -->
-<script type="text/javascript">
-// Hide error/Success message after 10 seconds
-    $(window).load(function() {
-        setTimeout(function() {
-             $('#message').fadeOut('fast');
-        }, 2000);
-    });
-
-    // Show Mechanism Details
-    function showMechanismDetails(datim_id) {
-
-        var url_show_mechanism_details = "<?php echo base_url('mechanisms/show_mechanism_details/')?>" + "/" + datim_id;
-        console.log(url_show_mechanism_details);
-        $.ajax({
-            url: url_show_mechanism_details,
-            type: 'POST',
-            data: {},
-            success: function (data) {
-
-                var data = JSON.parse(data);
-                var mechanism_details = {
-                    details: {
-                        title: 'Mechanism Details',
-                        html: '<div><label>Mechanism Name:</label>&nbsp;&nbsp;' +data.mechanism_name+
-                        '<br><label>Created by:</label>&nbsp;&nbsp;' +data.created_by+
-                        '<br><label>Start Date:</label>&nbsp;&nbsp;' + data.start_date+
-                        '<br><label>End Date :</label>&nbsp;&nbsp;' + data.end_date+
-                        '<br><label>Number of Facilities TA :</label>&nbsp;&nbsp;' + data.facilities_ta+
-                        '<br><label>Number of Facilities DSD :</label>&nbsp;&nbsp;' + data.facilities_dsd+
-                        '</div>',
-                        buttons: {OK: 1},
-                        focus: 0,
-                        submit: function (e, v, m, f) {
-                            if (v == 1) {
-                                $.prompt.close();
-                            }
-                            else {
-                                $.prompt.close();
-                            }
-                            return false;
-                        }
-                    }
-                };
-
-                $.prompt(mechanism_details, {
-                    close: function (e, v, m, f) {
-                        if (v !== undefined) {
-                            window.location.reload(true);
-                        }
-                    },
-                    classes: {
-                        box: '',
-                        fade: '',
-                        prompt: '',
-                        close: '',
-                        title: 'lead',
-                        message: '',
-                        buttons: '',
-                        button: 'btn',
-                        defaultButton: 'btn-primary'
-                    }
-                });
-
-
-            }
-        });
-
-    }
-
-</script>
 
 
 <!--  -->
@@ -607,15 +570,17 @@
             $("tbody tr").removeClass("alert alert-success");
             $(this).addClass("alert alert-success");
 
-            var datim_id = $(this).closest('tr').data('id');
+            var id = $(this).closest('tr').data('id');
             var mechanism_name = $(this).closest('tr').data('name');
+            var support=$(this).closest('tr').data('support');
+            var period =$(this).closest('tr').data('period');
+            var org =$(this).closest('tr').data('org');
 
             // Actions
-            document.getElementById("view").href = "<?php echo base_url();?>" + "mechanisms/viewmechanism/" + datim_id;
-            document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/editmechanism/" + datim_id;
-            document.getElementById("remove").setAttribute('onclick', "deleteMechanism('" + datim_id + "','" + mechanism_name + "')");
-            document.getElementById("attribute").href = "<?php echo base_url();?>" + "mechanisms/mechanisms_data_attribution/" + datim_id;
-            document.getElementById("showdetails").setAttribute('onclick', "showMechanismDetails('" + datim_id + "')");
+            document.getElementById("view").href = "<?php echo base_url();?>" + "mechanisms/viewmechanism/" + id;
+            document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/editmechanism/" + id;
+            document.getElementById("remove").setAttribute('onclick', "dropsupport('" + id + "','" + org + "','" + mechanism_name + "','" + support + "','" + period + "')");
+            document.getElementById("attribute").href = "<?php echo base_url();?>" + "mechanisms/mechanisms_data_attribution/" + id;
 
         });
 

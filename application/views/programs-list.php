@@ -54,14 +54,7 @@
 
 
 <script>
-    // Hide error/Success message after 10 seconds
-    $(window).load(function() {
-        setTimeout(function() {
-             $('#message').fadeOut('fast');
-        }, 2000);
-    });
 
-    // Function to delete a program
     function programdelete(data, name) {
         //alert(data);
         var temp = {
@@ -210,7 +203,7 @@
             <div class="box-header">
                 <h3 class="box-title">Programs </h3>
                 <?php if ($program_right) {
-                    echo '<h1 id="message" style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
+                    echo '<h1 style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
                 } ?>
                 <?php if ($program_right) {
                     echo '<a href="' . base_url('programmanager/createprogram') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Create Program</a>';

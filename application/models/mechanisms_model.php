@@ -8,6 +8,16 @@ class Mechanisms_model extends CI_Model {
     public function empty_attribution_mechanisms(){
         $this->db->truncate('attribution_mechanisms'); 
     }
+	public function empty_mechanisms_support_errors(){
+		$this->db->truncate('attribution_support_import_errors');
+	}
+	public function mechanisms_support_errors(){
+		$errors=$this->db->get_where("attribution_support_import_errors");
+		if (sizeof($errors->result())>=1) {
+			return $errors->result();
+		}
+		return "";
+	}
 	public function mechanisms_list(){
 		$mechanisms=$this->db->get_where("attribution_mechanisms",array("mechanism_status"=>"active"));
 		if (sizeof($mechanisms->result())>=1) {
@@ -65,7 +75,7 @@ class Mechanisms_model extends CI_Model {
 					"mechanism_name"=>$existing_mech->mechanism_name,
 					"datim_id"=>$existing_mech->datim_id,
 					"mechanism_uid"=>$existing_mech->mechanism_uid,
-					"mechanism_id"=>$existing_mech->kepms_id,
+					"mechanism_id"=>$kepms_id,
 					"attribution_key"=>$existing_mech->categorycombo_id,
 					"partner_name"=>$partner_name,
 					'mechanism_status'=>$existing_mech->mechanism_status
@@ -176,7 +186,7 @@ class Mechanisms_model extends CI_Model {
 			);
 			$this->db->insert("attribution_mechanisms",$mechanisms);
 		}
-
+		
 	}
 	
 	
@@ -188,7 +198,6 @@ class Mechanisms_model extends CI_Model {
 		}
 		return "";
 	}
-
 	public function deletemechanism($datim_id){
 		$details=array(
 			"mechanism_status"=>"dropped",
@@ -201,8 +210,97 @@ class Mechanisms_model extends CI_Model {
 		}	
 
 		return true;					 
+	 }	
+	 
+	 
+	 public function support_excel_import($orgunit_name,$mechanism_name,$datim_id,$program_name,$support_name,$start_date, $end_date){
+	 	//Step 1 Check If Program Exists
+	 	$orgunit=$this->db->get_where("organisationunit",array("name"=>$orgunit_name))->row();
+		if (sizeof($orgunit)==1) {
+		 	$program=$this->db->get_where("attribution_programs",array("program_name"=>$program_name))->row();
+		 	if (sizeof($program)==1) {
+				 //Check If Support Type Exists
+				 $support=$this->db->get_where("attribution_support_types",array("support_name"=>$support_name))->result();
+				 if (sizeof($support)==1) {
+					 //Check If Record Exists
+					 $record=array(
+					 	"organization_name"=>$orgunit_name,
+					 	"datim_id"=>$datim_id,
+					 	"program_name"=>$program_name,
+					 	"support_type"=>$support_name,
+					 	"start_date"=>$start_date,
+					 	"stop_date"=>$end_date
+					 );				 
+					 if (sizeof($this->db->get_where("attribution_mechanisms_programs",$record)->result())==0) { 
+						 //Check For Date Overlaps prevent same support type on same facility same period
+						 $overlapquery="SELECT * FROM attribution_mechanisms_programs where (organization_name='$orgunit_name' AND program_name='$program_name' AND support_type='$support_name' AND start_date BETWEEN '$start_date' and  '$end_date') or (organization_name='$orgunit_name' AND program_name='$program_name' AND support_type='$support_name' AND stop_date BETWEEN '$start_date' and '$end_date') ";						 
+						 if (sizeof($this->db->query($overlapquery)->result())==0) {
+							 $new_support=array(
+							 	"organization_name"=>$orgunit_name,
+							 	"organization_id"=>$orgunit->organisationunitid,
+							 	"datim_id"=>$datim_id,
+							 	"mechanism_name"=>$mechanism_name,
+							 	"program_name"=>$program_name,
+							 	"program_id"=>$program->program_id,
+							 	"support_type"=>$support_name,
+							 	"start_date"=>$start_date,
+							 	"stop_date"=>$end_date,
+							 	"status"=>"active"					 
+							 );
+							 $this->db->insert("attribution_mechanisms_programs",$new_support);
+							 return true;
+						 } else {
+							 return "Overlap Support For The Same Program and Support Type";
+						 }
+						 
+					 } else {
+						 Return  "Support Exists In Database";
+					 }
+				 } else {
+					 return "Support Not Found";
+				 }
+				 
+			 }else{
+			 	return "Program Doesnot Exist";
+			 }		
+		}else{
+			return "Organization Unit Not Found";
+		}
+ 
 	 }
+	 public function support_import_errors($organization_name,$mechanism_name,$datim_id,$program_name,$support_type,$start_date, $stop_date,$update) {
+		 $support_fail=array(
+		 	"organization_name"=>$organization_name,
+		 	"mechanism_name"=>$mechanism_name,
+		 	"datim_id"=>$datim_id,
+		 	"program_name"=>$program_name,
+		 	"support_type"=>$support_type,
+		 	"start_date"=>$start_date,
+		 	"stop_date"=>$stop_date,
+		 	"import_error"=>$update
+		 );
+		 $this->db->insert("attribution_support_import_errors",$support_fail);
+	 }
+	 public function mechanisms_support(){
+		 $support=$this->db->get_where("attribution_mechanisms_programs",array("status"=>'active'))->result();
+		 if (sizeof($support)>=1) {
+			 return $support;
+		 }
+		 return "";
+	 }
+	 public function drop_mechanism_support($id){
+		$details=array(
+			"status"=>"dropped",
+		);
 
+		$this->db->where('id', $id);	
+		 	
+		if (!$this->db->update("attribution_mechanisms_programs", $details)) {
+			return false;
+		}	
+
+		return true;		 
+	 }
 	 public function addnewmechanism(){
 
 	 	$kepms_id= $this->input->post('kepms_id');
@@ -469,8 +567,5 @@ class Mechanisms_model extends CI_Model {
             'facilities_dsd'=>$number_facilities_dsd);
 
         return $data;
-    }
-=======
-	 }	
->>>>>>> master
+    }	 
 }

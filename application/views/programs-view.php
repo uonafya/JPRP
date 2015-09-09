@@ -213,9 +213,7 @@
                                     <table id="dataelements-table" class="table table-bordered table-striped" >                                    	
                                     <thead>
                                         <tr>
-
                                             <th style="width:10%">Dataelement Code</th>
-
                                             <th style="width:30%">Dataelement Name</th>
                                             <th style="width:50%">Dataelement Description</th>
                                         </tr>
@@ -271,7 +269,7 @@
                                     		<td>Nyeri Hospital</td>
                                     		<td>12/01/2015</td>
                                     		<td>12/06/2015</td>
-                                    	</tr>
+                                    	</tr> 
                                     </tbody>
     
                                     </table>

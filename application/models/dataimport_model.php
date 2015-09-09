@@ -47,12 +47,11 @@ class Dataimport_model extends CI_Model {
                 $temp = json_decode(json_encode($data_array));
 
                 foreach($temp as $row){
-                    $if_exists = $this->db->get_where('datavalue', array('updateid'=>$row->updateid))->row()->updateid;
-                    //echo $if_exists;die();
-                    if(isset($if_exists)){
+                    $if_exists = $this->db->get_where('datavalue', array('updateid'=>$row->updateid))->result();
+					if (sizeof($if_exists)>=1) {
                         $this->db->where('updateid', $row->updateid);
-                        $this->db->update('datavalue', $row);
-                    }else{
+                        $this->db->update('datavalue', $row);						
+					}else{
                         $this->db->insert('datavalue', $row);
                     }
                 }

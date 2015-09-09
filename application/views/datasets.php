@@ -40,7 +40,7 @@
                                                 echo "<td>$row->lastupdated</td>";
                                                 echo "</tr>";
                                             }
-
+                                        
                                         ?>
                                     </tbody>
     
@@ -51,7 +51,7 @@
                     </div>
 
                 </section><!-- /.content -->
-
+ 
 
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
