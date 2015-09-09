@@ -445,7 +445,6 @@
                             </div>
 
 
-<!-- TODO: Format the CSS to have a better appearance for Chosen select -->
                             <div>
                                 <select id="datasets" class="chosen-select" style="height: 30px; width: 350px;" onchange="getElements()" tabindex="2">
                                     <option value="nil">All Data Sets</option>
