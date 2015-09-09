@@ -39,7 +39,7 @@ class Mechanisms extends CI_Controller {
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
         	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
-        		$file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\$file_name";
+        		$file = "/var/www/html/attribution/server/php/files/$file_name";
 				$no_empty_rows=TRUE;
 				$this->mechanisms_model->empty_attribution_mechanisms();
 				$this->load->library('excel');
@@ -75,7 +75,8 @@ class Mechanisms extends CI_Controller {
                     //Only Get Rows With All Columns Filled
                     if ($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null && 
                     $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null &&
-                     $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null){
+                    $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null &&
+                     $objPHPExcel->getActiveSheet()->getCell("D".$count)->getValue()!=null){
                         if ($cell=="A".$count) {
                             //Get Mechanism Name    
                             $column ='A';
@@ -89,20 +90,27 @@ class Mechanisms extends CI_Controller {
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='') {
-								$partner_name = $data_value;
+								$datim_id = $data_value;
                             }         
-                        }elseif($cell=="C".$count){
-                        	$count=$count+1;
+                        } elseif($cell=="C".$count){
                             $column ='C';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+                            if ($row != 1 && $data_value!='') {
+								$partner_name = $data_value;
+                            }         
+                        }elseif($cell=="D".$count){
+                        	$count=$count+1;
+                            $column ='D';
+                            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='' ) {
-                                $mechanisms_id = $data_value;
+                                $kepms_id = $data_value;
                                 $data_rows=$data_rows+1;
-								$this->mechanisms_model->mechanisms_excel_import($mechanisms_name,$partner_name, $mechanisms_id);								
+								$this->mechanisms_model->mechanisms_excel_import($mechanisms_name,$datim_id,$partner_name, $kepms_id);								
                             }
                         //Get Rows With  Partial Column Data
-                        }elseif($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null ){                       
+                        }elseif($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("D".$count)->getValue()!=null){                       
                                 $empty_cells_alert[$empty_column]="Empty Cell In Row $count";
                                 $empty_column=$empty_column+1;
                                 $count=$count+1;
@@ -142,14 +150,14 @@ class Mechanisms extends CI_Controller {
         }			
 	}
 	
-	public function viewmechanism($mech_id){
+	public function viewmechanism($datim_id){
         if($this->session->userdata('marker')!=1){
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
         	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
-        		$data["mech_details"]=$this->mechanisms_model->mechanism_info($mech_id);
-				$data["mech_programs"]=$this->mechanisms_model->get_mech_programs($mech_id);  
+        		$data["mech_details"]=$this->mechanisms_model->mechanism_info($datim_id);
+				$data["mech_programs"]=$this->mechanisms_model->get_mech_programs($datim_id);  
 				$data['attribution_right']=$this->user_model->get_user_role('attribution',$this->session->userdata('useruid'));		
 				$data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));				
 				$data['page']='mechanisms-view';  
@@ -197,5 +205,23 @@ class Mechanisms extends CI_Controller {
 			}       
         }									
 	}
-		
+    public function deletemechanism($datim_id){
+        if($this->session->userdata('marker')!=1){
+            redirect($this->index());
+        }else{
+            //Check If User Has Authority(program_magement) To delete Programs
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+                if($this->mechanisms_model->deletemechanism($datim_id)==TRUE){
+                    header('Content-Type: application/x-json; charset=utf-8'); 
+                    echo "The Mechanism Has Successfully Been removed";
+                }else{
+                    header('Content-Type: application/x-json; charset=utf-8'); 
+                    echo "An Error Occured While Deleting The Mechanism. Kindly Try Again";
+                }               
+            } else {
+                $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error',$data);           
+            }       
+        }           
+    }		
 }
