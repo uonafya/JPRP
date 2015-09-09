@@ -154,6 +154,13 @@
                 </style>
                 
                 <style>
+                    .chosen-container-active.chosen-with-drop .chosen-single{
+                        width:500px;
+                    }
+                    .chosen-container-single .chosen-drop{
+                        width:500px;
+                        overflow-x: hidden
+                    }
             
                     .donor_form SELECT{
                         width: 200px;
@@ -452,6 +459,7 @@
                                 </select>
 <!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
                             </div>
+                            <span class="required_notification" id="dataset_error_notification"></span>
                             <!--                                    End Steve: Data Sets on page  -->
 
 
@@ -585,23 +593,22 @@
                         var dataSetId = $( "#datasets option:selected" ).val();
                         var dataElementList = [];
 
+                        $("#dataset_error_notification").empty();
+                        $("#leftValues").empty();
+
                         if (dataSetId == 'nil'){
-                            $("#leftValues").empty();
                             $.each(dataelements, function (e) {
                                 $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
                             });
                         }
                         else {
-
-                            $("#leftValues").empty();
-
                             $.each(datasetmembers, function (e) {
                                 if (datasetmembers[e].datasetid == dataSetId){
                                     dataElementList.push(datasetmembers[e].dataelementid);
                                 }
                             });
                             if (dataElementList.length == 0){
-                                $("#leftValues").append("<option value=''>No DataElements Available for selected Data Set</option>");
+                                $("#dataset_error_notification").append("*No DataElements Available for selected Data Set");
                             }else{
                                 $.each(dataElementList, function(element){
                                     $.each(dataelements, function (e) {
@@ -618,14 +625,14 @@
 
 
                 <!--                End Steve Scripts -->
-                
+
         <link rel="stylesheet" href="<?php echo base_url(); ?>/style/date/css/default.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>/style/bootstrap-dialog/css/base.css" type="text/css">
-        
+
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/chosen/chosen.jquery.min.js"></script>
-        
+
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/zebra_datepicker.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/core.js"></script>                
+        <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/core.js"></script>
         
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/bootstrap-dialog/js/jquery-impromptu.js"></script>    
                
