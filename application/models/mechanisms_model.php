@@ -200,5 +200,273 @@ class Mechanisms_model extends CI_Model {
 		}	
 
 		return true;					 
-	 }	
+	 }
+
+	 public function addnewmechanism(){
+
+	 	$kepms_id= $this->input->post('kepms_id');
+ 		$datim_id= $this->input->post('datim_id');
+ 		$mechanisms_name = $this->input->post('mechanism_name');
+ 		$partner_name = $this->input->post('partner_name');
+ 		$end_date = $this->input->post('end_date');
+ 		$start_date = $this->input->post('start_date');
+
+		//Check If The Mechanism Has An Attribution Key
+		$control=sizeof($this->db->get_where("attribution_keys",array("datim_id"=>$datim_id))->result());
+		if ($control==1) {
+
+			return "Datim ID Exists";
+
+		}elseif($control==0) {//Generate Attribution Key If Key Doesn't Exist 
+			//Step1 Generate User Group
+			$length=11;//Length Of UID String Generator
+						
+			$this->db->select_max('usergroupid');
+			$group_query = $this->db->get('usergroup');
+			$usergroup_id= 1+(integer)$group_query->row()->usergroupid;
+		    $usergroup_uid = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+			$mechanisms_uid=$usergroup_uid;
+			$usergroup=array(
+				"usergroupid"=>$usergroup_id,
+				"uid"=>$usergroup_uid,
+				"code"=>$datim_id,
+				"name"=>$partner_name,
+                'created'=>date("Y-m-d"),
+                'lastupdated'=>date("Y-m-d")				
+			);
+
+			if(!$this->db->insert("usergroup",$usergroup))
+			{
+				return "User Group";
+			}
+
+			//Step 1b Generate Usergroup Access rights
+			$this->db->select_max('usergroupaccessid');
+			$groupaccess_query = $this->db->get('usergroupaccess');
+			$usergroupaccess_id= 1+(integer)$groupaccess_query->row()->usergroupaccessid;			
+			$usergroupaccess=array(
+				"usergroupaccessid"=>$usergroupaccess_id,
+				"access"=>"r-------",
+				"usergroupid"=>$usergroup_id			
+			);			
+			if(!$this->db->insert("usergroupaccess",$usergroupaccess)){
+				return "User Group Access";
+			}
+
+			//Step 2 Create Option Group For The User Group
+		    $categoryoption_uid = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);	
+			$this->db->select_max('categoryoptionid');
+			$option_query = $this->db->get('dataelementcategoryoption');
+			$categoryoption_id= 1+(integer)$option_query->row()->categoryoptionid;			
+			$categoryoption=array(
+				"categoryoptionid"=>$categoryoption_id,
+				"uid"=>$categoryoption_uid,
+				"code"=>$datim_id,
+				"name"=>$partner_name,
+				"shortname"=>substr($partner_name,0,30),
+                'created'=>date("Y-m-d"),
+                'lastupdated'=>date("Y-m-d")				
+			);
+
+			if(!$this->db->insert("dataelementcategoryoption",$categoryoption)){
+				return "Data Element Category Option";
+			}
+			//echo $this->db->last_query();
+
+			//Step 3 Add Option To Category
+			$categoryid=$this->db->get_where('dataelementcategory',array('name'=>'Mechanisms'))->row()->categoryid;
+            $maxorder_results= $this->db->query("SELECT MAX(sort_order) as max FROM categories_categoryoptions WHERE categoryid=$categoryid ");
+            $maxorder=$maxorder_results->row()->max;
+            if(!$this->db->insert('categories_categoryoptions',array('categoryoptionid'=>$categoryoption_id,'categoryid'=>$categoryid,'sort_order'=>$maxorder+1))){
+            	return "category options";
+            }			
+
+			//Step 4 create CategoryOptionCombo : Attribution Key(new generated categoryoptioncomboid)
+			$optioncombo_uid=substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);   
+			$categoryoptioncomboid=$this->db->query('Select max(categoryoptioncomboid) as maxs from categoryoptioncombo')->row()->maxs+1;
+			$combo=array(
+				'categoryoptioncomboid'=>$categoryoptioncomboid,
+				'uid'=>substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length),
+				'created'=>date("Y-m-d"),
+				'lastupdated'=>date("Y-m-d")
+			);
+			
+			if(!$this->db->insert('categoryoptioncombo',$combo)){
+				return "categoryoptioncombo";
+			}
+
+			//Step5 Add categoryoptionid and categoryoptioncomboid to categoryoptioncombos_categoryoptions
+			$categoryoptioncombos_categoryoptions=array(
+				'categoryoptionid'=>$categoryoption_id,
+				'categoryoptioncomboid'=>$categoryoptioncomboid
+			);
+			if(!$this->db->insert('categoryoptioncombos_categoryoptions',$categoryoptioncombos_categoryoptions)){
+				return "categoryoptioncombos_categoryoptions";
+			}	
+
+			//Step 6 Add Categoryoptioncombo and categorycomboid to categorycombos_optioncombos
+			$categorycomboid=$this->db->get_where("categorycombo",array("name"=>"Mechanisms Combo"))->row()->categorycomboid;
+			$categorycombos_optioncombos=array(
+				'categorycomboid'=>$categorycomboid,
+				'categoryoptioncomboid'=>$categoryoptioncomboid
+			);
+			if(!$this->db->insert('categorycombos_optioncombos',$categorycombos_optioncombos)){
+				return "categorycombos_optioncombos";
+			}	
+		
+			//Step 7 Update  attribution_keys 
+			$attribution_keys=array(
+				'datim_id'=>$datim_id,
+				'mechanism_id'=>$kepms_id,
+				'mechanism_name'=>$partner_name,
+				'mechanism_uid'=>$usergroup_uid,
+				'usergroup_id'=>$usergroup_id,
+				'categorycombo_id'=>$categoryoptioncomboid,
+				'categoryoption_id'=>$categoryoption_id,
+				'mechanism_status'=>"active",
+				'start_date'=>$start_date,
+				'end_date'=>$end_date);	
+
+			if(!$this->db->insert("attribution_keys",$attribution_keys)){
+				return "attribution_keys";
+			}
+
+			//Step 8 : Insert Data to attribution_mechanisms	
+			$mechanisms=array(
+				"mechanism_name"=>$mechanisms_name,
+				"datim_id"=>$datim_id,
+				"mechanism_id"=>$kepms_id,
+				"mechanism_uid"=>$mechanisms_uid,
+				"attribution_key"=>$categoryoptioncomboid,
+				"partner_name"=>$partner_name,
+				'mechanism_status'=>"active",
+				'start_date'=>$start_date,
+				'end_date'=>$end_date,
+				"created_by"=>$this->session->userdata('useruid'),
+            	"date_created"=>date("d-m-Y H:m:s"));
+
+			if(!$this->db->insert("attribution_mechanisms",$mechanisms)){
+				return "attribution_mechanisms";
+			}
+		}
+
+		return true;
+	}
+
+	public function update_mechanism()
+	{
+		$kepms_id= $this->input->post('kepms_id');
+ 		$datim_id= $this->input->post('datim_id');
+ 		$mechanism_name = $this->input->post('mechanism_name');
+ 		$partner_name = $this->input->post('partner_name');
+ 		$end_date = $this->input->post('end_date');
+ 		$start_date = $this->input->post('start_date');
+
+ 		// Update attribution mechanisms table
+ 		$mechanisms=array(
+				"mechanism_name"=>$mechanism_name,
+				"mechanism_id"=>$kepms_id,
+				"partner_name"=>$partner_name,
+				'start_date'=>$start_date,
+				'end_date'=>$end_date);
+
+		$this->db->where('datim_id', $datim_id);	
+		if (!$this->db->update("attribution_mechanisms",$mechanisms)) {
+			return "Attribution Update";
+		}
+
+		// Update attribution keys table
+ 		$attribution_keys=array(
+				"mechanism_name"=>$partner_name,
+				"mechanism_id"=>$kepms_id,
+				'start_date'=>$start_date,
+				'end_date'=>$end_date);
+
+		$this->db->where('datim_id', $datim_id);	
+		if(!$this->db->update("attribution_keys",$attribution_keys)) {
+			return "Attribution Update";
+		}
+
+		// Update category option 
+ 		$categoryoption=array(
+				"name"=>$partner_name,
+				"shortname"=>substr($partner_name,0,30),
+				'lastupdated'=>date("Y-m-d"));
+
+		$this->db->where('code', $datim_id);	
+		if (!$this->db->update("dataelementcategoryoption",$categoryoption)) {
+			return "Attribution Update";
+		}
+
+
+		// Update user group
+ 		$usergroup=array(
+				"name"=>$partner_name,
+				'lastupdated'=>date("Y-m-d"));
+
+		$this->db->where('code', $datim_id);	
+		if (!$this->db->update("usergroup",$usergroup)) {
+			return "Attribution Update";
+		}
+
+		return true;
+	}
+
+	 // fetches details of a mechanism
+    public function show_mechanism_details($datim_id)
+    {
+       
+        $start_date = "";
+        $end_date = "";
+        $created_by = "";
+        $number_of_facilities = "";
+        $number_of_facilities_dsd="";
+        $number_of_facilities_ta="";
+        $mechanism_name = "";
+        $partner_name = "";
+        $name="";
+
+        // Mechanism info
+        if ($query = $this->db->get_where('attribution_mechanisms', array('datim_id' => $datim_id))) {
+            $row = $query->row();
+            $mechanism_name = $row->mechanism_name;
+            $start_date = $row->start_date;
+            $end_date = $row->end_date;
+            $created_by=$row->created_by;
+        }
+
+        // Number of DSD facilities
+        $this->db->select('count(datim_id)');
+        if ($query = $this->db->get_where('attribution_mechanisms_programs', array('datim_id' => $datim_id, 
+        		'support_type'=>'DSD'))) {
+            $number_facilities_dsd = $query->row()->count;
+        }
+
+         // Number of TA facilities
+        $this->db->select('count(datim_id)');
+        if ($query = $this->db->get_where('attribution_mechanisms_programs', array('datim_id' => $datim_id, 
+        		'support_type'=>'TA'))) {
+            $number_facilities_ta = $query->row()->count;
+        }
+   
+ 	  // Created by info
+        if($created_by!="")
+        {
+        	$created_by_query = $this->db->get_where('userinfo', array('uid' => $created_by));
+        	if (sizeof($created_by_query->result())==1) {
+	            $row = $created_by_query->row();
+	            $name = $row->firstname." ".$row->surname;
+        	}	
+        }
+        
+        $data = array(
+        	'mechanism_name' => $mechanism_name,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'created_by'=>$name,
+            'facilities_ta'=>$number_facilities_ta,
+            'facilities_dsd'=>$number_facilities_dsd);
+
+        return $data;
+    }
 }

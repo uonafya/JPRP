@@ -385,7 +385,7 @@
                     }); 
                 </script>
 
-                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('Mechanismmanager/addnewMechanism')?>" method="post" style="margin-left: -30px ">
+                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('mechanisms/addnewmechanism')?>" method="post" style="margin-left: -30px ">
                     <ul>    
                         <li>
                              <h2>Mechanism Details </h2>
@@ -393,25 +393,35 @@
                         </li>
                         <li>
                             <label for="name">Mechanism Name:</label>
-                            <input type="text" name="mname" id="pname"  placeholder="9171 - South Rift Valley"  required pattern="[A-Za-z\s]{10,}"  />
+                            <input type="text" name="mechanism_name" id=""  placeholder="9171 - South Rift Valley"  required pattern="{10,}"  />
                             <span class="form_hint">Mechanism Name Must Be Of Atleast 10 Characters</span>
                         </li> 
                         <li>
                             <label for="name">Datim ID:</label>
-                            <input type="text" name="datimid" id="pname"  placeholder="11243"  required pattern="[1-9][0-9]{4,}"  />
+                            <input type="text" name="datim_id" id=""  placeholder="11243"  required pattern="[1-9][0-9]{4,}"  />
                             <span class="form_hint">Mechanism ID Must Be Of Atleast 4 Integer Character Long</span>
                         </li>                         
                         <li>
                             <label for="name">Partner Name:</label>
-                            <input type="text" name="mname" id="pname"  placeholder="South Rift Valley VCT"  required pattern="[A-Za-z\s]{10,}"  />
+                            <input type="text" name="partner_name" id=""  placeholder="South Rift Valley VCT"  required pattern="{10,}"  />
                             <span class="form_hint">Partner Name Must Be Of Atleast 10 Characters</span>
                         </li>                         
                         <li>
-                            <label for="name">Mechanism ID:</label>
-                            <input type="text" name="mid" id="sname"  placeholder="124"   pattern="[1-9][0-9]{1,}"  />
+                            <label for="name">KePMS ID:</label>
+                            <input type="text" name="kepms_id" id=""  placeholder="124"  pattern="[1-9][0-9]{1,}"  />
                             <span class="form_hint">Mechanism ID Must Be Of Atleast 1 Integer Character Long</span>
-                        </li>                                                                                                                                              	                                             
-                        <li style="margin-left: 32%; width: 100%">
+                        </li> 
+                         <li>
+                            <label for="name">Mechanism Start Date:</label>
+                            <input type="text" name="start_date" id="start_date" required pattern="\d{1,2}-\d{1,2}-\d{4}"  placeholder="dd-mm-yyyy"    />
+                           <span class="form_hint">Date format must be dd-mm-yyyy</span>
+                        </li> 
+                         <li>
+                            <label for="name">Mechanism End Date:</label>
+                            <input type="text" name="end_date" id="end_date" required pattern="\d{1,2}-\d{1,2}-\d{4}" placeholder="dd-mm-yyyy"    />
+                            <span class="form_hint">Date format must be dd-mm-yyyy</span>
+                        </li>                                                                                                                                             	                                             
+                        <li style="margin-left: 20%; width: 100%">
                             <button class="submit" type="submit">Submit</button>
                         </li>
                    </ul> 
@@ -479,6 +489,30 @@
                 this.dxSDate = sdate;
                 this.dxEDate = edate;
             }
+
+            $(document).ready(function(){
+
+                $("#start_date").datepicker({
+                  defaultDate: "+1w",
+                  dateFormat:"dd-mm-yy",
+                  changeMonth: true,
+                  numberOfMonths: 1,
+                  onClose: function( selectedDate ) {
+                    $("#end_date").datepicker( "option", "minDate", selectedDate );
+                  }
+                });
+
+                $("#end_date").datepicker({
+                  defaultDate: "+4w",
+                  dateFormat:"dd-mm-yy",
+                  changeMonth: true,
+                  numberOfMonths: 1,
+                  onClose: function( selectedDate ) {
+                    $("#start_date").datepicker( "option", "maxDate", selectedDate );
+                  }
+                });
+            });
+
         </script>
                 
                 
