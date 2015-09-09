@@ -223,5 +223,91 @@ class Mechanisms extends CI_Controller {
                 $this->load->view('error',$data);           
             }       
         }           
+    }
+
+    public function addnewmechanism()
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            //Check If User Has Authority(program_magement) To  Create a Mechanism
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                if ($progress = $this->mechanisms_model->addnewmechanism() == TRUE) {
+                    $message = $message = "The Mechanism Has Successfully Been Created";
+                    redirect("/mechanisms/index/$message", 'refresh');
+                } else {
+                    $message = "An Error Occured At The " . $progress . " Stage Of Mechanism Creation. Kindly Try Again";
+                    redirect("/mechanisms/index/$message", 'refresh');
+                }
+            } else {
+                $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error', $data);
+            }
+        }
+    }
+
+    public function editmechanism($datim_id)
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+                $data['page']='mechanisms-edit';
+                $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
+                $data['programs']=$this->programs_model->all_programs_list();
+                $data['agencyname']=$this->session->userdata('groupname');
+                $data['mechanism']=$this->mechanisms_model->mechanism_info($datim_id);
+                
+                $this->load->view('template',$data);                        
+            } else {
+                $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error',$data);           
+            }      
+        }
+    }
+
+// Update a mechanism
+    public function update_mechanism()
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            //Check If User Has Authority(program_magement) To Update Mechanism
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                $progress = $this->mechanisms_model->update_mechanism();
+                if ($progress === TRUE) {
+
+                    echo $message = "The Mechanism Has Successfully Been Updated";
+                    // echo base_url("/programmanager/index/null/".$message);
+                    redirect("/mechanisms/index/$message",'refresh');
+                } else {
+
+                    echo $message = $progress . " at Stage Of Mechanism Update. Kindly Try Again";
+                     redirect("/mechanisms/index/$message",'refresh');
+                    // echo base_url("/programmanager/index/null/".$message);
+                }
+
+            } else {
+                $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error', $data);
+            }
+        }
+    }
+
+     // Fetch Mechanism Details
+    public function show_mechanism_details($datim_id)
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            //Check If User Has Authority(program_magement)  to view details of a mechanism
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                if ($result = $this->mechanisms_model->show_mechanism_details($datim_id)) {
+
+                    echo $data = json_encode($result);
+                }
+            }
+        }
+
     }		
 }

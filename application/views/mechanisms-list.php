@@ -255,7 +255,7 @@
             <div class="box-header">
                 <h3 class="box-title">Mechanisms Table</h3>
                 <?php if ($mechanisms_right) {
-                    echo '<h1 style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: red">' . $error_message . '</h1>';
+                    echo '<h1 id="message" style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
                 } ?>
                 <?php if ($mechanisms_right) {
                     echo '<a href="' . base_url('mechanisms/addmechanism') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Mechanism</a>';
@@ -484,9 +484,84 @@
         if (true) {
             echo '<li class=""><a href="#" id="attribute"><i class="fa fa-plus"></i> Attribute</a></li> <br>';
         };
+         if (true) {
+            echo '<li class=""><a href="#" id="showdetails"><i class="fa fa-info-circle"></i> Show Details</a></li> <br>';
+        };
         ?>
     </ul>
 </div>
+
+<!-- Show Details pop up -->
+<script type="text/javascript">
+// Hide error/Success message after 10 seconds
+    $(window).load(function() {
+        setTimeout(function() {
+             $('#message').fadeOut('fast');
+        }, 2000);
+    });
+
+    // Show Mechanism Details
+    function showMechanismDetails(datim_id) {
+
+        var url_show_mechanism_details = "<?php echo base_url('mechanisms/show_mechanism_details/')?>" + "/" + datim_id;
+        console.log(url_show_mechanism_details);
+        $.ajax({
+            url: url_show_mechanism_details,
+            type: 'POST',
+            data: {},
+            success: function (data) {
+
+                var data = JSON.parse(data);
+                var mechanism_details = {
+                    details: {
+                        title: 'Mechanism Details',
+                        html: '<div><label>Mechanism Name:</label>&nbsp;&nbsp;' +data.mechanism_name+
+                        '<br><label>Created by:</label>&nbsp;&nbsp;' +data.created_by+
+                        '<br><label>Start Date:</label>&nbsp;&nbsp;' + data.start_date+
+                        '<br><label>End Date :</label>&nbsp;&nbsp;' + data.end_date+
+                        '<br><label>Number of Facilities TA :</label>&nbsp;&nbsp;' + data.facilities_ta+
+                        '<br><label>Number of Facilities DSD :</label>&nbsp;&nbsp;' + data.facilities_dsd+
+                        '</div>',
+                        buttons: {OK: 1},
+                        focus: 0,
+                        submit: function (e, v, m, f) {
+                            if (v == 1) {
+                                $.prompt.close();
+                            }
+                            else {
+                                $.prompt.close();
+                            }
+                            return false;
+                        }
+                    }
+                };
+
+                $.prompt(mechanism_details, {
+                    close: function (e, v, m, f) {
+                        if (v !== undefined) {
+                            window.location.reload(true);
+                        }
+                    },
+                    classes: {
+                        box: '',
+                        fade: '',
+                        prompt: '',
+                        close: '',
+                        title: 'lead',
+                        message: '',
+                        buttons: '',
+                        button: 'btn',
+                        defaultButton: 'btn-primary'
+                    }
+                });
+
+
+            }
+        });
+
+    }
+
+</script>
 
 
 <!--  -->
@@ -540,6 +615,7 @@
             document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/editmechanism/" + datim_id;
             document.getElementById("remove").setAttribute('onclick', "deleteMechanism('" + datim_id + "','" + mechanism_name + "')");
             document.getElementById("attribute").href = "<?php echo base_url();?>" + "mechanisms/mechanisms_data_attribution/" + datim_id;
+            document.getElementById("showdetails").setAttribute('onclick', "showMechanismDetails('" + datim_id + "')");
 
         });
 
