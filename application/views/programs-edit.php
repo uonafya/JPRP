@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/js/jquery-ui.css">
-
+<link rel="stylesheet" href="<?php echo base_url(); ?>/style/chosen/chosen.min.css" type="text/css">
 <script src="<?php echo base_url(); ?>/style/js/jquery-1.10.2.js"></script>
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
 <script src="<?php echo base_url(); ?>/style/js/jquery-ui.js"></script>
@@ -188,7 +188,13 @@
 </style>
 
 <style>
-
+    .chosen-container-active.chosen-with-drop .chosen-single{
+    	width:500px;
+    }
+	.chosen-container-single .chosen-drop{
+		width:500px;
+		overflow-x: hidden
+	}
     .donor_form SELECT {
         width: 200px;
         height: 200px;
@@ -306,11 +312,43 @@
                     </div>
 
                     <div class="form-group">
-                         <label>Program Dataelements:</label>  
+
                         <div class="col-md-12">
-                            <div class="col-md-offset-1">
+                          <div>
+
+                            <div>
+                                <label for="datasets">Data Sets Available </label>
+                            </div>
+
+
+							<!-- TODO: Format the CSS to have a better appearance for Chosen select -->
+                            <div>
+                                <select id="datasets" class="chosen-select"  style="height: 30px; width: 350px;" onchange="getElements()" tabindex="2">
+                                    <option value="nil">All Data Sets</option>
+                                    <?php
+                                    if ($datasets!='') {
+                                        foreach ($datasets as $dataset_row) {
+                                            echo "<option value='$dataset_row->datasetid'>$dataset_row->name</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
+							<!--                                <div class="alert alert-warning" role="alert">No data elements available</div>-->
+                            </div>
+                            <!--                                   End Steve: Data Sets on page  -->
+
+                            
+                            <div>&nbsp;</div>
+                            <div>
+                                <label for="datasets" >Search Dataelements </label>
+                            </div>
+                            
+                            <div>
                                  <input id="textbox" type="text" class="form-control" placeholder="Search Dataelements"/>
                             </div>
+
+                        </div>
+                            
                             <section class="container">
                                 <div>
                                     <div>
@@ -339,7 +377,7 @@
                                                 Dataelements </label>
                                         </div>
                                         <div>
-                                            <select id="rightValues" size="5" name='facilities[]' style="width:370px; height:250px;" multiple required>
+                                            <select id="rightValues" size="5" name='dataelements[]' style="width:370px; height:250px;" multiple required>
                                                 <?php
                                                 if ($program_dataelements != '') {
                                                     foreach ($program_dataelements as $row) {
@@ -432,7 +470,7 @@
 
             // Form Update Data 
             var form_data = {
-                facilities: elements,
+                dataelements: elements,
                 pname: $("#pname").val(),
                 sname: $("#sname").val(),
                 pdescription: $("#pdescription").val()
@@ -443,7 +481,7 @@
              var temp = {
                 state0: {
                     title:'Confirm Update',
-                    html:'Update Program Data Elements',
+                    html:'Do you want to update program information?',
                     buttons: { Cancel: false, YES: true },
                     focus: 1,
                     submit:function(e,v,m,f){ 
@@ -485,8 +523,8 @@
                     }
                 },
                 state1: {
-                    title: '<h4>Backup Data Elements</h4>',
-                    html:'<p class="alert alert-info">Do you want to create an archive of the changes in the data elements of the program?</p>',
+                    title: '<h4>Program Data Elements</h4>',
+                    html:'<p class="alert alert-info">Do you want to  archive/save the  previous data elements of the program?</p>',
                     buttons: {No: false ,Yes:true },
                     focus: 1,
                     submit:function(e,v,m,f){
@@ -512,18 +550,16 @@
                                     if(!msg){
                     
                                         $('#startdateForm').html('<form id="edit_support" action="#" method="post">\n\
-                                        <fieldset>Enter Archive Start Date.</fieldset>'+                                    
+                                        <fieldset>Enter Start Date of the Archive.</fieldset>'+                                    
                                         "<div class='field'>\n\
                                             <label for='start_date' style='font-size:1.2em;margin-top:1em;width:8em;'>Start Date</label>\n\
-                                            <input  type='text' id='datepickerstart' value='' required pattern='[A-Za-z\s0-9]{5,}' name='start_date' placeholder='dd-mm-yyyy' style='height:30px;font-size:18px;width:10em;'/>\n\
+                                            <input  type='text' id='datepickerstart' value=''  name='start_date' placeholder='dd-mm-yyyy' style='height:30px;font-size:18px;width:10em;'/>\n\
                                             <span class='form_hint'>dd-mm-yyyy</span> \n\
                                         </div>"+
                                         '</form>');
 
-                                        $( "#datepickerstart" ).datepicker({ minDate: "-20Y", maxDate: "-1D" });
-                                        $("#format" ).change(function() {
-                                            $("#datepickerstart").datepicker( "option", "dateFormat", "dd-mm-yy");
-                                         });
+                                        $( "#datepickerstart" ).datepicker({ minDate: "-20Y", maxDate: "-1D",dateFormat:"dd-mm-yy" });
+
                                         
                                         $.prompt.goToState('state2');
 
@@ -564,7 +600,7 @@
                             });
 
                             var form_data2 = {
-                                facilities: elements,
+                                dataelements: elements,
                                 pname: $("#pname").val(),
                                 sname: $("#sname").val(),
                                 pdescription: $("#pdescription").val(),
@@ -586,7 +622,7 @@
                     }
                 },
                 finalState: {
-                    title: 'Update',
+                    title: 'Update Success',
                     html:'<p id="response"></p>',
                     buttons: {Finish: 1 },
                     focus: 0,
@@ -623,6 +659,51 @@
 
 </script>
 
+ </script>
+                <!--                Steve Scripts -->
+                <script>
+                    var datasets = <?php echo json_encode($datasets); ?>;
+                    var datasetmembers = <?php echo json_encode($datasetmembers); ?>;
+                    var dataelements = <?php echo json_encode($program_dataelements); ?>;
+                    function getElements() {
+                        var dataSetId = $( "#datasets option:selected" ).val();
+                        var dataElementList = [];
+
+                        if (dataSetId == 'nil'){
+                            $("#leftValues").empty();
+                            $.each(dataelements, function (e) {
+                                $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
+                            });
+                        }
+                        else {
+
+                            $("#leftValues").empty();
+
+                            $.each(datasetmembers, function (e) {
+                                if (datasetmembers[e].datasetid == dataSetId){
+                                    dataElementList.push(datasetmembers[e].dataelementid);
+                                }
+                            });
+                            if (dataElementList.length == 0){
+                                 $("#leftValues").empty();
+                                $("#leftValues").append("<option value=''>No DataElements Available for selected Data Set</option>");
+                            }else{
+                                $.each(dataElementList, function(element){
+                                    $.each(dataelements, function (e) {
+                                        if (dataelements[e].dataelementid == dataElementList[element] ){
+                                            $("#leftValues").append("<option value='" + dataelements[e].uid + "'>" + dataelements[e].name + "</option>");
+                                        }
+                                    });
+                                });
+                            }
+
+                        }
+                    }
+                </script>
+
+
+                <!--                End Steve Scripts -->
+
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/date/css/default.css" type="text/css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/bootstrap-dialog/css/base.css" type="text/css">
@@ -630,6 +711,7 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/zebra_datepicker.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/core.js"></script>
+ <script type="text/javascript" src="<?php echo base_url(); ?>/style/chosen/chosen.jquery.min.js"></script>
 
 <script type="text/javascript" src="<?php echo base_url(); ?>/style/bootstrap-dialog/js/jquery-impromptu.js"></script>
 
