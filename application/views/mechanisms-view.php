@@ -157,7 +157,7 @@
 
 				<script>
 				
-                    function supportedit(id,orgunit,program,s_date,s_end){  
+                    function supportedit(id,orgunit,program,s_date,s_end){
 
                         var temp = {
                             state0: {
@@ -421,7 +421,7 @@
         <script src="<?php echo base_url(); ?>/style/js/AdminLTE/demo.js" type="text/javascript"></script>
         <!-- Jquery UI js -->
         <script src="<?php echo base_url(); ?>/style/js/jquery-ui.js" type="text/javascript"></script>
- 
+
 
 
 <!-- Pop over Class -->

@@ -176,7 +176,7 @@ class Mechanisms_model extends CI_Model {
 			);
 			$this->db->insert("attribution_mechanisms",$mechanisms);
 		}
-		
+
 	}
 	
 	
@@ -188,6 +188,7 @@ class Mechanisms_model extends CI_Model {
 		}
 		return "";
 	}
+
 	public function deletemechanism($datim_id){
 		$details=array(
 			"mechanism_status"=>"dropped",
@@ -469,4 +470,7 @@ class Mechanisms_model extends CI_Model {
 
         return $data;
     }
+=======
+	 }	
+>>>>>>> master
 }

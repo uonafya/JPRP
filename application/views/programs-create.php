@@ -29,7 +29,7 @@
                     }
                     .required_notification {
                         color:#d45252; 
-                        margin:5px 0 0 0; 
+                        margin:5px 0 0 0;
                     }
                     
                     /* === Form Elements === */
@@ -478,7 +478,7 @@
                                                         echo "<option value='$row->uid'>$row->name</option>";
                                                     }
                                                 } 
-                                            ?>       
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -632,7 +632,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>/style/bootstrap-dialog/css/base.css" type="text/css">
         
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/chosen/chosen.jquery.min.js"></script>
-        
+
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/zebra_datepicker.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>/style/date/js/core.js"></script>                
         

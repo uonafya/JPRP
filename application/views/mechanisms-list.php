@@ -25,7 +25,7 @@
                 title: 'Drop '+name +  '.',
                 html: "<p>Do you want to drop "+ name +"Mechanism?</p>",
                 buttons: {Cancel: false, Yes: true},
-                focus: 1,
+                focus: 1
                 submit: function (e, v, m, f) {
                     if (!v)
                         $.prompt.close();

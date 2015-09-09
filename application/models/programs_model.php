@@ -51,7 +51,7 @@
 			return $available->result();
 		} else {
 			return "";
-		}		
+		}
 	}
 	
 	public function get_dataelements(){
@@ -404,7 +404,7 @@
             return "";
         }
 
-    }	 
+    }
 	 
 	 
 	 

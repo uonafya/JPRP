@@ -4,7 +4,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="<?php 
+                            <img src="<?php
                                 if ($this->session->userdata('gender')=='gender_female') {
                                     echo base_url()."/style/img/avatar3.png";
                                 } else {
@@ -57,14 +57,14 @@
                                 <span>Partner Management</span>
                             </a>
 
-                        </li>  
+                        </li>
                         <li class="active">
                             <a href="<?php echo base_url(); ?>dataimport">
                                 <i class="fa fa-bar-chart-o"></i>
                                 <span>Data Import</span>
                             </a>
 
-                        </li>                                                 
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

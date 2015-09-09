@@ -118,13 +118,13 @@ class Mechanisms extends CI_Controller {
                         }
                         
                     
-                }  
+                }
 				     		       		
 			}  
                     $data = array(
                     'message' => "Data Has Been Successfully Uploaded Into The Database"
                     );    
-                    echo json_encode($data) ;   
+                    echo json_encode($data) ;
         }else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
                 $this->load->view('error',$data);			
