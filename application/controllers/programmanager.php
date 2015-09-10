@@ -53,17 +53,19 @@ class Programmanager extends CI_Controller
 
             if ($this->categoryoptionattribution($groupid) == "ok") {
                 //Get User Group Agency Level
-                if ($this->partner_model->groupagencylevel($groupid) == TRUE) {
+                if ($this->partner_model->groupagencylevel($groupid) === TRUE) {
                     //Get User Group Name
-                    $groupname = $this->partner_model->getsessiongroupname($groupid);
+                    $group = $this->partner_model->getsessiongroup($groupid);
                     //Get User Gender
-                    $gender = $this->partner_model->gender($uid);
+                    $user = $this->partner_model->gender($uid);
                     $newdata = array(
                         'marker' => '1',
                         'groupid' => $groupid,
-                        'groupname' => $groupname,
-                        'gender' => $gender,
+                        'groupname' => $group->name,
+                        'gender' => $user->gender,
                         'useruid' => $uid,
+                        'group_uid'=>$group->uid,
+                        'name'=>$user->firstname,
                         'logged_in' => TRUE
                     );
                     $this->session->set_userdata($newdata);

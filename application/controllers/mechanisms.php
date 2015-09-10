@@ -491,5 +491,21 @@ class Mechanisms extends CI_Controller {
             }
         }
 
-    }	
+    }
+
+    public function check_availability_datim_id(){
+
+        if ($this->session->userdata('marker') == 1) {
+
+            echo $this->mechanisms_model->check_availability_datim_id();
+        }
+    }
+
+    public function check_availability_kepms_id(){
+
+        if ($this->session->userdata('marker') == 1) {
+
+            echo $this->mechanisms_model->check_availability_kepms_id();
+        }
+    }
 }
