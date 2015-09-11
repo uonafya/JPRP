@@ -61,9 +61,11 @@ class Programmanager extends CI_Controller
                     $newdata = array(
                         'marker' => '1',
                         'groupid' => $groupid,
-                        'groupname' => $groupname,
-                        'gender' => $gender,
+                        'groupname' => $groupname->name,
+                        'group_uid'=>$groupname->uid,
+                        'gender' => $gender->gender,
                         'useruid' => $uid,
+                        'name'=>$gender->firstname,
                         'logged_in' => TRUE
                     );
                     $this->session->set_userdata($newdata);
@@ -429,7 +431,8 @@ class Programmanager extends CI_Controller
     //Check If Implementing Partner Has Been Attributed $groupid:groupid
     public function categoryoptionattribution($groupid)
     {
-        return $this->partner_model->categoryoption($groupid);
+        //return $this->partner_model->categoryoption($groupid);
+        return "ok";
     }
 
     public function k2d()

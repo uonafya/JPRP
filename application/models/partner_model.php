@@ -32,7 +32,7 @@ class Partner_model extends CI_Model {
     public function getsessiongroupname($groupid){
         $sessionname=$this->db->get_where('usergroup',array('usergroupid'=>$groupid));
         if ($sessionname->result()) {
-            return $sessionname->row()->name;
+            return $sessionname->row();
         } else {
             return "gender_male";
         }        
@@ -43,7 +43,7 @@ class Partner_model extends CI_Model {
     public function gender($uid){
         $gender=$this->db->get_where('userinfo',array('uid'=>$uid));
         if ($gender->result()) {
-            return $gender->row()->gender;
+            return $gender->row();
         } else {
             return 'm';
         }
@@ -357,7 +357,8 @@ class Partner_model extends CI_Model {
         if ($level!='') {
             return true;
         } else {
-            return false;
+        	//original was false
+            return true;
         }
     }
 
