@@ -1,10 +1,10 @@
+<!---->
 <!--/**-->
 <!-- * Created by IntelliJ IDEA.-->
 <!-- * User: banga-->
-<!-- * Date: 10/09/15-->
-<!-- * Time: 15:36-->
+<!-- * Date: 11/09/15-->
+<!-- * Time: 07:06-->
 <!-- */-->
-
 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/js/jquery-ui.css">
 
 <script src="<?php echo base_url(); ?>/style/js/jquery-1.10.2.js"></script>
@@ -185,12 +185,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Add Agency
+        Update Agency
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Development Partner</a></li>
-        <li class="active">Add Agency</li>
+        <li class="active">Update Agency</li>
     </ol>
 </section>
 
@@ -230,25 +230,27 @@
         });
     </script>
 
-    <form class="donor_form" id="agency_details" action="<?php echo base_url('development_partners/save_agency')?>" method="post" style="margin-left: -30px ">
+    <form class="donor_form" id="agency_details" action="<?php echo base_url('development_partners/save_agency_update')?>" method="post" style="margin-left: -30px ">
         <ul>
             <li>
                 <h2>Agency Details </h2>
                 <span class="required_notification">* Denotes Required Field</span>
             </li>
             <li>
+                <input type="hidden" name="agency_uid" id=""  value="<?php echo $agency->uid; ?>" >
+
                 <label for="name">Name:</label>
-                <input type="text" name="name" id=""  placeholder="USG"   required pattern="[A-Za-z\s]{5,150}"  />
+                <input type="text" name="name" id=""  value="<?php echo $agency->name; ?>" placeholder="USG"   required pattern="[A-Za-z\s]{5,150}"  />
                 <span class="form_hint">Agency Name Must Be Of Atleast 5 Characters</span>
             </li>
             <li>
                 <label for="name">Short Name:</label>
-                <input type="text" name="sname" id=""  placeholder="USG"  required pattern="[A-Za-z\s]{2,20}"  />
+                <input type="text" name="sname" id=""  value="<?php echo $agency->shortname; ?>"  placeholder="USG"  required pattern="[A-Za-z\s]{2,20}"  />
                 <span class="form_hint">Agency Short Name Must Be Of Atleast 2 Characters</span>
             </li>
             <li>
                 <label for="name">Code:</label>
-                <input type="text" name="code" id=""  placeholder="124"   pattern="[1-9][0-9]{0,10}"  />
+                <input type="text" name="code" id=""  value="<?php echo $agency->code; ?>"  placeholder="124"   pattern="[1-9][0-9]{0,10}"  />
                 <span class="form_hint" style='content: "\25C0";background-color:#28921f;'>Code Should Be Of Atleast 1 Integer Character Long</span>
             </li>
             <li>
@@ -284,7 +286,14 @@
                                 <label for="name" style="font-size: 16px; margin-left:0px; width: 200px">Selected Programs </label>
                             </div>
                             <div>
-                                <select id="rightValues" size="10" name='programs[]' style="width:330px; height:250px;" multiple required >
+                                <select id="rightValues" size="20" name="programs[]" style="width:330px; height:250px;" multiple required >
+                                    <?php
+                                    if ($selected_programs != '') {
+                                        foreach ($selected_programs as $row) {
+                                            echo "<option value='$row->program_id'>$row->program_name</option>";
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -292,7 +301,7 @@
 
                 </section>
             </li>
-            <li style="margin-left: 20%; width: 100%">
+            <li style="margin-left: 45%; width: 100%">
                 <button class="submit" type="submit">Submit</button>
             </li>
         </ul>
@@ -319,9 +328,9 @@
         $("#rightValues").change(function () {
             var selectedItem = $("#rightValues option:selected");
             $("#txtRight").val(selectedItem.text());
-            $("#rightValues option").prop("selected", true);
         });
     });
+
     $(function() {
         $("#example1").dataTable();
         $("#supportedorgs").dataTable();
@@ -333,6 +342,7 @@
             "bInfo": true,
             "bAutoWidth": false
         });
+
         $("#select").click(function () {
             $("#sel_table").html("");
             var html = '';

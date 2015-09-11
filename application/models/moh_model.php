@@ -21,6 +21,16 @@ class Moh_model extends CI_Model {
 		return "";		
 	}
 	
+	public function devpartner_programs_update($devuid){
+		$query="  SELECT ap.* FROM   attribution_programs ap WHERE  NOT EXISTS
+		 (SELECT * FROM   attribution_hierarchy_programs ahp WHERE  ahp.hierarchy_uid='$devuid' and ap.program_id = ahp.program_id)";
+		$list=$this->db->query($query);
+		if (sizeof($list->result())>=1) {
+			return $list->result();
+		}
+		return "";		
+	}
+	
 	public function devpartner_details($devuid){
 		$list=$this->db->get_where("attribution_hierarchy",array("uid"=>$devuid));
 		if (sizeof($list->result())>=1) {

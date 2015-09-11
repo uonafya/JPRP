@@ -390,7 +390,7 @@
             var uid = $(this).closest('tr').data('uid');
 
             document.getElementById("view").href = "<?php echo base_url();?>" + "moh_manager/devpartnerview/" + uid;
-            document.getElementById("update").href = "<?php echo base_url();?>" + "moh_manager/editprogram/" + id;
+            document.getElementById("update").href = "<?php echo base_url();?>" + "moh_manager/devpupdate/" + uid;
             document.getElementById("delete").setAttribute('onclick', "programdelete('" +uid + "','" + name + "')");
             document.getElementById("description").setAttribute('onclick', "show_program_details('" + uid + "')");
 

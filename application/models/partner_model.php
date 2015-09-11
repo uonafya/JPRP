@@ -29,7 +29,7 @@ class Partner_model extends CI_Model {
         }
     }
     //Get session group id name
-    public function getsessiongroup($groupid){
+    public function getsessiongroupname($groupid){
         $sessionname=$this->db->get_where('usergroup',array('usergroupid'=>$groupid));
         if ($sessionname->result()) {
             return $sessionname->row();
@@ -357,7 +357,8 @@ class Partner_model extends CI_Model {
         if ($level!='') {
             return true;
         } else {
-            return false;
+        	//original was false
+            return true;
         }
     }
 

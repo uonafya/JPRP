@@ -129,7 +129,7 @@
 
                         echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
                         echo "<td>$i</td>";
-                        echo "<td>$row->name</td>";
+                        echo "<td>$row->name   $row->uid </td>";
                         echo "<td>$row->shortname</td>";
                         echo "<td>$row->uid</td>";
                         $i++;
@@ -359,7 +359,7 @@
 
             // Actions
             document.getElementById("view").href = "<?php echo base_url();?>" + "development_partners/view_agency/" + id;
-            document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/edit_agency/" + id;
+            document.getElementById("edit").href = "<?php echo base_url();?>" + "development_partners/update_agency/" + id;
             document.getElementById("remove").setAttribute('onclick', "removeAgency('" + id + "','" + name + "')");
             document.getElementById("showdetails").setAttribute('onclick', "showAgencyDetails('" + id + "')");
 

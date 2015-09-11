@@ -53,19 +53,19 @@ class Programmanager extends CI_Controller
 
             if ($this->categoryoptionattribution($groupid) == "ok") {
                 //Get User Group Agency Level
-                if ($this->partner_model->groupagencylevel($groupid) === TRUE) {
+                if ($this->partner_model->groupagencylevel($groupid) == TRUE) {
                     //Get User Group Name
-                    $group = $this->partner_model->getsessiongroup($groupid);
+                    $groupname = $this->partner_model->getsessiongroupname($groupid);
                     //Get User Gender
-                    $user = $this->partner_model->gender($uid);
+                    $gender = $this->partner_model->gender($uid);
                     $newdata = array(
                         'marker' => '1',
                         'groupid' => $groupid,
-                        'groupname' => $group->name,
-                        'gender' => $user->gender,
+                        'groupname' => $groupname->name,
+                        'group_uid'=>$groupname->uid,
+                        'gender' => $gender->gender,
                         'useruid' => $uid,
-                        'group_uid'=>$group->uid,
-                        'name'=>$user->firstname,
+                        'name'=>$gender->firstname,
                         'logged_in' => TRUE
                     );
                     $this->session->set_userdata($newdata);
@@ -431,7 +431,8 @@ class Programmanager extends CI_Controller
     //Check If Implementing Partner Has Been Attributed $groupid:groupid
     public function categoryoptionattribution($groupid)
     {
-        return $this->partner_model->categoryoption($groupid);
+        //return $this->partner_model->categoryoption($groupid);
+        return "ok";
     }
 
     public function k2d()

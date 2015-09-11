@@ -383,7 +383,7 @@
             $(this).addClass("alert alert-success");
             var id = $(this).closest('tr').data('id');
 
-            document.getElementById("view").href = "<?php echo base_url();?>" + "moh_manager/agencyview/" + uid;
+            document.getElementById("view").href = "<?php echo base_url();?>" + "development_partners/view_agency/" + id;
             document.getElementById("description").setAttribute('onclick', "show_program_details('" + id + "')");
 
         });

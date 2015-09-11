@@ -93,4 +93,27 @@ class Moh_manager extends CI_Controller {
 			}       
         }		
 	}
+
+	public function devpupdate($devuid){
+        if($this->session->userdata('marker')!=1){
+            redirect($this->index());
+        }else{
+        	//Check If User Has Authority(program_magement) To Create Programs
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+				$data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));
+				$data['page']='developmentpartners-update'; 
+				$data['dev_programs'] = $this->moh_model->devpartner_programs_list($devuid);
+				$data['programs'] = $this->moh_model->devpartner_programs_update($devuid) ; 
+				$data['devpartner_details']= $this->moh_model->devpartner_details($devuid);
+				$data['error_message']=str_replace("%20", " ", ""); 
+	            $data['agencyname']=$this->session->userdata('groupname');
+	            $this->load->view('template',$data);     		       		
+			} else {
+				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error',$data);			
+			}       
+        }			
+	}
+
+
 }

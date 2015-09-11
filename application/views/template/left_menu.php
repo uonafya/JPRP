@@ -72,8 +72,22 @@
                                 <i class="fa fa-bar-chart-o"></i>
                                 <span>Data Import</span>
                             </a>
-                        </li>                                                                                               
+                        </li>   
+                        <li class="active">
+                            <a href="<?php echo base_url(); ?>moh_manager">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>MOH</span>
+                            </a>
+                        </li> 
+                        <li class="active">
+                            <a href="<?php echo base_url(); ?>development_partners">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Development Partners</span>
+                            </a>
+                        </li>                                                                                                                                              
                     </ul>
                 </section>
                 <!-- /.sidebar -->
             </aside>
+            
+

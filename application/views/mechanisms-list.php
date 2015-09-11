@@ -566,6 +566,7 @@
 
 <!--  -->
 <script>
+
     $(document).ready(function () {
         $("#contextMenuID").hide();
         $('#programs-table').DataTable();

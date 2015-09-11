@@ -340,12 +340,12 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Add Mechanism
+                        Update <?php echo $devpartner_details->name; ?> Details
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Mechanism Management</a></li>
-                        <li class="active">Create Mechanism</li>
+                        <li><a href="#">Development Partner</a></li>
+                        <li class="active">Update Development Partner</li>
                     </ol>
                 </section>       
        
@@ -385,43 +385,76 @@
                     }); 
                 </script>
 
-                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('mechanisms/addnewmechanism')?>" method="post" style="margin-left: -30px ">
+                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('moh_manager/newdevp')?>" method="post" style="margin-left: -30px ">
                     <ul>    
                         <li>
-                             <h2>Mechanism Details </h2>
+                             <h2>Development Partner Details </h2>
                              <span class="required_notification">* Denotes Required Field</span>
                         </li>
                         <li>
-                            <label for="name">Mechanism Name:</label>
-                            <input type="text" name="mechanism_name" id=""  placeholder="9171 - South Rift Valley"  required pattern="{10,}"  />
-                            <span class="form_hint">Mechanism Name Must Be Of Atleast 10 Characters</span>
-                        </li> 
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" id=""  value='<?php echo $devpartner_details->name; ?>'   required pattern="[A-Za-z\s]{5,150}"  />
+                            <span class="form_hint">Development Partner Name Must Be Of Atleast 5 Characters</span>
+                        </li>                        
                         <li>
-                            <label for="name">Datim ID:</label>
-                            <input type="text" name="datim_id" id=""  placeholder="11243"  required pattern="[1-9][0-9]{4,}"  />
-                            <span class="form_hint">Mechanism ID Must Be Of Atleast 4 Integer Character Long</span>
+                            <label for="name">Short Name:</label>
+                            <input type="text" name="sname" id=""  value='<?php echo $devpartner_details->shortname; ?>' required pattern="[A-Za-z\s]{2,20}"  />
+                            <span class="form_hint">Development Partner Short Name Must Be Of Atleast 2 Characters</span>
                         </li>                         
                         <li>
-                            <label for="name">Partner Name:</label>
-                            <input type="text" name="partner_name" id=""  placeholder="South Rift Valley VCT"  required pattern="{10,}"  />
-                            <span class="form_hint">Partner Name Must Be Of Atleast 10 Characters</span>
-                        </li>                         
+                            <label for="name">Code:</label>
+                            <input type="text" name="code" id=""  value='<?php echo $devpartner_details->code; ?>'   pattern="[1-9][0-9]{0,10}"  />
+                            <span class="form_hint" style='content: "\25C0";background-color:#28921f;'>Code Should Be Of Atleast 1 Integer Character Long</span>
+                        </li>  
                         <li>
-                            <label for="name">KePMS ID:</label>
-                            <input type="text" name="kepms_id" id=""  placeholder="124"  pattern="[1-9][0-9]{1,}"  />
-                            <span class="form_hint">Mechanism ID Must Be Of Atleast 1 Integer Character Long</span>
-                        </li> 
-                         <li>
-                            <label for="name">Mechanism Start Date:</label>
-                            <input type="text" name="start_date" id="start_date" required pattern="\d{1,2}-\d{1,2}-\d{4}"  placeholder="dd-mm-yyyy"    />
-                           <span class="form_hint">Date format must be dd-mm-yyyy</span>
-                        </li> 
-                         <li>
-                            <label for="name">Mechanism End Date:</label>
-                            <input type="text" name="end_date" id="end_date" required pattern="\d{1,2}-\d{1,2}-\d{4}" placeholder="dd-mm-yyyy"    />
-                            <span class="form_hint">Date format must be dd-mm-yyyy</span>
-                        </li>                                                                                                                                             	                                             
-                        <li style="margin-left: 20%; width: 100%">
+                            <div>
+                                <label for="datasets" style="font-size: 16px; width: 200px">Program Search </label>
+                                <input id="textbox" type="text" class="form-control" placeholder="Program Search"/>
+                            </div>  
+                            <section class="container">
+
+                                <div>
+                                    <div>
+                                        <label for="name" style="font-size: 16px; width: 200px">Programs </label>
+                                    </div>
+                                    <div>
+                                        <select id="leftValues" size="10" multiple style="width:370px; height:250px;">
+                                            <?php
+                                                if ($programs!='') {
+                                                    foreach ($programs as $row) {
+                                                        echo "<option value='$row->program_id'>$row->program_name</option>";
+                                                    }
+                                                } 
+                                            ?>       
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 10%;">
+                                    <input type="button" class="btn btn-md" id="btnRight" value="&gt;&gt;"/>
+                                    <input type="button" class="btn btn-md" id="btnLeft" value="&lt;&lt;" style="margin-top: 30px"/>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div>
+                                            <label for="name" style="font-size: 16px; margin-left:0px; width: 200px">Selected Programs </label>
+                                        </div>
+                                        <div>
+                                            <select id="rightValues" size="10" name='programs[]' style="width:370px; height:250px;" multiple required >
+                                            <?php
+                                                if ($dev_programs!='') {
+                                                    foreach ($dev_programs as $row) {
+                                                        echo "<option value='$row->program_id'>$row->program_name</option>";
+                                                    }
+                                                } 
+                                            ?>                                              	
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </section>
+                        </li>                                                                                                                                                                    	                                             
+                        <li style="margin-left: 50%; width: 100%">
                             <button class="submit" type="submit">Submit</button>
                         </li>
                    </ul> 

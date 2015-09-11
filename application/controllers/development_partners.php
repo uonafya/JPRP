@@ -96,5 +96,47 @@ class Development_partners extends CI_Controller{
     }
 
 
+    public function update_agency($agency_id){
+        if($this->session->userdata('marker')!=1){
+            redirect($this->index());
+        }else{
+            //Check If User Has Authority(program_magement) To Update Agencies
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+                $data['page']='agency-edit';
+                $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
+                $data['programs']=$this->development_partners_model->agency_programs_list_update($agency_id);
+                $data['agency']=$this->development_partners_model->agency_details($agency_id);
+                $data['selected_programs'] = $this->development_partners_model->agency_programs_list($agency_id);
+                $data['agencyname']=$this->session->userdata('groupname');
+                $this->load->view('template',$data);
+            } else {
+                $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error',$data);
+            }
+        }
+    }
+
+    public function save_agency_update()
+    {
+        if ($this->session->userdata('marker') != 1) {
+            redirect($this->index());
+        } else {
+            //Check If User Has Authority(program_magement) To  Create an Agency
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                if ($progress = $this->development_partners_model->save_agency_update() ===TRUE) {
+                    $message = "Agency Has Successfully been Updated";
+                    redirect("/development_partners/index/$message", 'refresh');
+                } else {
+                    $message =  $progress;
+                    redirect("/development_partners/index/$message", 'refresh');
+                }
+            } else {
+                $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";
+                $this->load->view('error', $data);
+            }
+        }
+    }
+
+
 
 }
