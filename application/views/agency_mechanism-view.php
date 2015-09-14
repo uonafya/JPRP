@@ -1,3 +1,4 @@
+
 <!--/**-->
 <!-- * Created by IntelliJ IDEA.-->
 <!-- * User: banga-->
@@ -242,12 +243,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <?php echo $agency_details->name; ?>
+        <?php echo $mechanism_details->name; ?>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Development Partner</a></li>
-        <li class="active">View Development Partner Details</li>
+        <li><a href="#">Agency</a></li>
+        <li class="active">View Implementing Mechanism Details</li>
     </ol>
 </section>
 
@@ -255,7 +255,7 @@
     <div class="row">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title"> <?php echo $agency_details->name; ?> : Programs </h3>
+                <h3 class="box-title"> <?php echo $mechanism_details->name; ?> : Programs </h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -287,29 +287,39 @@
     <div class="row">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title"> <?php echo $agency_details->name; ?> : Implementing Mechanisms</h3>
+                <h3 class="box-title"> <?php echo $mechanism_details->name; ?> : Facilties</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
                 <table id="mechanism-table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th style="width:50%">Mechanism Name</th>
-                        <th style="width:20%">Datim ID</th>
+                        <th style="width:50%">Facility Name</th>
+                        <th style="width:20%">MFL Code</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <td>Machakos</td>
+                        <td>3443</td>
+                    </tr>
 
-                    <?php
-                    if ($mechanisms != false) {
-                        foreach ($mechanisms as $row) {
-                            echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
-                            echo "<td>$row->name</td>";
-                            echo "<td>$row->code</td>";
-                            echo "</tr>";
-                        }
-                    }
-                    ?>
+                    <tr>
+                        <td>Mama Lucy</td>
+                        <td>89</td>
+                    </tr>
+
+
+                    <!--                    --><?php
+                    //                    if ($mechanisms != false) {
+                    //                        foreach ($mechanisms as $row) {
+                    //                            echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
+                    //                            echo "<td>$row->name</td>";
+                    //                            echo "<td>$row->shortname</td>";
+                    //                            echo "</tr>";
+                    //                        }
+                    //                    }
+                    //                    ?>
                     </tbody>
 
                 </table>
@@ -437,7 +447,7 @@
             $(this).addClass("alert alert-success");
             var id = $(this).closest('tr').data('id');
 
-            document.getElementById("view").href = "<?php echo base_url();?>" + "agency_mechanism/view_mechanism/" + id;
+            document.getElementById("view").href = "<?php echo base_url();?>" + "moh_manager/agencyview/" + uid;
             document.getElementById("description").setAttribute('onclick', "show_program_details('" + id + "')");
 
         });

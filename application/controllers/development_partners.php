@@ -85,6 +85,10 @@ class Development_partners extends CI_Controller{
                 $data['program'] = $this->development_partners_model->agency_programs_list($agency_id);
                 $data['agency_details']= $this->development_partners_model->agency_details($agency_id);
                 $data['mechanisms'] = $this->development_partners_model->agency_mechanisms($agency_id);
+                if(empty($data['agency_details'])){
+                    $message =  "Invalid Agency ";
+                    redirect("/development_partners/index/$message", 'refresh');
+                }
                 $data['error_message']=str_replace("%20", " ", "");
                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
@@ -106,6 +110,10 @@ class Development_partners extends CI_Controller{
                 $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
                 $data['programs']=$this->development_partners_model->agency_programs_list_update($agency_id);
                 $data['agency']=$this->development_partners_model->agency_details($agency_id);
+                if(empty($data['agency'])){
+                    $message =  "Invalid Agency";
+                    redirect("/development_partners/index/$message", 'refresh');
+                }
                 $data['selected_programs'] = $this->development_partners_model->agency_programs_list($agency_id);
                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);

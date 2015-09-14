@@ -136,8 +136,8 @@ class Development_partners_model extends CI_Model
 
     public function agency_programs_list_update($agency_id)
     {
-    	$usergroupid = $this->session->userdata('group_uid');
-		$query="  SELECT * FROM  attribution_hierarchy_programs ahp WHERE  NOT EXISTS 
+        $usergroupid = $this->session->userdata('group_uid');
+        $query = "  SELECT * FROM  attribution_hierarchy_programs ahp WHERE  NOT EXISTS
   (SELECT * FROM   attribution_hierarchy_programs ahpa WHERE  ahpa.hierarchy_uid='$agency_id' and ahp.program_id = ahpa.program_id) and  ahp.hierarchy_uid='$usergroupid'";
         $list = $this->db->query($query);
         if (sizeof($list->result()) >= 1) {
@@ -178,72 +178,67 @@ class Development_partners_model extends CI_Model
 //        //Step1 Check if Development Partner exists
 //        $check = $this->db->get_where("attribution_hierarchy", array("name" => $name))->result();
 //        if (sizeof($check) === 0) {
-            //step2 -Update agency details in the usergroup
-            $usergroup = array(
-                "name" => $name,
-                'lastupdated' => date("Y-m-d")
+        //step2 -Update agency details in the usergroup
+        $usergroup = array(
+            "name" => $name,
+            'lastupdated' => date("Y-m-d")
+        );
+
+        $this->db->where('uid', $agency_uid);
+        if (!$this->db->update("usergroup", $usergroup)) {
+            return "Error Updating user group";
+        }
+
+        //Step3-Update agency details in the category option
+        $categoryoption = array(
+            "name" => $name,
+            "shortname" => substr($shortname, 0, 30),
+            'lastupdated' => date("Y-m-d")
+        );
+
+        $this->db->where('uid', $agency_uid);
+        if (!$this->db->update("dataelementcategoryoption", $categoryoption)) {
+            return "Error Updating Category Option";
+        }
+
+        //Step4  Update attribution_hierarchy table
+        $hierarchy = array(
+            "code" => $code,
+            "name" => $name,
+            "shortname" => $shortname
+        );
+
+        $this->db->where('uid', $agency_uid);
+        if (!$this->db->update("attribution_hierarchy", $hierarchy)) {
+            return "Error Updating Attribution Hierarchy";
+        }
+
+        //Step5 Insert Programs to attribution_hierarchy_programs
+        $this->db->delete("attribution_hierarchy_programs", array('hierarchy_uid' => $agency_uid));
+        foreach ($programs as $row) {
+            if (!$programinfo = $this->db->get_where("attribution_programs", array("program_id" => $row))) {
+                echo "Error Updating Details at program info";
+            }
+
+            $dets = $programinfo->row();
+
+            $hierarchy_programs = array(
+                "program_name" => $dets->program_name,
+                "program_id" => $dets->program_id,
+                "hierarchy_uid" => $agency_uid
             );
 
-            $this->db->where('uid', $agency_uid);
-            if (!$this->db->update("usergroup", $usergroup)) {
-                return "Error Updating user group";
+
+            if ($this->db->insert("attribution_hierarchy_programs", $hierarchy_programs)) {
+
+            } else {
+                return "An Error Occured During The C";
             }
 
-            //Step3-Update agency details in the category option
-            $categoryoption = array(
-                "name" => $name,
-                "shortname" => substr($shortname, 0, 30),
-                'lastupdated' => date("Y-m-d")
-            );
 
-            $this->db->where('uid', $agency_uid);
-            if (!$this->db->update("dataelementcategoryoption", $categoryoption)) {
-                return "Error Updating Category Option";
-            }
+        }
 
-            //Step4  Update attribution_hierarchy table
-            $hierarchy = array(
-                "code" => $code,
-                "name" => $name,
-                "shortname" => $shortname
-            );
-
-            $this->db->where('uid', $agency_uid);
-            if (!$this->db->update("attribution_hierarchy", $hierarchy)) {
-                return "Error Updating Attribution Hierarchy";
-            }
-	
-            //Step5 Insert Programs to attribution_hierarchy_programs
-            $this->db->delete("attribution_hierarchy_programs",array('hierarchy_uid'=>$agency_uid));
-            foreach ($programs as $row) {
-                if(!$programinfo = $this->db->get_where("attribution_programs", array("program_id" => $row)))
-                {
-                    echo "Error Updating Details at program info";
-                }
-
-                $dets = $programinfo->row();
-
-                $hierarchy_programs = array(
-                    "program_name" => $dets->program_name,
-                    "program_id" => $dets->program_id,
-                    "hierarchy_uid" => $agency_uid
-                );
-	
-
-
-
-
-                        if($this->db->insert("attribution_hierarchy_programs", $hierarchy_programs)) {
-
-                        } else {
-                            return "An Error Occured During The Creation Of Development Partners";
-                        }
-
-
-
-            }
-
-            return TRUE;
+        return TRUE;
 
 //
 

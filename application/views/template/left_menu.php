@@ -84,7 +84,13 @@
                                 <i class="fa fa-bar-chart-o"></i>
                                 <span>Development Partners</span>
                             </a>
-                        </li>                                                                                                                                              
+                        </li>
+                        <li class="active">
+                            <a href="<?php echo base_url(); ?>agency_mechanism">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Agency</span>
+                            </a>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->
