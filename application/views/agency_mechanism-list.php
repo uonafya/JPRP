@@ -119,6 +119,7 @@
                     <tr>
                         <th style="width:10%">#</th>
                         <th style="width:20%">Mechanism Name</th>
+                        <th>Partner Name </th>
                         <th style="width:10%">Datim ID</th>
                         <th style="width:10%">KePMS ID</th>
                     </tr>
@@ -137,6 +138,7 @@
                             echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
                             echo "<td>$i</td>";
                             echo "<td>$row->name</td>";
+                            echo "<td>$row->shortname</td>";
                             echo "<td>$row->code</td>";
                             echo "<td>$kepms_id</td>";
                             $i++;
@@ -251,15 +253,16 @@
 <script type="text/javascript">
     // Hide error/Success message after 10 seconds
     $(window).load(function () {
+        $("#contextMenuID").hide();
         setTimeout(function () {
             $('#message').fadeOut('fast');
         }, 2000);
     });
 
     // Show Mechanism Details
-    function showMechanismDetails(datim_id) {
+    function showMechanismDetails(mechanism_uid) {
 
-        var url_show_mechanism_details = "<?php echo base_url('mechanisms/show_mechanism_details/')?>" + "/" + datim_id;
+        var url_show_mechanism_details = "<?php echo base_url('agency_mechanism/show_mechanism_details/')?>" + "/" + mechanism_uid;
         console.log(url_show_mechanism_details);
         $.ajax({
             url: url_show_mechanism_details,

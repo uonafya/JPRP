@@ -83,6 +83,11 @@ class Moh_manager extends CI_Controller {
 				$data['page']='developmentpartners-view'; 
 				$data['program'] = $this->moh_model->devpartner_programs_list($devuid);
 				$data['devpartner_details']= $this->moh_model->devpartner_details($devuid);
+				if(empty($data['devpartner_details'])){
+					$message =  "Invalid Development Partner";
+					redirect("/moh_manager/index/$message", 'refresh');
+				}
+
 				$data['agencies'] = $this->moh_model->devpartner_agencies($devuid);
 				$data['error_message']=str_replace("%20", " ", ""); 
 	            $data['agencyname']=$this->session->userdata('groupname');
@@ -105,6 +110,10 @@ class Moh_manager extends CI_Controller {
 				$data['dev_programs'] = $this->moh_model->devpartner_programs_list($devuid);
 				$data['programs'] = $this->moh_model->devpartner_programs_update($devuid) ; 
 				$data['devpartner_details']= $this->moh_model->devpartner_details($devuid);
+				if(empty($data['devpartner_details'])){
+					$message =  "Invalid Development Partner";
+					redirect("/moh_manager/index/$message", 'refresh');
+				}
 				$data['error_message']=str_replace("%20", " ", ""); 
 	            $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		

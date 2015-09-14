@@ -63,7 +63,6 @@ class Mechanisms_model extends CI_Model {
 	}*/
 	
 	public function mechanisms_excel_import($mechanisms_name,$datim_id, $partner_name, $kepms_id){
-		echo $datim_id;
 		//Check If The Mechanism Has An Attribution Key
 		$control=sizeof($this->db->get_where("attribution_keys",array("datim_id"=>$datim_id))->result());
 		if ($control==1) {

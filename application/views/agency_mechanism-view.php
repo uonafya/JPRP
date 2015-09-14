@@ -287,39 +287,37 @@
     <div class="row">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title"> <?php echo $mechanism_details->name; ?> : Facilties</h3>
+                <h3 class="box-title"> <?php echo $mechanism_details->name; ?> : Facilities</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-                <table id="mechanism-table" class="table table-bordered table-striped">
+                <table id="support-table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th style="width:50%">Facility Name</th>
-                        <th style="width:20%">MFL Code</th>
+                        <th style="width:20%">Organization Unit</th>
+                        <th style="width:10%">Program Name</th>
+                        <th style="width:10%">Support Type</th>
+                        <th style="width:10%">Start Date</th>
+                        <th style="width:10%">Stop Date</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Machakos</td>
-                        <td>3443</td>
-                    </tr>
+                    <?php
+                    if ($support != '') {
+                        $i = 1;
+                        foreach ($support as $row) {
+                            echo "<tr class='grade_tr' data-id='" . $row->hierarchy_uid . "' data-name='" . $row->mechanism_name . "' data-org='".$row->organization_name."'>";
+                            echo "<td>$row->organization_name</td>";
+                            echo "<td>$row->program_name</td>";
+                            echo "<td>$row->support_type</td>";
+                            echo "<td>$row->start_date</td>";
+                            echo "<td>$row->stop_date</td>";
+                            $i++;
+                        }
+                    }
 
-                    <tr>
-                        <td>Mama Lucy</td>
-                        <td>89</td>
-                    </tr>
 
-
-                    <!--                    --><?php
-                    //                    if ($mechanisms != false) {
-                    //                        foreach ($mechanisms as $row) {
-                    //                            echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
-                    //                            echo "<td>$row->name</td>";
-                    //                            echo "<td>$row->shortname</td>";
-                    //                            echo "</tr>";
-                    //                        }
-                    //                    }
-                    //                    ?>
+                    ?>
                     </tbody>
 
                 </table>
@@ -333,7 +331,7 @@
 <script type="text/javascript">
     $(function () {
         $('#programs-table').dataTable({});
-        $('#mechanism-table').dataTable({});
+        $('#support-table').dataTable({});
     });
 </script>
 

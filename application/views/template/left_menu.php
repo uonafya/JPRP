@@ -91,6 +91,13 @@
                                 <span>Agency</span>
                             </a>
                         </li>
+
+                        <li class="active">
+                            <a href="<?php echo base_url(); ?>implementing_mechanism">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Implementing Mechanism</span>
+                            </a>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

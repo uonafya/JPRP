@@ -13,6 +13,7 @@ class Mechanisms extends CI_Controller {
 		$this->load->model('programs_model');	
 		$this->load->model('user_model'); 
 	}
+
 	public function index($errors=null){
         if($this->session->userdata('marker')!=1){
             redirect($this->index());

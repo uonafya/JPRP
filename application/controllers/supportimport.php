@@ -44,6 +44,8 @@ class Supportimport extends CI_Controller {
         	//Check If User Has Authority(program_magement) To Import Support
         	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
         		$file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\suportimport.xlsx";
+
+                $file="/home/banga/Downloads/suportimport.xlsx";
 				$no_empty_rows=TRUE;
 				$this->mechanisms_model->empty_attribution_mechanisms();
 				$this->load->library('excel');

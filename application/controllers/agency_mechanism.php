@@ -83,6 +83,7 @@
                  $data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));
                  $data['page']='agency_mechanism-view';
                  $data['program'] = $this->agency_mechanism_model->mechanism_programs_list($mechanism_id);
+                 $data['support'] = $this->agency_mechanism_model->mechanism_support_list($mechanism_id);
                  $data['mechanism_details']= $this->agency_mechanism_model->mechanism_details($mechanism_id);
 
                  if(empty($data['mechanism_details'])){
@@ -144,6 +145,24 @@
              }
          }
      }
+
+     // Fetch Mechanism Details
+     public function show_mechanism_details($mechanism_uid)
+     {
+         if ($this->session->userdata('marker') != 1) {
+             redirect($this->index());
+         } else {
+             //Check If User Has Authority(program_magement)  to view details of a mechanism
+             if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+                 if ($result = $this->agency_mechanism_model->show_mechanism_details($mechanism_uid)) {
+
+                     echo $data = json_encode($result);
+                 }
+             }
+         }
+
+     }
+
 
 
  }

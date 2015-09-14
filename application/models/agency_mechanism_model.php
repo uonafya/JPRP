@@ -199,6 +199,16 @@
         return "";
     }
 
+    //Support list
+    public function mechanism_support_list($hierarchy_uid){
+
+        $support=$this->db->get_where("attribution_mechanisms_programs",array("status"=>'active',"hierarchy_uid"=>$hierarchy_uid))->result();
+        if (sizeof($support)>=1) {
+            return $support;
+        }
+        return "";
+    }
+
 
     public function mechanism_programs_list_update($mechanism_uid)
     {
@@ -337,4 +347,62 @@
         return true;
     }
 
- }
+    // fetches details of a mechanism
+    public function show_mechanism_details($mechanism_uid)
+    {
+
+        $start_date = "";
+        $end_date = "";
+        $created_by = "";
+        $number_of_facilities = "";
+        $number_facilities_dsd="";
+        $number_facilities_ta="";
+        $mechanism_name = "";
+        $partner_name = "";
+        $name="";
+
+        // Mechanism info
+        if ($query = $this->db->get_where('attribution_mechanisms', array('mechanism_uid' => $mechanism_uid))) {
+            $row = $query->row();
+            $mechanism_name = $row->mechanism_name;
+            $start_date = $row->start_date;
+            $end_date = $row->end_date;
+            $created_by=$row->created_by;
+        }
+
+//        // Number of DSD facilities
+//        $this->db->select('count(datim_id)');
+//        if ($query = $this->db->get_where('attribution_mechanisms_programs', array('datim_id' => $mechanism_uid,
+//            'support_type'=>'DSD'))) {
+//            $number_facilities_dsd = $query->row()->count;
+//        }
+//
+//        // Number of TA facilities
+//        $this->db->select('count(datim_id)');
+//        if ($query = $this->db->get_where('attribution_mechanisms_programs', array('datim_id' =>  $mechanism_uid,
+//            'support_type'=>'TA'))) {
+//            $number_facilities_ta = $query->row()->count;
+//        }
+
+        // Created by info
+        if($created_by!="")
+        {
+            $created_by_query = $this->db->get_where('userinfo', array('uid' => $created_by));
+            if (sizeof($created_by_query->result())==1) {
+                $row = $created_by_query->row();
+                $name = $row->firstname." ".$row->surname;
+            }
+        }
+
+        $data = array(
+            'mechanism_name' => $mechanism_name,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'created_by'=>$name,
+            'facilities_ta'=>$number_facilities_ta,
+            'facilities_dsd'=>$number_facilities_dsd);
+
+        return $data;
+    }
+
+}
