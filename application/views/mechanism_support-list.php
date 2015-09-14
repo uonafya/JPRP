@@ -114,9 +114,9 @@
                 <?php if ($mechanism_right) {
                     echo '<h1 id="message" style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
                 } ?>
-                <?php if ($mechanism_right) {
-                    echo '<a href="' . base_url('implementing_mechanism/upload_view') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Upload IPSL</a>';
-                } ?>
+<!--                --><?php //if ($mechanism_right) {
+//                    echo '<a href="' . base_url('implementing_mechanism/upload_view') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Upload IPSL</a>';
+//                } ?>
 
             </div>
             <!-- /.box-header -->
@@ -156,7 +156,7 @@
     <div class="row">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title"> Facilities</h3>
+                <h3 class="box-title"> IPSL</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">

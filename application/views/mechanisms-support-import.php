@@ -257,9 +257,9 @@
                 <?php if ($mechanisms_right) {
                     echo '<h1 style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: red">' . $error_message . '</h1>';
                 } ?>
-                <?php if ($mechanisms_right) {
-                    echo '<a href="' . base_url('mechanisms/addmechanism') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Mechanism Support</a>';
-                } ?>
+<!--                --><?php //if ($mechanisms_right) {
+//                    echo '<a href="' . base_url('mechanisms/addmechanism') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Mechanism Support</a>';
+//                } ?>
 
             </div>
             <!-- /.box-header -->
@@ -470,130 +470,130 @@
 
 </script>
 
-<!-- Pop over Class -->
-
-<style type="text/css">
-
-    /*table{
-        -moz-user-select: none;
-    }
-    */
-    .contextMenu {
-        position: absolute;
-        font-size: 9pt;
-        color: #000;
-        border: 1px solid #ddd;
-        padding-left: 4px;
-        padding-right: 4px;
-        width: 60px;
-        max-height: 400px;
-        overflow-y: auto;
-        background-color: #f7f7f7;
-        display: none;
-        z-index: 9;
-        filter: alpha(opacity=98);
-        opacity: 0.98;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        box-shadow: #ccc 0 1px 1px 0;
-    }
-
-    .contextMenuItemActive {
-        background-color: #246BA1 !important;
-        color: #fff !important;
-    }
-
-</style>
-
-
-<div id="contextMenuID" class="contextMenu" style="width: 200px; display:block;">
-    <button type="button" class="close" id="btn-dismiss" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
-    <br/>
-    <ul class="" style="list-style-type:none">
-        <?php
-        echo '<li class=""><a href="#" id="view"><i class="fa fa-plus"></i> View</a></li> <br>';
-        if ($mechanisms_right) {
-            echo '<li class=""><a href="#" id="edit"><i class="fa fa-edit"></i> Update</a></li> <br>';
-        };
-        if ($mechanisms_right) {
-            echo '<li class=""><a href="#" id="remove" onclick=""><i class="fa fa-trash-o"></i> Drop Support</a></li> <br>';
-        };
-        if (true) {
-            echo '<li class=""><a href="#" id="attribute"><i class="fa fa-plus"></i> Attribute</a></li> <br>';
-        };
-        ?>
-    </ul>
-</div>
-
-
-<!--  -->
-<script>
-
-    $(document).ready(function () {
-        $("#contextMenuID").hide();
-        $('#programs-table').DataTable();
-
-
-        $('body').delegate('#mechanisms-table .grade_tr', 'click', function (event) {
-
-
-            var menuHeight = $('.contextMenu').height();
-            var menuWidth = $('.contextMenu').width();
-            var winHeight = $(window).height();
-            var winWidth = $(window).width();
-
-            var pageX = event.pageX;
-            var pageY = event.pageY;
-
-            if ((menuWidth + pageX) > winWidth) {
-                pageX -= menuWidth;
-            }
-
-            if ((menuHeight + pageY) > winHeight) {
-                pageY -= menuHeight;
-
-                if (pageY < 0) {
-                    pageY = event.pageY;
-                }
-            }
-
-            var mouseCoordinates = {
-                x: pageX,
-                y: pageY
-            };
-
-
-            $("#contextMenuID").show();
-            $("#contextMenuID").css({"top": mouseCoordinates.y, "left": mouseCoordinates.x});
-
-            $("tbody tr").removeClass("alert alert-success");
-            $(this).addClass("alert alert-success");
-
-            var id = $(this).closest('tr').data('id');
-            var mechanism_name = $(this).closest('tr').data('name');
-            var support=$(this).closest('tr').data('support');
-            var period =$(this).closest('tr').data('period');
-            var org =$(this).closest('tr').data('org');
-
-            // Actions
-            document.getElementById("view").href = "<?php echo base_url();?>" + "mechanisms/viewmechanism/" + id;
-            document.getElementById("edit").href = "<?php echo base_url();?>" + "mechanisms/editmechanism/" + id;
-            document.getElementById("remove").setAttribute('onclick', "dropsupport('" + id + "','" + org + "','" + mechanism_name + "','" + support + "','" + period + "')");
-            document.getElementById("attribute").href = "<?php echo base_url();?>" + "mechanisms/mechanisms_data_attribution/" + id;
-
-        });
-
-        $("#btn-dismiss, thead, tfoot").click(function () {
-
-            $("#contextMenuID").hide(100);
-            $("tr").removeClass("alert alert-success");
-
-        })
-
-    });
-
-</script>
+<!--<!-- Pop over Class -->-->
+<!---->
+<!--<style type="text/css">-->
+<!---->
+<!--    /*table{-->
+<!--        -moz-user-select: none;-->
+<!--    }-->
+<!--    */-->
+<!--    .contextMenu {-->
+<!--        position: absolute;-->
+<!--        font-size: 9pt;-->
+<!--        color: #000;-->
+<!--        border: 1px solid #ddd;-->
+<!--        padding-left: 4px;-->
+<!--        padding-right: 4px;-->
+<!--        width: 60px;-->
+<!--        max-height: 400px;-->
+<!--        overflow-y: auto;-->
+<!--        background-color: #f7f7f7;-->
+<!--        display: none;-->
+<!--        z-index: 9;-->
+<!--        filter: alpha(opacity=98);-->
+<!--        opacity: 0.98;-->
+<!--        border-bottom-left-radius: 3px;-->
+<!--        border-bottom-right-radius: 3px;-->
+<!--        box-shadow: #ccc 0 1px 1px 0;-->
+<!--    }-->
+<!---->
+<!--    .contextMenuItemActive {-->
+<!--        background-color: #246BA1 !important;-->
+<!--        color: #fff !important;-->
+<!--    }-->
+<!---->
+<!--</style>-->
+<!---->
+<!---->
+<!--<div id="contextMenuID" class="contextMenu" style="width: 200px; display:block;">-->
+<!--    <button type="button" class="close" id="btn-dismiss" aria-label="Close"><span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+<!--    <br/>-->
+<!--    <ul class="" style="list-style-type:none">-->
+<!--        --><?php
+//        echo '<li class=""><a href="#" id="view"><i class="fa fa-plus"></i> View</a></li> <br>';
+//        if ($mechanisms_right) {
+//            echo '<li class=""><a href="#" id="edit"><i class="fa fa-edit"></i> Update</a></li> <br>';
+//        };
+//        if ($mechanisms_right) {
+//            echo '<li class=""><a href="#" id="remove" onclick=""><i class="fa fa-trash-o"></i> Drop Support</a></li> <br>';
+//        };
+//        if (true) {
+//            echo '<li class=""><a href="#" id="attribute"><i class="fa fa-plus"></i> Attribute</a></li> <br>';
+//        };
+//        ?>
+<!--    </ul>-->
+<!--</div>-->
+<!---->
+<!---->
+<!--<!--  -->-->
+<!--<script>-->
+<!---->
+<!--    $(document).ready(function () {-->
+<!--        $("#contextMenuID").hide();-->
+<!--        $('#programs-table').DataTable();-->
+<!---->
+<!---->
+<!--        $('body').delegate('#mechanisms-table .grade_tr', 'click', function (event) {-->
+<!---->
+<!---->
+<!--            var menuHeight = $('.contextMenu').height();-->
+<!--            var menuWidth = $('.contextMenu').width();-->
+<!--            var winHeight = $(window).height();-->
+<!--            var winWidth = $(window).width();-->
+<!---->
+<!--            var pageX = event.pageX;-->
+<!--            var pageY = event.pageY;-->
+<!---->
+<!--            if ((menuWidth + pageX) > winWidth) {-->
+<!--                pageX -= menuWidth;-->
+<!--            }-->
+<!---->
+<!--            if ((menuHeight + pageY) > winHeight) {-->
+<!--                pageY -= menuHeight;-->
+<!---->
+<!--                if (pageY < 0) {-->
+<!--                    pageY = event.pageY;-->
+<!--                }-->
+<!--            }-->
+<!---->
+<!--            var mouseCoordinates = {-->
+<!--                x: pageX,-->
+<!--                y: pageY-->
+<!--            };-->
+<!---->
+<!---->
+<!--            $("#contextMenuID").show();-->
+<!--            $("#contextMenuID").css({"top": mouseCoordinates.y, "left": mouseCoordinates.x});-->
+<!---->
+<!--            $("tbody tr").removeClass("alert alert-success");-->
+<!--            $(this).addClass("alert alert-success");-->
+<!---->
+<!--            var id = $(this).closest('tr').data('id');-->
+<!--            var mechanism_name = $(this).closest('tr').data('name');-->
+<!--            var support=$(this).closest('tr').data('support');-->
+<!--            var period =$(this).closest('tr').data('period');-->
+<!--            var org =$(this).closest('tr').data('org');-->
+<!---->
+<!--            // Actions-->
+<!--<!--            document.getElementById("view").href = "-->--><?php ////echo base_url();?><!--//" + "mechanisms/viewmechanism/" + id;-->
+<!--//            document.getElementById("edit").href = "--><?php ////echo base_url();?><!--//" + "mechanisms/editmechanism/" + id;-->
+<!--//            document.getElementById("remove").setAttribute('onclick', "dropsupport('" + id + "','" + org + "','" + mechanism_name + "','" + support + "','" + period + "')");-->
+<!--//            document.getElementById("attribute").href = "--><?php ////echo base_url();?><!--//" + "mechanisms/mechanisms_data_attribution/" + id;-->
+<!--//-->
+<!--//        });-->
+<!--//-->
+<!--//        $("#btn-dismiss, thead, tfoot").click(function () {-->
+<!--//-->
+<!--//            $("#contextMenuID").hide(100);-->
+<!--//            $("tr").removeClass("alert alert-success");-->
+<!--//-->
+<!--//        })-->
+<!--//-->
+<!--//    });-->
+<!--//-->
+<!--//</script>-->
 
 
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
