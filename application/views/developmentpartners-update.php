@@ -385,20 +385,22 @@
                     }); 
                 </script>
 
-                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('moh_manager/newdevp')?>" method="post" style="margin-left: -30px ">
+                <form class="donor_form" id="Mechanism_details" action="<?php echo base_url('moh_manager/save_devp_update')?>" method="post" style="margin-left: -30px ">
                     <ul>    
                         <li>
                              <h2>Development Partner Details </h2>
-                             <span class="required_notification">* Denotes Required Field</span>
+
+                            <input type="hidden" name="devp_uid" id=""  value='<?php echo $devpartner_details->uid; ?>' >
+                            <span class="required_notification">* Denotes Required Field</span>
                         </li>
                         <li>
                             <label for="name">Name:</label>
-                            <input type="text" name="name" id=""  value='<?php echo $devpartner_details->name; ?>'   required pattern="[A-Za-z\s]{5,150}"  />
-                            <span class="form_hint">Development Partner Name Must Be Of Atleast 5 Characters</span>
+                            <input type="text" name="name" id=""  value='<?php echo $devpartner_details->name; ?>'   required pattern="{2,150}"  />
+                            <span class="form_hint">Development Partner Name Must Be Of Atleast 3 Characters</span>
                         </li>                        
                         <li>
                             <label for="name">Short Name:</label>
-                            <input type="text" name="sname" id=""  value='<?php echo $devpartner_details->shortname; ?>' required pattern="[A-Za-z\s]{2,20}"  />
+                            <input type="text" name="sname" id=""  value='<?php echo $devpartner_details->shortname; ?>' required pattern="{2,20}"  />
                             <span class="form_hint">Development Partner Short Name Must Be Of Atleast 2 Characters</span>
                         </li>                         
                         <li>

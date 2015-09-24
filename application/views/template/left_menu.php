@@ -13,6 +13,7 @@
                                 ?>" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
+                        	<p style="font-size: 24px"><?php echo $this->session->userdata('name');?> </p>
                             <p><?php echo $agencyname;?> </p>
                         </div>
                     </div>
@@ -97,7 +98,13 @@
                                 <i class="fa fa-bar-chart-o"></i>
                                 <span>Implementing Mechanism</span>
                             </a>
-                        </li>
+                        </li> 
+                        <li class="active">
+                            <a href="<?php echo base_url(); ?>data_attribution">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Data Attribution</span>
+                            </a>
+                        </li>                                                                                                                                                                   
                     </ul>
                 </section>
                 <!-- /.sidebar -->

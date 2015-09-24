@@ -19,9 +19,9 @@ class Supportimport extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
         		$data["support"]=$this->mechanisms_model->mechanisms_support();
-				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));
+				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
 				$data['page']='mechanisms-support-import'; 
 				$data['error_message']=str_replace("%20", " ", ""); 
 				$data['import_errors']=$this->mechanisms_model->mechanisms_support_errors();
@@ -42,10 +42,8 @@ class Supportimport extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Import Support
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
         		$file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\suportimport.xlsx";
-
-                $file="/home/banga/Downloads/suportimport.xlsx";
 				$no_empty_rows=TRUE;
 				$this->mechanisms_model->empty_attribution_mechanisms();
 				$this->load->library('excel');

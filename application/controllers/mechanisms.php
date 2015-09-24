@@ -13,15 +13,14 @@ class Mechanisms extends CI_Controller {
 		$this->load->model('programs_model');	
 		$this->load->model('user_model'); 
 	}
-
 	public function index($errors=null){
         if($this->session->userdata('marker')!=1){
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
         		$data["mechanisms"]=$this->mechanisms_model->mechanisms_list();
-				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));
+				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
 				$data['page']='mechanisms-list'; 
 				$data['error_message']=str_replace("%20", " ", $errors); 
 	            $data['agencyname']=$this->session->userdata('groupname');
@@ -39,7 +38,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
         		$file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\$file_name";
 				$no_empty_rows=TRUE;
 				$this->mechanisms_model->empty_attribution_mechanisms();
@@ -138,7 +137,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
 				$data['page']='mechanisms-add';
 				$data['orgunits']=$this->mechanisms_model->get_all_orgunits();
 				$data['programs']=$this->programs_model->all_programs_list();
@@ -156,11 +155,11 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
         		$data["mech_details"]=$this->mechanisms_model->mechanism_info($datim_id);
 				$data["mech_programs"]=$this->mechanisms_model->get_mech_programs($datim_id);  
-				$data['attribution_right']=$this->user_model->get_user_role('attribution',$this->session->userdata('useruid'));		
-				$data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));				
+				$data['attribution_right']=$this->user_model->get_user_role('attribution',$this->session->userdata('userroleid'));		
+				$data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));				
 				$data['page']='mechanisms-view';  
 	            $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
@@ -176,7 +175,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
 				if (isset($_POST["data"])) {
 					$data = json_decode($_POST["data"],true);
 	                $infoarray=array(
@@ -211,7 +210,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
             //Check If User Has Authority(program_magement) To delete Programs
-            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
                 if($this->mechanisms_model->deletemechanism($datim_id)==TRUE){
                     header('Content-Type: application/x-json; charset=utf-8'); 
                     echo "The Mechanism Has Successfully Been removed";
@@ -233,9 +232,9 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Create Programs
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
         		$data["support"]=$this->mechanisms_model->mechanisms_support();
-				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));
+				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
 				$data['page']='mechanisms-support-import'; 
 				$data['error_message']=str_replace("%20", " ", ""); 
 	            $data['agencyname']=$this->session->userdata('groupname');
@@ -255,7 +254,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Import Support
-        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+        	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
         		$file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\suportimport.xlsx";
 				$no_empty_rows=TRUE;
 				$this->mechanisms_model->empty_mechanisms_support_errors();
@@ -395,7 +394,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         }else{
             //Check If User Has Authority(program_magement) To delete Programs
-            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
                 if($this->mechanisms_model->drop_mechanism_support($id)==TRUE){
                     header('Content-Type: application/x-json; charset=utf-8'); 
                     echo "The Mechanism Support Has Successfully Been Dropped";
@@ -415,7 +414,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To  Create a Mechanism
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($progress = $this->mechanisms_model->addnewmechanism() == TRUE) {
                     $message = $message = "The Mechanism Has Successfully Been Created";
                     redirect("/mechanisms/index/$message", 'refresh');
@@ -435,7 +434,7 @@ class Mechanisms extends CI_Controller {
         if ($this->session->userdata('marker') != 1) {
             redirect($this->index());
         } else {
-            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
                 $data['page']='mechanisms-edit';
                 $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
                 $data['programs']=$this->programs_model->all_programs_list();
@@ -456,7 +455,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Update Mechanism
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 $progress = $this->mechanisms_model->update_mechanism();
                 if ($progress === TRUE) {
 
@@ -484,7 +483,7 @@ class Mechanisms extends CI_Controller {
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement)  to view details of a mechanism
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($result = $this->mechanisms_model->show_mechanism_details($datim_id)) {
 
                     echo $data = json_encode($result);

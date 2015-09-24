@@ -232,7 +232,7 @@ class Development_partners_model extends CI_Model
             if ($this->db->insert("attribution_hierarchy_programs", $hierarchy_programs)) {
 
             } else {
-                return "An Error Occured During The C";
+                return "An Error Occurred During The Agency Update";
             }
 
 

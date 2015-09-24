@@ -406,8 +406,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Program Name:</label>
-                                <input type="text" name="pname" id="pname"  placeholder="Program Name"  required pattern="[A-Za-z\s]{10,}"  />
-                                <span class="form_hint">Program Name Must Be Of Atleast 10 Characters</span>
+                                <input type="text" name="pname" id="pname"  placeholder="Program Name"  required pattern="{2,}"  />
+                                <span class="form_hint">Program Name Must Be Of Atleast 2 Characters</span>
                             </div>
 
                             <div class="form-group">

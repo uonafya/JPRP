@@ -127,4 +127,79 @@ class Moh_model extends CI_Model {
 
 		
 	}
+
+	public function save_devp_update()
+	{
+		$name = $this->input->post('name');
+		$devp_uid = $this->input->post('devp_uid');
+		$shortname = $this->input->post('sname');
+		$code = $this->input->post('code');
+		$programs = $this->input->post("programs");
+
+		$length = 11;
+
+
+		$usergroup = array(
+			"name" => $name,
+			'lastupdated' => date("Y-m-d")
+		);
+
+		$this->db->where('uid', $devp_uid);
+		if (!$this->db->update("usergroup", $usergroup)) {
+			return "Error Updating user group";
+		}
+
+		//Step3-Update agency details in the category option
+		$categoryoption = array(
+			"name" => $name,
+			"shortname" => substr($shortname, 0, 30),
+			'lastupdated' => date("Y-m-d")
+		);
+
+		$this->db->where('uid', $devp_uid);
+		if (!$this->db->update("dataelementcategoryoption", $categoryoption)) {
+			return "Error Updating Category Option";
+		}
+
+		//Step4  Update attribution_hierarchy table
+		$hierarchy = array(
+			"code" => $code,
+			"name" => $name,
+			"shortname" => $shortname
+		);
+
+		$this->db->where('uid', $devp_uid);
+		if (!$this->db->update("attribution_hierarchy", $hierarchy)) {
+			return "Error Updating Attribution Hierarchy";
+		}
+
+		//Step5 Insert Programs to attribution_hierarchy_programs
+		$this->db->delete("attribution_hierarchy_programs", array('hierarchy_uid' => $devp_uid));
+		foreach ($programs as $row) {
+			if (!$programinfo = $this->db->get_where("attribution_programs", array("program_id" => $row))) {
+				echo "Error Updating Details at program info";
+			}
+
+			$dets = $programinfo->row();
+
+			$hierarchy_programs = array(
+				"program_name" => $dets->program_name,
+				"program_id" => $dets->program_id,
+				"hierarchy_uid" => $devp_uid
+			);
+
+
+			if ($this->db->insert("attribution_hierarchy_programs", $hierarchy_programs)) {
+
+			} else {
+				return "An Error occurred During Development Partner Update ";
+			}
+
+
+		}
+
+		return TRUE;
+
+	}
+
 }

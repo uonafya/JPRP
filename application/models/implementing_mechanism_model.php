@@ -8,15 +8,27 @@
 
  class Implementing_mechanism_model extends CI_Model{
 
-     public function mechanism_support_list(){
+     public function mechanism_support_list($datim_id){
          $hierarchy_uid=$this->session->userdata('group_uid');
-
-         $support=$this->db->get_where("attribution_mechanisms_programs",array("status"=>'active',"hierarchy_uid"=>$hierarchy_uid))->result();
-         if (sizeof($support)>=1) {
-             return $support;
+         if($datim_id!="")
+         {
+             $support=$this->db->get_where("attribution_mechanisms_programs",array("status"=>'active',"datim_id"=>$datim_id))->result();
+             if (sizeof($support)>=1) {
+                 return $support;
+             }
          }
          return "";
      }
+
+     public function get_datim_id($hierarchy_uid)
+     {
+         $list = $this->db->get_where("attribution_mechanisms", array("mechanism_uid" => $hierarchy_uid));
+         if (sizeof($list->result()) >= 1) {
+             return $list->row()->datim_id;
+         }
+         return "";
+     }
+
 
      public function mechanism_details($mechanism_uid)
      {

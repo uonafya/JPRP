@@ -21,8 +21,8 @@ class Programmanager extends CI_Controller
                 $data['page'] = 'programs-list';
                 //Get All The Programs from All The Datasets From Database
                 $data['programs'] = $this->programs_model->all_programs_list();
-                $data['attribution_right'] = $this->user_model->get_user_role('attribution', $this->session->userdata('useruid'));
-                $data['program_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('useruid'));
+                $data['attribution_right'] = $this->user_model->get_user_role('attribution', $this->session->userdata('userroleid'));
+                $data['program_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
                 $data['error_message'] = str_replace("%20", " ", $errors);
                 //Get programs and the implementation partners
                 $data['agencyname'] = $this->session->userdata('groupname');
@@ -32,8 +32,8 @@ class Programmanager extends CI_Controller
         } else {
             //Skip Creating a new session Key
             $data['page'] = 'programs-list';
-            $data['attribution_right'] = $this->user_model->get_user_role('attribution', $this->session->userdata('useruid'));
-            $data['program_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('useruid'));
+            $data['attribution_right'] = $this->user_model->get_user_role('attribution', $this->session->userdata('userroleid'));
+            $data['program_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
             $data['agencyname'] = $this->session->userdata('groupname');
             $data['error_message'] = str_replace("%20", " ", $errors);
             $data['programs'] = $this->programs_model->all_programs_list();
@@ -47,37 +47,40 @@ class Programmanager extends CI_Controller
     //Get the sessions and there roles
     public function sessionmanager($uid)
     {
-        //Get User Group ID
+        //Get User Group UID
         $groupid = $this->partner_model->getsessionuser($uid);
         if ($groupid != "error1" && $groupid != "error2") {
+        	//CheckIF User Has Been ALlocated A Role
+        	$groupname = $this->partner_model->getsessiongroupname($groupid);
+        	$userrole=$this->partner_model->get_userrole($uid);
+			if ($userrole=="false") {
+				$data['message'] = "Kindly Contact The Administrator User Desnot Exists";
+				$this->load->view('error', $data);
+				die();
+			} else {
+				if ($userrole->attributionroleid!="") {
+					$roleid=$userrole->attributionroleid;
+				} else {
+					$roleid=$groupname->attributionroleid;
+				}			
+			}
+            //Get User Gender
+            $gender = $this->partner_model->gender($uid);
+            $newdata = array(
+                'marker' => '1',
+                'groupid' => $groupid,
+                'groupname' => $groupname->name,
+                'group_uid'=>$groupname->uid,
+                'gender' => $gender->gender,
+                'useruid' => $uid,
+                'name'=>$gender->firstname,
+                'logged_in' => TRUE,
+                'userroleid'=>$roleid,
+                'username'=>$this->partner_model->get_username($uid)
+            );
+            $this->session->set_userdata($newdata);
+            return true;
 
-            if ($this->categoryoptionattribution($groupid) == "ok") {
-                //Get User Group Agency Level
-                if ($this->partner_model->groupagencylevel($groupid) == TRUE) {
-                    //Get User Group Name
-                    $groupname = $this->partner_model->getsessiongroupname($groupid);
-                    //Get User Gender
-                    $gender = $this->partner_model->gender($uid);
-                    $newdata = array(
-                        'marker' => '1',
-                        'groupid' => $groupid,
-                        'groupname' => $groupname->name,
-                        'group_uid'=>$groupname->uid,
-                        'gender' => $gender->gender,
-                        'useruid' => $uid,
-                        'name'=>$gender->firstname,
-                        'logged_in' => TRUE
-                    );
-                    $this->session->set_userdata($newdata);
-                    return true;
-                } else {
-                    $data['message'] = "Kindly Contact The Administrator You Have To Allocate You A Agency Level";
-                    $this->load->view('error', $data);
-                }
-            } else {
-                $data['message'] = $this->categoryoptionattribution();
-                $this->load->view('error', $data);
-            }
         } else {
             $newdata = array(
                 'marker' => '0',
@@ -101,7 +104,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 $data['page'] = 'programs-create';
 //                Steve: Get data sets from Database
                 $data['datasets'] = $this->programs_model->get_datasets();
@@ -125,7 +128,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($progress = $this->programs_model->newprogram() == TRUE) {
                     $message = $message = "The Program Has Successfully Been Created";
                     redirect("/programmanager/index/null/$message", 'refresh');
@@ -146,7 +149,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 $data["program_details"] = $this->programs_model->program_info($programid);
                 $data["program_dataelements"] = $this->programs_model->get_program_dataelements($programid);
                 $data["available"] = $this->programs_model->get_available_elements($programid);
@@ -175,7 +178,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
 
                 if ($progress = $this->programs_model->create_program_dataelements_archive($program_id) == TRUE) {
 
@@ -199,7 +202,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 $progress = $this->programs_model->update_program($program_id);
                 if ($progress === TRUE) {
 
@@ -225,7 +228,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($progress = $this->programs_model->check_change_in_program_dataelements($program_id) === TRUE) {
 //                    Data elements not changed
                     echo 0;
@@ -246,7 +249,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 $data["program_details"] = $this->programs_model->program_info($program_id);
                 $data["program_dataelements"] = $this->programs_model->get_program_dataelements($program_id);
                 $data['page'] = 'programs-view';
@@ -266,7 +269,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($this->programs_model->deleteprogram($program_id) == TRUE) {
                     header('Content-Type: application/x-json; charset=utf-8');
                     echo "The Program Has Successfully Been Deleted";
@@ -289,7 +292,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement)  to view details of a program
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($result = $this->programs_model->show_program_details($program_id)) {
 
                     echo $data = json_encode($result);

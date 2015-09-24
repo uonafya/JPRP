@@ -24,9 +24,9 @@ class Implementing_mechanism extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 $data["support"] = $this->implementing_mechanism_model->mechanism_support_list();
-                $data['mechanism_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('useruid'));
+                $data['mechanism_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
                 $data['page'] = 'upload_ipsl';
                 $data['import_errors'] = $this->implementing_mechanism_model->mechanisms_support_errors();
                 $data['error_message'] = str_replace("%20", " ", "");
@@ -45,10 +45,14 @@ class Implementing_mechanism extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
-                $data["support"] = $this->implementing_mechanism_model->mechanism_support_list();
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
+
+                $hierarchy_uid=$this->session->userdata('group_uid');
+                $datim_id=$this->implementing_mechanism_model->get_datim_id($hierarchy_uid);
+
+                $data["support"] = $this->implementing_mechanism_model->mechanism_support_list($datim_id);
                 $data["programs"] = $this->implementing_mechanism_model->mechanism_programs_list();
-                $data['mechanism_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('useruid'));
+                $data['mechanism_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
                 $data['page'] = 'mechanism_support-list';
                 $data['error_message'] = str_replace("%20", " ", "");
                 $data['agencyname'] = $this->session->userdata('groupname');
@@ -67,7 +71,7 @@ class Implementing_mechanism extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Import Support
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
 //                $file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\suportimport.xlsx";
                 $file="~/home/banga/Downloads/suportimport.xlsx";
                 $no_empty_rows = TRUE;
@@ -213,7 +217,7 @@ class Implementing_mechanism extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To delete Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($this->implementing_mechanism_model->drop_mechanism_support($id) == TRUE) {
                     header('Content-Type: application/x-json; charset=utf-8');
                     echo "The Mechanism Support Has Successfully Been Dropped";
