@@ -104,7 +104,15 @@
                                 <i class="fa fa-bar-chart-o"></i>
                                 <span>Data Attribution</span>
                             </a>
-                        </li>                                                                                                                                                                   
+                        </li>         
+
+                         <li class="active">
+                            <a href="<?php echo base_url(); ?>message">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Mailbox</span>
+                            </a>
+                        </li>  
+
                     </ul>
                 </section>
                 <!-- /.sidebar -->

@@ -378,7 +378,7 @@ class Partner_model extends CI_Model {
 
             $user_query=$this->db->get_where('users',array('userid'=>$user_id));
             if(sizeof($user_query->result())==1){
-                return $user_query->username;
+                return $user_query->row()->username;
             }
 
         }

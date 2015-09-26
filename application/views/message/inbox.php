@@ -9,7 +9,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Mailbox-MIMI
+        Mailbox-<?php echo $this->session->userdata('username'); ?>
     </h1>
 
     <ol class="breadcrumb">
@@ -21,6 +21,12 @@
 
 <!-- Main content -->
 <section class="content">
+    <div class="box-header col-md-12">
+        <?php if ($right) {
+            echo '<h1 class="return-message" style="float: left; margin-left: 30%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
+        } ?>
+
+    </div>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-md-2">
@@ -78,72 +84,26 @@
                 </div>
                 <div class="mail-box">
 
-                    <table class="table table-hover table-mail">
+                    <table id="inbox-mail-table" class="table table-hover table-mail">
                         <tbody>
-                        <tr class="unread">
-                            <td class="check-mail">
-                                <input type="checkbox" class="i-checks">
-                            </td>
-                            <td class="mail-ontact"><a href="">Anna
-                                    Smith</a></td>
-                            <td class="mail-subject"><a href="<?php echo base_url(); ?>message/mail_detail">Lorem ipsum
-                                    dolor noretek imit set.</a></td>
-                            <td class=""><i class="fa fa-paperclip"></i></td>
-                            <td class="text-right mail-date">6.10 AM</td>
-                        </tr>
-                        <tr class="unread">
-                            <td class="check-mail">
-                                <input type="checkbox" class="i-checks" checked>
-                            </td>
-                            <td class="mail-ontact"><a href="<?php echo base_url(); ?>message/mail_detail">Jack
-                                    Nowak</a></td>
-                            <td class="mail-subject"><a href="<?php echo base_url(); ?>message/mail_detail">Aldus
-                                    PageMaker including versions of Lorem Ipsum.</a></td>
-                            <td class=""></td>
-                            <td class="text-right mail-date">8.22 PM</td>
-                        </tr>
-                        <tr class="read">
-                            <td class="check-mail">
-                                <input type="checkbox" class="i-checks">
-                            </td>
-                            <td class="mail-ontact"><a href="mail_detail.html">Facebook</a> <span
-                                    class="label label-warning pull-right">Clients</span></td>
-                            <td class="mail-subject"><a href="mail_detail.html">Many desktop publishing packages and web
-                                    page editors.</a></td>
-                            <td class=""></td>
-                            <td class="text-right mail-date">Jan 16</td>
-                        </tr>
-                        <tr class="read">
-                            <td class="check-mail">
-                                <input type="checkbox" class="i-checks">
-                            </td>
-                            <td class="mail-ontact"><a href="mail_detail.html">Mailchip</a></td>
-                            <td class="mail-subject"><a href="mail_detail.html">There are many variations of passages of
-                                    Lorem Ipsum.</a></td>
-                            <td class=""></td>
-                            <td class="text-right mail-date">Mar 22</td>
-                        </tr>
-                        <tr class="read">
-                            <td class="check-mail">
-                                <input type="checkbox" class="i-checks">
-                            </td>
-                            <td class="mail-ontact"><a href="mail_detail.html">Alex T.</a> <span
-                                    class="label label-danger pull-right">Documents</span></td>
-                            <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a>
-                            </td>
-                            <td class=""><i class="fa fa-paperclip"></i></td>
-                            <td class="text-right mail-date">December 22</td>
-                        </tr>
-                        <tr class="read">
-                            <td class="check-mail">
-                                <input type="checkbox" class="i-checks">
-                            </td>
-                            <td class="mail-ontact"><a href="mail_detail.html">Monica Ryther</a></td>
-                            <td class="mail-subject"><a href="mail_detail.html">The standard chunk of Lorem Ipsum
-                                    used.</a></td>
-                            <td class=""></td>
-                            <td class="text-right mail-date">Jun 12</td>
-                        </tr>
+                         <?php if ($received_mails!=false): ?>
+                
+                            <?php foreach ($received_mails as $mail): ?>
+                                <tr class="unread mail-item" id="<?php echo $mail->message_id; ?>" data-sender="<?php echo $mail->sender_username; ?>" 
+                                data-receiver="<?php echo $mail->receiver_username; ?>" data-content="<?php echo $mail->message_content; ?>"
+                                data-subject="<?php echo $mail->message_subject; ?>" data-timestamp="<?php echo $mail->timestamp;?>">
+
+                                <td class="check-mail">
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td class="mail-contact text-info"><?php echo $mail->sender_username; ?></td>
+                                <td class="mail-subject text-warning"><?php echo substr($mail->message_subject,0,20); ?></td>
+                                <td class=""><?php echo substr($mail->message_content,0,30); ?>...</td>
+                                <td class="text-right mail-date text-success"><?php echo $mail->timestamp; ?></td>
+                            </tr>
+                            <?php endforeach ?>
+                        <?php endif ?>
+
                         </tbody>
                     </table>
 
@@ -186,68 +146,24 @@
     </div>
     <div class="mail-box">
 
-        <table class="table table-hover table-mail">
+        <table id="sent-mail-table" class="table table-hover table-mail">
             <tbody>
-            <tr class="unread">
-                <td class="check-mail">
-                    <input type="checkbox" class="i-checks">
-                </td>
-                <td class="mail-ontact"><a href="<?php echo base_url(); ?>message/mail_detail">Anna Smith</a></td>
-                <td class="mail-subject"><a href="<?php echo base_url(); ?>message/mail_detail">Lorem ipsum dolor
-                        noretek imit set.</a></td>
-                <td class=""><i class="fa fa-paperclip"></i></td>
-                <td class="text-right mail-date">6.10 AM</td>
-            </tr>
-            <tr class="unread">
-                <td class="check-mail">
-                    <input type="checkbox" class="i-checks" checked>
-                </td>
-                <td class="mail-ontact"><a href="<?php echo base_url(); ?>message/mail_detail">Jack Nowak</a></td>
-                <td class="mail-subject"><a href="<?php echo base_url(); ?>message/mail_detail">Aldus PageMaker
-                        including versions of Lorem Ipsum.</a></td>
-                <td class=""></td>
-                <td class="text-right mail-date">8.22 PM</td>
-            </tr>
-            <tr class="read">
-                <td class="check-mail">
-                    <input type="checkbox" class="i-checks">
-                </td>
-                <td class="mail-ontact"><a href="mail_detail.html">Facebook</a> <span
-                        class="label label-warning pull-right">Clients</span></td>
-                <td class="mail-subject"><a href="mail_detail.html">Many desktop publishing packages and web page
-                        editors.</a></td>
-                <td class=""></td>
-                <td class="text-right mail-date">Jan 16</td>
-            </tr>
-            <tr class="read">
-                <td class="check-mail">
-                    <input type="checkbox" class="i-checks">
-                </td>
-                <td class="mail-ontact"><a href="mail_detail.html">Mailchip</a></td>
-                <td class="mail-subject"><a href="mail_detail.html">There are many variations of passages of Lorem
-                        Ipsum.</a></td>
-                <td class=""></td>
-                <td class="text-right mail-date">Mar 22</td>
-            </tr>
-            <tr class="read">
-                <td class="check-mail">
-                    <input type="checkbox" class="i-checks">
-                </td>
-                <td class="mail-ontact"><a href="mail_detail.html">Alex T.</a> <span
-                        class="label label-danger pull-right">Documents</span></td>
-                <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a></td>
-                <td class=""><i class="fa fa-paperclip"></i></td>
-                <td class="text-right mail-date">December 22</td>
-            </tr>
-            <tr class="read">
-                <td class="check-mail">
-                    <input type="checkbox" class="i-checks">
-                </td>
-                <td class="mail-ontact"><a href="mail_detail.html">Monica Ryther</a></td>
-                <td class="mail-subject"><a href="mail_detail.html">The standard chunk of Lorem Ipsum used.</a></td>
-                <td class=""></td>
-                <td class="text-right mail-date">Jun 12</td>
-            </tr>
+            <?php if ($sent_mails!=false): ?>
+                
+                <?php foreach ($sent_mails as $mail): ?>
+                    <tr class="unread mail-item" id="<?php echo $mail->message_id; ?>" data-sender="<?php echo $mail->sender_username; ?>" 
+                    data-receiver="<?php echo $mail->receiver_username; ?>" data-content="<?php echo $mail->message_content; ?>"
+                    data-subject="<?php echo $mail->message_subject; ?>" data-timestamp="<?php echo $mail->timestamp;?>">
+                    <td class="check-mail">
+                        <input type="checkbox" class="i-checks">
+                    </td>
+                    <td class="mail-ontact"><?php echo $mail->receiver_username; ?></td>
+                    <td class="mail-subject"><?php echo substr($mail->message_subject,0,20); ?></td>
+                    <td class=""><?php echo substr($mail->message_content,0,30); ?>...</td>
+                    <td class="text-right mail-date"><?php echo $mail->timestamp; ?></td>
+                </tr>
+                <?php endforeach ?>
+            <?php endif ?>
             </tbody>
         </table>
 
@@ -302,8 +218,8 @@
 </div>
 
 
-<!--Message Details -->
-<div id="message-details" style="display: none">
+<!--Received Message Details -->
+<div id="inbox-message-detail" style="display: none">
     <div class="mail-box-header">
         <div class="pull-right tooltip-demo">
             <a href="mail_compose.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
@@ -318,12 +234,12 @@
         <div class="mail-tools tooltip-demo m-t-md">
 
 
-            <h3>
-                <span class="font-noraml">Subject: </span>Aldus PageMaker including versions of Lorem Ipsum.
-            </h3>
+            <h4>
+                <span class="font-noraml">Subject: </span> <span id="message-subject">Aldus PageMaker including versions of Lorem Ipsum.</span>
+            </h4>
             <h5>
-                <span class="pull-right font-noraml">10:15AM 02 FEB 2014</span>
-                <span class="font-noraml">From: </span>alex.smith@corporation.com
+                <span class="pull-right font-noraml" id="message-timestamp">10:15AM 02 FEB 2014</span>
+                <span class="font-noraml">From: </span> <span id="message-sender">alex.smith@corporation.com</span>
             </h5>
         </div>
     </div>
@@ -331,7 +247,7 @@
 
 
         <div class="mail-body">
-            <p>
+            <p id="message-content">
                 Hello Jonathan!
                 <br/>
                 <br/>
@@ -344,22 +260,59 @@
                 remaining
                 essentially unchanged.
             </p>
-
-            <p>
-                It was popularised in the 1960s with the release <a href="#" class="text-navy">Letraset sheets</a>
-                containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
-
-            <p>
-                There are many variations of passages of <strong>Lorem Ipsum</strong>Lorem Ipsum available, but the
-                majority have suffered alteration in some form, by injected humour, or randomised words which don't
-                look even slightly believable. If you are going to use a passage of.
-            </p>
         </div>
 
         <div class="mail-body text-right tooltip-demo">
             <a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Reply</a>
+        </div>
+
+    </div>
+</div>
+
+<!--Sent Message Details -->
+<div id="sent-message-detail" style="display: none">
+    <div class="mail-box-header">
+        <div class="pull-right tooltip-demo">
+            <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"
+               title="Move to trash"><i class="fa fa-trash-o"></i> </a>
+        </div>
+        <h2>
+            View Message
+        </h2>
+
+        <div class="mail-tools tooltip-demo m-t-md">
+
+
+            <h4>
+                <span class="font-noraml">Subject: </span> <span id="message-subject">Aldus PageMaker including versions of Lorem Ipsum.</span>
+            </h4>
+            <h5>
+                <span class="pull-right font-noraml" id="message-timestamp">10:15AM 02 FEB 2014</span>
+                <span class="font-noraml">To: </span> <span id="message-receiver">alex.smith@corporation.com</span>
+            </h5>
+        </div>
+    </div>
+    <div class="mail-box">
+
+
+        <div class="mail-body">
+            <p id="message-content">
+                Hello Jonathan!
+                <br/>
+                <br/>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer
+                took a galley of type and scrambled it to make a type <strong>specimen book.</strong>It was
+                popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and
+                more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+                Ipsum. It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining
+                essentially unchanged.
+            </p>
+        </div>
+
+        <div class="mail-body text-right tooltip-demo">
+         <!--    <a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Reply</a> -->
         </div>
 
     </div>
@@ -390,7 +343,7 @@
 </div>
 
 <!--Content-header message details-->
-<div class="content-header-message-details" style="display: none">
+<div class="content-header-message-detail" style="display: none">
     <h1>
         Mailbox
     </h1>
@@ -419,6 +372,11 @@
         $('#sent-items').hide();
         $('#compose-mail').hide();
         $('#message-details').hide();
+
+    // Hide error/Success message after 5 seconds
+        setTimeout(function() {
+             $('.return-message').fadeOut('fast');
+        }, 5000);
     });
 
     $(document).ready(function () {
@@ -440,6 +398,64 @@
             $('.content-header').empty();
             var header = $(".content-header-compose-mail").html();
             $('.content-header').append(header);
+        });
+
+
+        // Load
+         $('body').delegate('#inbox-mail-table .mail-item', 'click', function (event) {
+
+            $('.message-section').empty();
+            var data = $("#inbox-message-detail").html();
+            $('.message-section').append(data);
+
+            $('.content-header').empty();
+            var header = $(".content-header-message-detail").html();
+            $('.content-header').append(header);
+
+            //add message contents
+            $('#message-subject').empty();
+            var subject=$(this).closest('tr').data('subject');
+            $('#message-subject').text(subject);
+
+            $('#message-sender').empty();
+            var sender=$(this).closest('tr').data('sender');
+            $('#message-sender').text(sender);
+
+            $('#message-timestamp').empty();
+            var timestamp=$(this).closest('tr').data('timestamp');
+            $('#message-timestamp').text(timestamp);
+
+            $('#message-content').empty();
+            var content=$(this).closest('tr').data('content');
+            $('#message-content').text(content);
+        });
+    // Load Sent Item Message details
+         $('body').delegate('#sent-mail-table .mail-item', 'click', function (event) {
+
+            $('.message-section').empty();
+            var data = $("#sent-message-detail").html();
+            $('.message-section').append(data);
+
+            $('.content-header').empty();
+            var header = $(".content-header-message-detail").html();
+            $('.content-header').append(header);
+
+            //add message contents
+            $('#message-subject').empty();
+            var subject=$(this).closest('tr').data('subject');
+            $('#message-subject').text(subject);
+
+            $('#message-receiver').empty();
+            var receiver=$(this).closest('tr').data('receiver');
+            $('#message-receiver').text(receiver);
+
+            $('#message-timestamp').empty();
+            var timestamp=$(this).closest('tr').data('timestamp');
+            $('#message-timestamp').text(timestamp);
+
+            $('#message-content').empty();
+            var content=$(this).closest('tr').data('content');
+            $('#message-content').text(content);
         });
     });
 </script>

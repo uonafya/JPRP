@@ -6,7 +6,7 @@
  * Date: 22/09/15
  * Time: 10:05
  */
-class message extends CI_Controller
+class Message extends CI_Controller
 {
 
     function __construct()
@@ -16,19 +16,20 @@ class message extends CI_Controller
         $this->load->model('message_model');
         $this->load->model('user_model');
     }
-
+   
     public function index($errors = null)
     {
         if ($this->session->userdata('marker') != 1) {
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_management)
+            
             if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 $data['username']=$this->session->userdata('username');
                 $data['sent_mails'] = $this->message_model->sent_mails();
                 $data['received_mails'] = $this->message_model->received_mails();
                 $data['right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
-                $data['page'] = 'message/inbox';
+                $data['page'] = 'message/inbox.php';
                 $data['error_message'] = str_replace("%20", " ", $errors);
                 $data['agencyname'] = $this->session->userdata('groupname');
                 $this->load->view('template', $data);
@@ -61,7 +62,6 @@ class message extends CI_Controller
             }
         }
     }
-
 
 
 
