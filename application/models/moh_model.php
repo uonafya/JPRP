@@ -71,7 +71,8 @@ class Moh_model extends CI_Model {
 					"code"=>$devp_uid,
 					"name"=>$name,
 	                'created'=>date("Y-m-d"),
-	                'lastupdated'=>date("Y-m-d")				
+	                'lastupdated'=>date("Y-m-d"),
+	                'attributionroleid'=>3				
 				);
 				$this->db->insert("usergroup",$usergroup);	
 				//Create Category Option

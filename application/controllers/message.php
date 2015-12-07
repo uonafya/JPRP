@@ -30,6 +30,7 @@ class Message extends CI_Controller
                 $data['received_mails'] = $this->message_model->received_mails();
                 $data['right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
                 $data['page'] = 'message/inbox.php';
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                 $data['error_message'] = str_replace("%20", " ", $errors);
                 $data['agencyname'] = $this->session->userdata('groupname');
                 $this->load->view('template', $data);

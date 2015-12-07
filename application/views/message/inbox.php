@@ -41,7 +41,7 @@
                                 <li><a href="<?php echo base_url(); ?>message/index" class="btn"> <i
                                             class="fa fa-inbox "></i> Inbox <span
                                             class="label label-warning pull-right">4</span> </a></li>
-                                <li><a id="sent-items-btn" class="btn"> <i class="fa fa-envelope-o"></i> Send Mail</a>
+                                <li><a id="sent-items-btn" class="btn"> <i class="fa fa-envelope-o"></i> Sent Mails</a>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>
@@ -64,7 +64,7 @@
                         </div>
                     </form> -->
                     <h2>
-                        Inbox (4)
+                        Inbox
                     </h2>
 
                     <div class="mail-tools tooltip-demo m-t-md">

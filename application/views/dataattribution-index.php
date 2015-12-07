@@ -147,8 +147,7 @@
                         <th style="width:20%">Program</th>
                         <th style="width:12%">Support Type</th>
                         <th style="width:20%">Organization Unit</th>
-                         <th style="width:12%">Start Date</th> 
-                         <th style="width:12%">Stop Date</th>
+                         <th style="width:12%">Period</th> 
                     </tr>
                     </thead>
                     <tbody>
@@ -156,13 +155,12 @@
                     if ($ipsl != '') {
                         foreach ($ipsl as $row) {
                             echo "<tr class='grade_tr' data-id='" . $row->id . "' data-name='" . $row->mechanism_name . "'
-                                                    data-stype='" . $row->support_type . "' data-org='" . $row->organization_name . "' data-sdate='" . $row->start_date . "' ' data-edate='" . $row->stop_date . "'>";
+                                                    data-stype='" . $row->support_type . "' data-org='" . $row->organization_name . "'>";
                             echo "<td>$row->mechanism_name</td>";
                             echo "<td>$row->program_name</td>";
 							echo "<td>$row->support_type</td>";
 							echo "<td>$row->organization_name</td>";
-							echo "<td>$row->start_date</td>";
-							echo "<td>$row->stop_date</td>";
+							echo "<td>$row->period</td>";
                             echo "</tr>";
                         }
                     }
@@ -311,8 +309,6 @@
             var name = $(this).closest('tr').data('name');
             var stype = $(this).closest('tr').data('stype');
             var org= $(this).closest('tr').data('org');
-            var sdate = $(this).closest('tr').data('sdate');
-            var  edate= $(this).closest('tr').data('edate');
 
             document.getElementById("view").href = "<?php echo base_url();?>" + "moh_manager/devpartnerview/" + id;
             document.getElementById("update").href = "<?php echo base_url();?>" + "moh_manager/devpupdate/" + id;

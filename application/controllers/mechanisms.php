@@ -23,7 +23,8 @@ class Mechanisms extends CI_Controller {
 				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
 				$data['page']='mechanisms-list'; 
 				$data['error_message']=str_replace("%20", " ", $errors); 
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -141,7 +142,8 @@ class Mechanisms extends CI_Controller {
 				$data['page']='mechanisms-add';
 				$data['orgunits']=$this->mechanisms_model->get_all_orgunits();
 				$data['programs']=$this->programs_model->all_programs_list();
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -161,7 +163,8 @@ class Mechanisms extends CI_Controller {
 				$data['attribution_right']=$this->user_model->get_user_role('attribution',$this->session->userdata('userroleid'));		
 				$data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));				
 				$data['page']='mechanisms-view';  
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -237,7 +240,8 @@ class Mechanisms extends CI_Controller {
 				$data['mechanisms_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
 				$data['page']='mechanisms-support-import'; 
 				$data['error_message']=str_replace("%20", " ", ""); 
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -438,7 +442,8 @@ class Mechanisms extends CI_Controller {
                 $data['page']='mechanisms-edit';
                 $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
                 $data['programs']=$this->programs_model->all_programs_list();
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $data['mechanism']=$this->mechanisms_model->mechanism_info($datim_id);
                 
                 $this->load->view('template',$data);                        

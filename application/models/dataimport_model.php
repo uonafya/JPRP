@@ -19,7 +19,7 @@ class Dataimport_model extends CI_Model {
         $data='';
         //$this->db->select('ouid');
 
-        $orgunits=$this->db->get('organisationunit');
+        $orgunits=$this->db->query('SELECT a.name as org_name, a.code as mfl_code, a.organisationunitid as id, a.parentid as parent_id, b.organisationunituid as org_uuid, b.level as level FROM organisationunit a, _orgunitstructure b where a.uid=b.organisationunituid AND b.level = 4 ;');
             foreach ($orgunits->result() as $row) {
                 $data[]=$row;
             }

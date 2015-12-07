@@ -25,7 +25,8 @@ class Supportimport extends CI_Controller {
 				$data['page']='mechanisms-support-import'; 
 				$data['error_message']=str_replace("%20", " ", ""); 
 				$data['import_errors']=$this->mechanisms_model->mechanisms_support_errors();
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -38,12 +39,13 @@ class Supportimport extends CI_Controller {
 	
 	public function supportexcelimport(){
 		$file_name=substr( $this->input->get('url'), strpos( $this->input->get('url'), "?file=") + 6);
+		$period='2014-03-01';
         if($this->session->userdata('marker')!=1){
             redirect($this->index());
         }else{
         	//Check If User Has Authority(program_magement) To Import Support
         	if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
-        		$file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\suportimport.xlsx";
+        		$file = "C:\\xampp\\htdocs\\attribution\\server\\php\\files\\$file_name";
 				$no_empty_rows=TRUE;
 				$this->mechanisms_model->empty_attribution_mechanisms();
 				$this->load->library('excel');
@@ -58,7 +60,7 @@ class Supportimport extends CI_Controller {
                 $highestRow = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 
                 //echo 'getHighestColumn() =  [' . $highestColumm . ']<br/>';
-                //echo 'getHighestRow() =  [' . $highestRow . ']<br/>';
+               // echo 'getHighestRow() =  [' . $highestRow . ']<br/>';
                 
                 //$cell_collection= array_map('array_filter', $objPHPExcel);
                         
@@ -72,90 +74,130 @@ class Supportimport extends CI_Controller {
 				$mechanisms_id="";
 				$mechanisms_uid="";
 				$attribution_key="";
+				$datim_id="";
+				$mfl_code="";
+				$ownership="";
+				$typeofsite="";
+				$othertypeofsite='';
+				$level="";
+				$county="";
+				$subcounty="";
                 //extract to a PHP readable array format
                 //print_r($cell_collection);
                 foreach ($cell_collection as $cell) {
-            
+            //echo "a $count </br>";
                     //Only Get Rows With All Columns Filled
                     if ($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null && 
                     $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null &&
                     $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null &&
-                    $objPHPExcel->getActiveSheet()->getCell("D".$count)->getValue()!=null &&
-                    $objPHPExcel->getActiveSheet()->getCell("E".$count)->getValue()!=null &&
-                    $objPHPExcel->getActiveSheet()->getCell("F".$count)->getValue()!=null &&
-                     $objPHPExcel->getActiveSheet()->getCell("G".$count)->getValue()!=null){
+                    $objPHPExcel->getActiveSheet()->getCell("K".$count)->getValue()!=null &&
+                     $objPHPExcel->getActiveSheet()->getCell("L".$count)->getValue()!=null){
                         if ($cell=="A".$count) {
+                        	//echo "a </br>";
                             //Get Mechanism Name    
                             $column ='A';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='') {
-                                $organization_name = $data_value;
+                                $mechanism_name = $data_value;
                             }    
                         } elseif($cell=="B".$count){
                             $column ='B';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='') {
-								$mechanism_name = $data_value;
+								$datim_id = $data_value;
                             }         
                         } elseif($cell=="C".$count){
                             $column ='C';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='') {
-								$datim_id = $data_value;
+								$organization_name = $data_value;
                             }         
                         } elseif($cell=="D".$count){
                             $column ='D';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='') {
-								$program_name = $data_value;
+								$mfl_code = $data_value;
                             }         
                         } elseif($cell=="E".$count){
                             $column ='E';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='') {
-								$support_type = $data_value;
+								$ownership = $data_value;
                             }         
                         } elseif($cell=="F".$count){
                             $column ='F';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
                             if ($row != 1 && $data_value!='') {
-								$cell = $objPHPExcel->getActiveSheet()->getCell('F'.$row );
-								$InvDate= $cell->getValue();
-								if(PHPExcel_Shared_Date::isDateTime($cell)) {
-								     $InvDate = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($InvDate)); 
-								}	
-								$start_date=$InvDate;
+								$typeofsite = $data_value;
                             }         
                         } elseif($cell=="G".$count){
-                        	$count=$count+1;
                             $column ='G';
                             $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
                             $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+                            if ($row != 1 && $data_value!='') {
+								$othertypeofsite = $data_value;
+                            }         
+                        } elseif($cell=="H".$count){
+                            $column ='H';
+                            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+                            if ($row != 1 && $data_value!='') {
+								$level = $data_value;
+                            }         
+                        }  elseif($cell=="I".$count){
+                            $column ='I';
+                            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+                            if ($row != 1 && $data_value!='') {
+								$county = $data_value;
+                            }         
+                        } elseif($cell=="J".$count){
+                            $column ='J';
+                            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+                            if ($row != 1 && $data_value!='') {
+								$subcounty = $data_value;
+                            }         
+                        } elseif($cell=="K".$count){
+                            $column ='K';
+                            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+                            if ($row != 1 && $data_value!='') {
+								$program_name = $data_value;
+                            }         
+                        } elseif($cell=="L".$count){
+                        	//echo "Kss </br>";
+                        	//$count++;
+                        	$count=$count+1;
+							//echo "$count";
+                            $column ='L';
+							//echo "string";
+                            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+							//echo "datais ".$data_value;
+							
+							//echo "here </br>";
+							//die();
                             if ($row != 1 && $data_value!='' ) {
-								$cell = $objPHPExcel->getActiveSheet()->getCell('G'.$row );
-								$InvDate= $cell->getValue();
-								if(PHPExcel_Shared_Date::isDateTime($cell)) {
-								     $InvDate = date("Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($InvDate)); 
-								}	
-								$end_date=$InvDate;
+                            	//echo "ok </br>";
+                            	$support_type = $data_value;
                                 $data_rows=$data_rows+1;
-								$update=$this->mechanisms_model->support_excel_import($organization_name,$mechanism_name,$datim_id,$program_name,$support_type,$start_date, $end_date);								
+								$update=$this->mechanisms_model->support_excel_import($organization_name,$mechanism_name,$datim_id,$program_name,$support_type,$period,$datim_id,$mfl_code,$ownership,$typeofsite,$othertypeofsite,$level,$county,$subcounty);								
 								if ($update!=1) {
-									$this->mechanisms_model->support_import_errors($organization_name,$mechanism_name,$datim_id,$program_name,$support_type,$start_date, $end_date,$update);
+									//$this->mechanisms_model->support_import_errors($organization_name,$mechanism_name,$datim_id,$program_name,$support_type,$period,$update,$datim_id,$mfl_code,$ownership,$typeofsite,$othertypeofsite,$level,$county,$subcounty);
 								}
 							}
                         //Get Rows With  Partial Column Data
-                        }elseif($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()!=null || $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()!=null 
-                        || $objPHPExcel->getActiveSheet()->getCell("D".$count)->getValue()!=null|| $objPHPExcel->getActiveSheet()->getCell("E".$count)->getValue()!=null
-						|| $objPHPExcel->getActiveSheet()->getCell("F".$count)->getValue()!=null
-						|| $objPHPExcel->getActiveSheet()->getCell("G".$count)->getValue()!=null){                       
-                                $empty_cells_alert[$empty_column]="Empty Cell In Row $count";
+                        }elseif($objPHPExcel->getActiveSheet()->getCell("A".$count)->getValue()==null || $objPHPExcel->getActiveSheet()->getCell("B".$count)->getValue()==null || $objPHPExcel->getActiveSheet()->getCell("C".$count)->getValue()==null 
+                        || $objPHPExcel->getActiveSheet()->getCell("K".$count)->getValue()==null|| $objPHPExcel->getActiveSheet()->getCell("L".$count)->getValue()==null){                       
+                             //echo "FALSE";
+							    $empty_cells_alert[$empty_column]="Empty Cell In Row $count";
                                 $empty_column=$empty_column+1;
                                 $count=$count+1;
                                 $no_empty_rows=FALSE;

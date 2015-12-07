@@ -23,7 +23,7 @@ class Dataattribution_model extends CI_Model {
 				//echo $ipslrow->datim_id;
 				$attribution_key=$this->db->get_where("attribution_keys",array("datim_id"=>$ipslrow->datim_id))->row()->categorycombo_id;
 				$orgunit=$ipslrow->organization_id;
-				$periods=$this->db->query("SELECT * FROM period where ( periodtypeid = '3' AND startdate BETWEEN '$ipslrow->start_date' and  '$ipslrow->stop_date') or (periodtypeid = '3' AND enddate BETWEEN '$ipslrow->start_date' and '$ipslrow->stop_date' ) ");
+				$periods=$this->db->query("SELECT * FROM period where ( periodtypeid = '3' AND startdate <='$ipslrow->period' and  enddate >= '$ipslrow->period') ");
 				$program_dataelements=$this->db->get_where("attribution_programs_dataelements",array("program_id"=>$ipslrow->program_id));
 				//Step2 Check If Any Period Is Available For Data Entry	
 				if (sizeof($periods->result())>=1) {
@@ -113,7 +113,7 @@ class Dataattribution_model extends CI_Model {
 					foreach ($ipsl->result() as $ipslrow) {
 						$attribution_key=$this->db->get_where("attribution_keys",array("datim_id"=>$ipslrow->datim_id))->row()->categorycombo_id;
 						$orgunit=$ipslrow->organization_id;
-						$periods=$this->db->query("SELECT * FROM period where ( periodtypeid = '3' AND startdate BETWEEN '$ipslrow->start_date' and  '$ipslrow->stop_date') or (periodtypeid = '3' AND enddate BETWEEN '$ipslrow->start_date' and '$ipslrow->stop_date' ) ");
+						$periods=$this->db->query("SELECT * FROM period where ( periodtypeid = '3' AND startdate <='$ipslrow->period' and  enddate >= '$ipslrow->period') ");
 						//Check If Any Period Is Available For Data Entry
 						if (sizeof($periods->result())>=1) {
 							foreach ($program_dataelements->result() as $progelement) {
@@ -203,7 +203,7 @@ class Dataattribution_model extends CI_Model {
 						//Check If Program Has Dataelements
 						$program_dataelements=$this->db->get_where("attribution_programs_dataelements",array("program_id"=>$ipslrow->program_id));
 						if (sizeof($program_dataelements->result())>=1) {
-							$periods=$this->db->query("SELECT * FROM period where ( periodtypeid = '3' AND startdate BETWEEN '$ipslrow->start_date' and  '$ipslrow->stop_date') or (periodtypeid = '3' AND enddate BETWEEN '$ipslrow->start_date' and '$ipslrow->stop_date' ) ");
+							$periods=$this->db->query("SELECT * FROM period where ( periodtypeid = '3' AND startdate <='$ipslrow->period' and  enddate >= '$ipslrow->period')' ) ");
 							//Check If Period Exists
 							if (sizeof($periods->result())>=1) {
 								$orgunit=$ipslrow->organization_id;

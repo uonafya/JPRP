@@ -297,8 +297,7 @@
                         <th style="width:20%">Organization Unit</th>
                         <th style="width:10%">Program Name</th>
                         <th style="width:10%">Support Type</th>
-                        <th style="width:10%">Start Date</th>
-                        <th style="width:10%">Stop Date</th>
+                        <th style="width:10%">Period</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -310,8 +309,7 @@
                             echo "<td>$row->organization_name</td>";
                             echo "<td>$row->program_name</td>";
                             echo "<td>$row->support_type</td>";
-                            echo "<td>$row->start_date</td>";
-                            echo "<td>$row->stop_date</td>";
+                            echo "<td>$row->period</td>";
                             $i++;
                         }
                     }

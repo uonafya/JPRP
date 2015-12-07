@@ -24,7 +24,8 @@ class Data_attribution extends CI_Controller{
 				$data['programs'] = $this->programs_model->all_programs_list();
 				$data['mechanisms'] = $this->mechanisms_model->mechanisms_list();
 				$data['program_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
-                $data['agencyname'] = $this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template', $data);
             } else {
                 $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";

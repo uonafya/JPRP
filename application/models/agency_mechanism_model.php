@@ -86,7 +86,7 @@
                     "uid" => $mechanism_uid,
                     "code" => $datim_id,
                     "name" => $mechanism_name,
-                    "shortname" => $kepms_id,
+                    "shortname" => $partner_name,
                     "level" => 4,
                     "parentid" => $this->session->userdata('group_uid')
                 );
@@ -200,12 +200,16 @@
     }
 
     //Support list
-    public function mechanism_support_list($hierarchy_uid){
-
-        $support=$this->db->get_where("attribution_mechanisms_programs",array("status"=>'active',"hierarchy_uid"=>$hierarchy_uid))->result();
-        if (sizeof($support)>=1) {
-            return $support;
-        }
+    public function mechanism_support_list($mech_uid){
+    	$datimid=$this->db->get_where("attribution_keys",array("mechanism_uid"=>$mech_uid));
+		if (sizeof($datimid->result())==1) {
+			$datim_id=$datimid->row()->datim_id;
+	        //$support=$this->db->get_where("attribution_mechanisms_programs",array("status"=>'active',"hierarchy_uid"=>$hierarchy_uid))->result();
+	        $support=$this->db->get_where("attribution_mechanisms_programs",array("datim_id"=>$datim_id));
+	        if (sizeof($support->result())>=1) {
+	            return $support->result();
+	        }			
+		} 
         return "";
     }
 

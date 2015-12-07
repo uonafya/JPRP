@@ -27,6 +27,7 @@
                  $data['right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
                  $data['page']='agency_mechanism-list.php';
                  $data['error_message']=str_replace("%20", " ", $errors);
+                 $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                  $data['agencyname']=$this->session->userdata('groupname');
                  $this->load->view('template',$data);
              } else {
@@ -44,6 +45,7 @@
              if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
                  $data['page']='agency_mechanism-add';
                  $data['programs']=$this->agency_mechanism_model->get_programs_assigned_agency();
+                 $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                  $data['agencyname']=$this->session->userdata('groupname');
                  $this->load->view('template',$data);
              } else {
@@ -92,6 +94,7 @@
                  }
 //                 $data['facilities'] = $this->agency_mechanism_model->agency_mechanisms($mechanism_id);
                  $data['error_message']=str_replace("%20", " ", "");
+                 $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                  $data['agencyname']=$this->session->userdata('groupname');
                  $this->load->view('template',$data);
              } else {
@@ -116,6 +119,7 @@
                      redirect("/agency_mechanism/index/$message", 'refresh');
                  }
                  $data['selected_programs'] = $this->agency_mechanism_model->mechanism_programs_list($mechanism_id);
+                 $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                  $data['agencyname']=$this->session->userdata('groupname');
                  $this->load->view('template',$data);
              } else {

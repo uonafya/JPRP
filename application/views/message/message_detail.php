@@ -6,13 +6,6 @@
 <!-- * Time: 17:16-->
 <!-- */-->
 <!---->
-<!--/**-->
-<!-- * Created by IntelliJ IDEA.-->
-<!-- * User: banga-->
-<!-- * Date: 22/09/15-->
-<!-- * Time: 10:16-->
-<!-- */-->
-<!-- -->
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>

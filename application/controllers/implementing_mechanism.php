@@ -30,7 +30,8 @@ class Implementing_mechanism extends CI_Controller
                 $data['page'] = 'upload_ipsl';
                 $data['import_errors'] = $this->implementing_mechanism_model->mechanisms_support_errors();
                 $data['error_message'] = str_replace("%20", " ", "");
-                $data['agencyname'] = $this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template', $data);
             } else {
                 $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -46,16 +47,13 @@ class Implementing_mechanism extends CI_Controller
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
             if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
-
-                $hierarchy_uid=$this->session->userdata('group_uid');
-                $datim_id=$this->implementing_mechanism_model->get_datim_id($hierarchy_uid);
-
-                $data["support"] = $this->implementing_mechanism_model->mechanism_support_list($datim_id);
+                $data["support"] = $this->implementing_mechanism_model->mechanism_support_list();
                 $data["programs"] = $this->implementing_mechanism_model->mechanism_programs_list();
                 $data['mechanism_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
                 $data['page'] = 'mechanism_support-list';
                 $data['error_message'] = str_replace("%20", " ", "");
-                $data['agencyname'] = $this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template', $data);
             } else {
                 $data['message'] = "Kindly Contact The Administrator You Have No Access Rights To This Module";

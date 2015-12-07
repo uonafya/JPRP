@@ -24,7 +24,8 @@ class Moh_manager extends CI_Controller {
 				$data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
 				$data['page']='developmentpartners-list'; 
 				$data['error_message']=str_replace("%20", " ", $errors); 
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -43,7 +44,8 @@ class Moh_manager extends CI_Controller {
 				$data['page']='developmentpartners-add'; 
 				$data['programs'] = $this->programs_model->all_programs_list();
 				$data['error_message']=str_replace("%20", " ", ""); 
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -85,7 +87,8 @@ class Moh_manager extends CI_Controller {
 				$data['devpartner_details']= $this->moh_model->devpartner_details($devuid);
 				$data['agencies'] = $this->moh_model->devpartner_agencies($devuid);
 				$data['error_message']=str_replace("%20", " ", ""); 
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -106,7 +109,8 @@ class Moh_manager extends CI_Controller {
 				$data['programs'] = $this->moh_model->devpartner_programs_update($devuid) ; 
 				$data['devpartner_details']= $this->moh_model->devpartner_details($devuid);
 				$data['error_message']=str_replace("%20", " ", ""); 
-	            $data['agencyname']=$this->session->userdata('groupname');
+	            $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
 	            $this->load->view('template',$data);     		       		
 			} else {
 				$data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -135,8 +139,4 @@ class Moh_manager extends CI_Controller {
 			}
 		}
 	}
-
-
-
-
 }

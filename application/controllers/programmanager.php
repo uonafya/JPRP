@@ -22,7 +22,8 @@ class Programmanager extends CI_Controller
                 //Get All The Programs from All The Datasets From Database
                 $data['programs'] = $this->programs_model->all_programs_list();
                 $data['attribution_right'] = $this->user_model->get_user_role('attribution', $this->session->userdata('userroleid'));
-                $data['program_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
+                $data['program_right'] = $this->user_model->get_user_role('program_create', $this->session->userdata('userroleid'));
+				$data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                 $data['error_message'] = str_replace("%20", " ", $errors);
                 //Get programs and the implementation partners
                 $data['agencyname'] = $this->session->userdata('groupname');
@@ -33,8 +34,9 @@ class Programmanager extends CI_Controller
             //Skip Creating a new session Key
             $data['page'] = 'programs-list';
             $data['attribution_right'] = $this->user_model->get_user_role('attribution', $this->session->userdata('userroleid'));
-            $data['program_right'] = $this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'));
+            $data['program_right'] = $this->user_model->get_user_role('program_create', $this->session->userdata('userroleid'));
             $data['agencyname'] = $this->session->userdata('groupname');
+			$data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
             $data['error_message'] = str_replace("%20", " ", $errors);
             $data['programs'] = $this->programs_model->all_programs_list();
             $this->load->view('template', $data);
@@ -104,7 +106,7 @@ class Programmanager extends CI_Controller
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
+            if ($this->user_model->get_user_role('program_create', $this->session->userdata('userroleid'))) {
                 $data['page'] = 'programs-create';
 //                Steve: Get data sets from Database
                 $data['datasets'] = $this->programs_model->get_datasets();
@@ -113,6 +115,7 @@ class Programmanager extends CI_Controller
                 //Get All The Dataelements From Database
                 $data['dataelements'] = $this->programs_model->get_dataelements();
                 //Get programs and the implementation partners
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                 $data['agencyname'] = $this->session->userdata('groupname');
                 $this->load->view('template', $data);
             } else {
@@ -156,6 +159,7 @@ class Programmanager extends CI_Controller
                 $data['page'] = 'programs-edit';
                 $data['agencyname'] = $this->session->userdata('groupname');
                  // Steve: Get data sets from Database
+                 $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                 $data['datasets'] = $this->programs_model->get_datasets();
                 $data['datasetmembers'] = $this->programs_model->get_datasetmembers();
 //                End Steve
@@ -253,6 +257,7 @@ class Programmanager extends CI_Controller
                 $data["program_details"] = $this->programs_model->program_info($program_id);
                 $data["program_dataelements"] = $this->programs_model->get_program_dataelements($program_id);
                 $data['page'] = 'programs-view';
+				$data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
                 $data['agencyname'] = $this->session->userdata('groupname');
                 $this->load->view('template', $data);
             } else {
@@ -310,6 +315,7 @@ class Programmanager extends CI_Controller
         $data['programname'] = $this->datasets_model->programname($secid);
         $data['orgunits'] = $this->programs_model->sectionorgunits($secid);
         $data['elements'] = $this->datasets_model->datasectionselements($secid);
+		$data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
         $data['agencyname'] = $this->session->userdata('groupname');
         $this->load->view('template', $data);
     }
@@ -327,6 +333,7 @@ class Programmanager extends CI_Controller
         $data['programname'] = $this->datasets_model->programname($secid);
         $data['elements'] = $this->datasets_model->datasectionselements($secid);
         $data['sectionid'] = $secid;
+		$data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
         $data['agencyname'] = $this->session->userdata('groupname');
         //print_r($this->programs_model->ipsectionorgunits($secid,$this->session->userdata('groupid')));
         //echo "string $secid";
@@ -396,6 +403,7 @@ class Programmanager extends CI_Controller
         $dates = $this->programs_model->getsecattribution($orgid, $secid);
         $data['start'] = $dates['start'];
         $data['end'] = $dates['end'];
+		$data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
         $data['page'] = 'facilityedit';
         $data['agencyname'] = $this->session->userdata('groupname');
         $this->load->view('template', $data);

@@ -26,7 +26,8 @@ class Development_partners extends CI_Controller{
                 $data['development_partner_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
                 $data['page']='agency-list';
                 $data['error_message']=str_replace("%20", " ", $errors);
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -44,7 +45,8 @@ class Development_partners extends CI_Controller{
                 $data['page']='agency-add';
                 $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
                 $data['programs']=$this->development_partners_model->get_programs_assigned_devp();
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -90,7 +92,8 @@ class Development_partners extends CI_Controller{
                     redirect("/development_partners/index/$message", 'refresh');
                 }
                 $data['error_message']=str_replace("%20", " ", "");
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -115,7 +118,8 @@ class Development_partners extends CI_Controller{
                     redirect("/development_partners/index/$message", 'refresh');
                 }
                 $data['selected_programs'] = $this->development_partners_model->agency_programs_list($agency_id);
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";

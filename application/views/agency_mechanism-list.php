@@ -117,11 +117,9 @@
                 <table id="agency_table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th style="width:10%">#</th>
                         <th style="width:20%">Mechanism Name</th>
                         <th>Partner Name </th>
-                        <th style="width:10%">Datim ID</th>
-                        <th style="width:10%">KePMS ID</th>
+                        <th style="width:20%">Datim ID</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -129,18 +127,10 @@
                     if ($mechanisms != '') {
                         $i = 1;
                         foreach ($mechanisms as $row) {
-                            $kepms_id=$row->shortname;
-
-                            if($kepms_id==0){
-                                $kepms_id="";
-                            }
-
                             echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
-                            echo "<td>$i</td>";
                             echo "<td>$row->name</td>";
                             echo "<td>$row->shortname</td>";
                             echo "<td>$row->code</td>";
-                            echo "<td>$kepms_id</td>";
                             $i++;
                         }
                     }

@@ -471,16 +471,19 @@
                 $("#btnLeft").click(function () {
                     var selectedItem = $("#rightValues option:selected");
                     $("#leftValues").append(selectedItem);
+                    $("#rightValues option").prop("selected", true);
                 });
 
                 $("#btnRight").click(function () {
                     var selectedItem = $("#leftValues option:selected");
                     $("#rightValues").append(selectedItem); 
+                    $("#rightValues option").prop("selected", true);
                 });
                   
                 $("#rightValues").change(function () {
                     var selectedItem = $("#rightValues option:selected");
                     $("#txtRight").val(selectedItem.text());
+                    
                 });  
                 $("#Mechanism_detailsss" ).submit(function( event ) { 
                     // Stop form from submitting normally
@@ -546,6 +549,7 @@
                     $("#start_date").datepicker( "option", "maxDate", selectedDate );
                   }
                 });
+                $("#rightValues option").prop("selected", true);
             });
 
         </script>

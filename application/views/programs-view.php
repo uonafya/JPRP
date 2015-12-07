@@ -235,59 +235,13 @@
                                     </table>
                                 </div><!-- /.box-body -->                                			
 						</div>
-				    </div>
-					<div class="row"> 
-						<div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title"> <?php echo $program_details->program_name; ?> : Data Attribution Organization Units </h3>
-                                </div><!-- /.box-header -->			
-                                <div class="box-body table-responsive">
-                                    <table id="attribution-table" class="table table-bordered table-striped" >                                    	
-                                    <thead>
-                                        <tr>
-                                            <th style="width:10%">#</th>
-                                            <th style="width:50%">Organization Unit Name</th>
-                                            <th style="width:20%">Start Date</th>
-                                            <th style="width:20%">End Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<tr>
-                                    		<td>1</td>
-                                    		<td>Machakos County Level 5</td>
-                                    		<td>12/01/2015</td>
-                                    		<td>12/06/2015</td>
-                                    	</tr>
-                                    	<tr>
-                                    		<td>2</td>
-                                    		<td>Kisumu County Hospital</td>
-                                    		<td>12/01/2015</td>
-                                    		<td>12/06/2015</td>
-                                    	</tr>   
-                                    	<tr>
-                                    		<td>3</td>
-                                    		<td>Nyeri Hospital</td>
-                                    		<td>12/01/2015</td>
-                                    		<td>12/06/2015</td>
-                                    	</tr> 
-                                    </tbody>
-    
-                                    </table>
-                                </div><!-- /.box-body -->                                			
-						</div>
-				    </div>                    
+				    </div>                   
        </section>
    
                 
         <script type="text/javascript"> 
             $(function() {
                 $('#dataelements-table').dataTable({
-                    "bPaginate": true,
-                    "bLengthChange": false,
-                    "bFilter": true,
-                    "bSort": true,
-                    "bInfo": true,
-                    "bAutoWidth": true
                 });
                 $('#attribution-table').dataTable({
                     "bPaginate": true,

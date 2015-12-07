@@ -370,7 +370,9 @@ class Partner_model extends CI_Model {
         }
     }
 
-//    Get UserName
+
+
+    //    Get UserName
     public function get_username($uid){
         $user=$this->db->get_where("userinfo",array("uid"=>$uid));
         if (sizeof($user->result()==1)) {
@@ -384,7 +386,5 @@ class Partner_model extends CI_Model {
         }
         return false;
     }
-
-
 
 }

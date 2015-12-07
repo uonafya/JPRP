@@ -65,7 +65,8 @@ class Development_partners_model extends CI_Model
                     "code" => $agency_uid,
                     "name" => $name,
                     'created' => date("Y-m-d"),
-                    'lastupdated' => date("Y-m-d")
+                    'lastupdated' => date("Y-m-d"),
+                    'attributionroleid'=>4
                 );
                 $this->db->insert("usergroup", $usergroup);
                 //Create Category Option
@@ -88,7 +89,7 @@ class Development_partners_model extends CI_Model
                     "code" => $code,
                     "name" => $name,
                     "shortname" => $shortname,
-                    "level" => 3,
+                    "level" => "3",
                     "parentid" => $this->session->userdata('group_uid')
                 );
 
@@ -232,7 +233,7 @@ class Development_partners_model extends CI_Model
             if ($this->db->insert("attribution_hierarchy_programs", $hierarchy_programs)) {
 
             } else {
-                return "An Error Occurred During The Agency Update";
+                return "An Error Occured During The C";
             }
 
 
