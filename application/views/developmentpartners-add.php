@@ -393,12 +393,12 @@
                         </li>
                         <li>
                             <label for="name">Name:</label>
-                            <input type="text" name="name" id=""  placeholder="PEPFAR"   required pattern="[A-Za-z\s]{5,150}"  />
+                            <input type="text" name="name" id=""  placeholder="PEPFAR"   required pattern="{2,150}"  />
                             <span class="form_hint">Development Partner Name Must Be Of Atleast 5 Characters</span>
                         </li>                        
                         <li>
                             <label for="name">Short Name:</label>
-                            <input type="text" name="sname" id=""  placeholder="PEPFAR"  required pattern="[A-Za-z\s]{2,20}"  />
+                            <input type="text" name="sname" id=""  placeholder="PEPFAR"  required pattern="{2,20}"  />
                             <span class="form_hint">Development Partner Short Name Must Be Of Atleast 2 Characters</span>
                         </li>                         
                         <li>

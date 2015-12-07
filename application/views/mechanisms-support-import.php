@@ -136,7 +136,7 @@
             type: "POST",
             dataType: 'json',
             async: false,
-            url: "<?php echo base_url();?>mechanisms/supportexcelimport/?url=" + file,
+            url: "<?php echo base_url();?>supportimport/supportexcelimport/?url=" + file,
             cache: false,
             beforeSend: function () {
                 // alert(urls);
@@ -257,9 +257,7 @@
                 <?php if ($mechanisms_right) {
                     echo '<h1 style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: red">' . $error_message . '</h1>';
                 } ?>
-                <?php if ($mechanisms_right) {
-                    echo '<a href="' . base_url('mechanisms/addmechanism') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Mechanism Support</a>';
-                } ?>
+
 
             </div>
             <!-- /.box-header -->
@@ -272,8 +270,7 @@
                         <th style="width:10%">Datim ID</th>
                         <th style="width:10%">Program Name</th>
                         <th style="width:10%">Support Type</th>
-                        <th style="width:10%">Start Date</th>
-                        <th style="width:10%">Stop Date</th>
+                        <th style="width:10%">Period</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -281,14 +278,13 @@
                     if ($support != '') {
                         $i = 1;
                         foreach ($support as $row) {
-                            echo "<tr class='grade_tr' data-id='" . $row->id . "' data-name='" . $row->mechanism_name . "' data-org='".$row->organization_name."' data-period='".$row->start_date." to ".$row->stop_date."' data-support='".$row->support_type."'>";
+                            echo "<tr class='grade_tr' data-id='" . $row->id . "' data-name='" . $row->mechanism_name . "' data-org='".$row->organization_name."' data-period='".$row->period."' data-support='".$row->support_type."'>";
                             echo "<td>$row->organization_name</td>";
                             echo "<td>$row->mechanism_name</td>";
                             echo "<td>$row->datim_id</td>";
                             echo "<td>$row->program_name</td>";
 							echo "<td>$row->support_type</td>";
-                            echo "<td>$row->start_date</td>";
-                            echo "<td>$row->stop_date</td>";
+                            echo "<td>$row->period</td>";
                             $i++;
                         }
                     }

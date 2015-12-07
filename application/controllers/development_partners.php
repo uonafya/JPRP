@@ -21,12 +21,13 @@ class Development_partners extends CI_Controller{
             redirect($this->index());
         }else{
             //Check If User Has Authority(program_magement)
-            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
                 $data["agencies"]=$this->development_partners_model->agency_list();
-                $data['development_partner_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));
+                $data['development_partner_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
                 $data['page']='agency-list';
                 $data['error_message']=str_replace("%20", " ", $errors);
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -40,11 +41,12 @@ class Development_partners extends CI_Controller{
             redirect($this->index());
         }else{
             //Check If User Has Authority(program_magement) To Create agencies
-            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
                 $data['page']='agency-add';
                 $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
                 $data['programs']=$this->development_partners_model->get_programs_assigned_devp();
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -59,7 +61,7 @@ class Development_partners extends CI_Controller{
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To  Create an Agency
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($progress = $this->development_partners_model->save_agency() ===TRUE) {
                     $message = "Agency Has  Been Successfully Created";
                     redirect("/development_partners/index/$message", 'refresh');
@@ -79,14 +81,19 @@ class Development_partners extends CI_Controller{
             redirect($this->index());
         }else{
             //Check If User Has Authority(program_magement) To Create Programs
-            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
-                $data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('useruid'));
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
+                $data['program_right']=$this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'));
                 $data['page']='agency-view';
                 $data['program'] = $this->development_partners_model->agency_programs_list($agency_id);
                 $data['agency_details']= $this->development_partners_model->agency_details($agency_id);
                 $data['mechanisms'] = $this->development_partners_model->agency_mechanisms($agency_id);
+                if(empty($data['agency_details'])){
+                    $message =  "Invalid Agency ";
+                    redirect("/development_partners/index/$message", 'refresh');
+                }
                 $data['error_message']=str_replace("%20", " ", "");
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -101,13 +108,18 @@ class Development_partners extends CI_Controller{
             redirect($this->index());
         }else{
             //Check If User Has Authority(program_magement) To Update Agencies
-            if ($this->user_model->get_user_role('program_management',$this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management',$this->session->userdata('userroleid'))) {
                 $data['page']='agency-edit';
                 $data['orgunits']=$this->mechanisms_model->get_all_orgunits();
                 $data['programs']=$this->development_partners_model->agency_programs_list_update($agency_id);
                 $data['agency']=$this->development_partners_model->agency_details($agency_id);
+                if(empty($data['agency'])){
+                    $message =  "Invalid Agency";
+                    redirect("/development_partners/index/$message", 'refresh');
+                }
                 $data['selected_programs'] = $this->development_partners_model->agency_programs_list($agency_id);
-                $data['agencyname']=$this->session->userdata('groupname');
+                $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
                 $this->load->view('template',$data);
             } else {
                 $data['message']="Kindly Contact The Administrator You Have No Access Rights To This Module";
@@ -122,7 +134,7 @@ class Development_partners extends CI_Controller{
             redirect($this->index());
         } else {
             //Check If User Has Authority(program_magement) To  Create an Agency
-            if ($this->user_model->get_user_role('program_management', $this->session->userdata('useruid'))) {
+            if ($this->user_model->get_user_role('program_management', $this->session->userdata('userroleid'))) {
                 if ($progress = $this->development_partners_model->save_agency_update() ===TRUE) {
                     $message = "Agency Has Successfully been Updated";
                     redirect("/development_partners/index/$message", 'refresh');

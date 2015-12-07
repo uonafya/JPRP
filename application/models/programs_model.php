@@ -96,6 +96,7 @@
 				"program_id"=>$programid,
 				"dataelement_name"=>$element->name,
 				"dataelement_uid"=>$datauid,
+				"dataelement_id"=>$element->dataelementid,
 				"dataelement_description"=>$element->description,
 				"dataelement_code"=>$element->code
 			);
@@ -137,6 +138,7 @@
                     "program_id"=>$program_id,
                     "dataelement_name"=>$element->name,
                     "dataelement_uid"=>$datauid,
+                    "dataelement_id"=>$element->dataelementid,
                     "dataelement_description"=>$element->description,
                     "dataelement_code"=>$element->code,
                     "created_by"=>$this->session->userdata('useruid'),
@@ -222,6 +224,7 @@
                         "dataelement_uid" => $archive_element->dataelement_uid,
                         "dataelement_description" => $archive_element->dataelement_description,
                         "dataelement_code"=>$archive_element->dataelement_code,
+                        "dataelement_id"=>$element->dataelementid,
                         "archive_id" => $archive_id,
                         "archive_start_date" => $start_date,
                         "archive_end_date" => $end_date,

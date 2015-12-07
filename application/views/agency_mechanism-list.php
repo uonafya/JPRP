@@ -1,9 +1,11 @@
+<!---->
 <!--/**-->
 <!-- * Created by IntelliJ IDEA.-->
 <!-- * User: banga-->
-<!-- * Date: 10/09/15-->
-<!-- * Time: 13:57-->
+<!-- * Date: 13/09/15-->
+<!-- * Time: 16:45-->
 <!-- */-->
+<!--/**-->
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>/style/js/jquery-ui.css" xmlns="http://www.w3.org/1999/html">
 <!-- Alert Css AND JS -->
@@ -87,64 +89,61 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Development Partner: <?php echo $this->session->userdata('groupname')?>
+        Agency: <?php echo $this->session->userdata('groupname')?>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Development Partner</a></li>
-        <li class="active">Agencies</li>
+        <li><a href="#">Agency</a></li>
+        <li class="active">Implementing Mechanisms list</li>
     </ol>
 </section>
 
 <!-- Main content -->
 <section class="content">
-<div class="row">
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Agencies</h3>
-            <?php if ($development_partner_right) {
-                echo '<h1 id="message" style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
-            } ?>
-            <?php if ($development_partner_right) {
-                echo '<a href="' . base_url('development_partners/add_agency') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Agency</a>';
-            } ?>
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Implementing Mechanisms</h3>
+                <?php if ($right) {
+                    echo '<h1 id="message" style="float: left; margin-left: 15%; margin-top: 0.2%; font-size: 18px; color: green">' . $error_message . '</h1>';
+                } ?>
+                <?php if ($right) {
+                    echo '<a href="' . base_url('agency_mechanism/add_mechanism') . '" class="btn btn-primary btn-sm" style="float: right; margin-right: 10%; margin-top: 0.2%; font-size: 14px; color: white">Add Mechanism</a>';
+                } ?>
 
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body table-responsive">
-            <table id="agency_table" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th style="width:10%">#</th>
-                    <th style="width:20%">Agency Name</th>
-                    <th style="width:10%">Short Name</th>
-                    <th style="width:10%">UID</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                if ($agencies != '') {
-                    $i = 1;
-                    foreach ($agencies as $row) {
-
-                        echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
-                        echo "<td>$i</td>";
-                        echo "<td>$row->name</td>";
-                        echo "<td>$row->shortname</td>";
-                        echo "<td>$row->uid</td>";
-                        $i++;
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+                <table id="agency_table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width:20%">Mechanism Name</th>
+                        <th>Partner Name </th>
+                        <th style="width:20%">Datim ID</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if ($mechanisms != '') {
+                        $i = 1;
+                        foreach ($mechanisms as $row) {
+                            echo "<tr class='grade_tr' data-id='" . $row->uid . "' data-name='" . $row->name . "'>";
+                            echo "<td>$row->name</td>";
+                            echo "<td>$row->shortname</td>";
+                            echo "<td>$row->code</td>";
+                            $i++;
+                        }
                     }
-                }
 
-                ?>
-                </tbody>
+                    ?>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <!-- /.box-body -->
+        <!-- /.box -->
     </div>
-    <!-- /.box -->
-</div>
 </section>
 <!-- /.content -->
 
@@ -227,13 +226,13 @@
     <ul class="" style="list-style-type:none">
         <?php
         echo '<li class=""><a href="#" id="view"><i class="fa fa-plus"></i> View</a></li> <br>';
-        if ($development_partner_right) {
+        if ($right) {
             echo '<li class=""><a href="#" id="edit"><i class="fa fa-edit"></i> Update</a></li> <br>';
         };
-        if ($development_partner_right) {
+        if ($right) {
             echo '<li class=""><a href="#" id="remove" onclick=""><i class="fa fa-trash-o"></i> Remove</a></li> <br>';
         };
-        if ($development_partner_right) {
+        if ($right) {
             echo '<li class=""><a href="#" id="showdetails"><i class="fa fa-info-circle"></i> Show Details</a></li> <br>';
         };
         ?>
@@ -244,15 +243,16 @@
 <script type="text/javascript">
     // Hide error/Success message after 10 seconds
     $(window).load(function () {
+        $("#contextMenuID").hide();
         setTimeout(function () {
             $('#message').fadeOut('fast');
         }, 2000);
     });
 
     // Show Mechanism Details
-    function showMechanismDetails(datim_id) {
+    function showMechanismDetails(mechanism_uid) {
 
-        var url_show_mechanism_details = "<?php echo base_url('mechanisms/show_mechanism_details/')?>" + "/" + datim_id;
+        var url_show_mechanism_details = "<?php echo base_url('agency_mechanism/show_mechanism_details/')?>" + "/" + mechanism_uid;
         console.log(url_show_mechanism_details);
         $.ajax({
             url: url_show_mechanism_details,
@@ -358,10 +358,10 @@
             var name = $(this).closest('tr').data('name');
 
             // Actions
-            document.getElementById("view").href = "<?php echo base_url();?>" + "development_partners/view_agency/" + id;
-            document.getElementById("edit").href = "<?php echo base_url();?>" + "development_partners/update_agency/" + id;
-            document.getElementById("remove").setAttribute('onclick', "removeAgency('" + id + "','" + name + "')");
-            document.getElementById("showdetails").setAttribute('onclick', "showAgencyDetails('" + id + "')");
+            document.getElementById("view").href = "<?php echo base_url();?>" + "agency_mechanism/view_mechanism/" + id;
+            document.getElementById("edit").href = "<?php echo base_url();?>" + "agency_mechanism/update_mechanism/" + id;
+            document.getElementById("remove").setAttribute('onclick', "removeMechanism('" + id + "','" + name + "')");
+            document.getElementById("showdetails").setAttribute('onclick', "showMechanismDetails('" + id + "')");
 
         });
 
@@ -375,40 +375,3 @@
     });
 
 </script>
-
-
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-<script src="<?php echo base_url() ?>js/vendor/jquery.ui.widget.js"></script>
-<!-- The Templates plugin is included to render the upload/download listings -->
-<script src="<?php echo base_url() ?>js/tmpl.min.js"></script>
-<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="<?php echo base_url() ?>js/load-image.all.min.js"></script>
-<!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="<?php echo base_url() ?>js/canvas-to-blob.min.js"></script>
-<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
-<script src="<?php echo base_url() ?>js/bootstrap.min.js"></script>
-<!-- blueimp Gallery script -->
-<script src="<?php echo base_url() ?>js/jquery.blueimp-gallery.min.js"></script>
-<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-<script src="<?php echo base_url() ?>js/jquery.iframe-transport.js"></script>
-<!-- The basic File Upload plugin -->
-<script src="<?php echo base_url() ?>js/jquery.fileupload.js"></script>
-<!-- The File Upload processing plugin -->
-<script src="<?php echo base_url() ?>js/jquery.fileupload-process.js"></script>
-<!-- The File Upload image preview & resize plugin -->
-<script src="<?php echo base_url() ?>js/jquery.fileupload-image.js"></script>
-<!-- The File Upload audio preview plugin -->
-<script src="<?php echo base_url() ?>js/jquery.fileupload-audio.js"></script>
-<!-- The File Upload video preview plugin -->
-<script src="<?php echo base_url() ?>js/jquery.fileupload-video.js"></script>
-<!-- The File Upload validation plugin -->
-<script src="<?php echo base_url() ?>js/jquery.fileupload-validate.js"></script>
-<!-- The File Upload user interface plugin -->
-<script src="<?php echo base_url() ?>js/jquery.fileupload-ui.js"></script>
-<!-- The main application script -->
-<script src="<?php echo base_url() ?>js/main.js"></script>
-<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
-<!--[if (gte IE 8)&(lt IE 10)]>
-<script src="js/cors/jquery.xdr-transport.js"></script>
-<![endif]-->
-

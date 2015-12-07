@@ -19,7 +19,7 @@ class Mechanisms_model extends CI_Model {
 		return "";
 	}
 	public function mechanisms_list(){
-		$mechanisms=$this->db->get_where("attribution_mechanisms",array("mechanism_status"=>"active"));
+		$mechanisms=$this->db->get_where("attribution_keys",array("mechanism_status"=>"active"));
 		if (sizeof($mechanisms->result())>=1) {
 			return $mechanisms->result();
 		}
@@ -63,13 +63,13 @@ class Mechanisms_model extends CI_Model {
 	}*/
 	
 	public function mechanisms_excel_import($mechanisms_name,$datim_id, $partner_name, $kepms_id){
-		echo $datim_id;
+		//echo $datim_id;
 		//Check If The Mechanism Has An Attribution Key
 		$control=sizeof($this->db->get_where("attribution_keys",array("datim_id"=>$datim_id))->result());
 		if ($control==1) {
 			//Update Mechanisms Table
 			if (sizeof($this->db->get_where("attribution_mechanisms",array("datim_id"=>$datim_id))->result())==0) {
-				echo "id id </br>";
+				//echo "id id </br>";
 				$existing_mech=$this->db->get_where("attribution_keys",array("datim_id"=>$datim_id))->row();	
 				$stored_mechanisms=array(
 					"mechanism_name"=>$existing_mech->mechanism_name,
@@ -98,7 +98,8 @@ class Mechanisms_model extends CI_Model {
 				"code"=>$datim_id,
 				"name"=>$partner_name,
                 'created'=>date("Y-m-d"),
-                'lastupdated'=>date("Y-m-d")				
+                'lastupdated'=>date("Y-m-d"),
+                'attributionroleid'=>5				
 			);
 			$this->db->insert("usergroup",$usergroup);
 
@@ -213,7 +214,8 @@ class Mechanisms_model extends CI_Model {
 	 }	
 	 
 	 
-	 public function support_excel_import($orgunit_name,$mechanism_name,$datim_id,$program_name,$support_name,$start_date, $end_date){
+	 public function support_excel_import($orgunit_name,$mechanism_name,$datim_id,$program_name,$support_name,$period,$datim_id,$mfl_code,$ownership,$typeofsite,$othertypeofsite,$level,$county,$subcounty){
+	 		//echo "here";
 	 	//Step 1 Check If Program Exists
 	 	$orgunit=$this->db->get_where("organisationunit",array("name"=>$orgunit_name))->row();
 		if (sizeof($orgunit)==1) {
@@ -228,12 +230,11 @@ class Mechanisms_model extends CI_Model {
 					 	"datim_id"=>$datim_id,
 					 	"program_name"=>$program_name,
 					 	"support_type"=>$support_name,
-					 	"start_date"=>$start_date,
-					 	"stop_date"=>$end_date
+					 	"period"=>$period
 					 );				 
 					 if (sizeof($this->db->get_where("attribution_mechanisms_programs",$record)->result())==0) { 
 						 //Check For Date Overlaps prevent same support type on same facility same period
-						 $overlapquery="SELECT * FROM attribution_mechanisms_programs where (organization_name='$orgunit_name' AND program_name='$program_name' AND support_type='$support_name' AND start_date BETWEEN '$start_date' and  '$end_date') or (organization_name='$orgunit_name' AND program_name='$program_name' AND support_type='$support_name' AND stop_date BETWEEN '$start_date' and '$end_date') ";						 
+						 $overlapquery="SELECT * FROM attribution_mechanisms_programs where organization_name='$orgunit_name' AND program_name='$program_name' AND support_type='$support_name' AND period = '$period' ";						 
 						 if (sizeof($this->db->query($overlapquery)->result())==0) {
 							 $new_support=array(
 							 	"organization_name"=>$orgunit_name,
@@ -243,8 +244,7 @@ class Mechanisms_model extends CI_Model {
 							 	"program_name"=>$program_name,
 							 	"program_id"=>$program->program_id,
 							 	"support_type"=>$support_name,
-							 	"start_date"=>$start_date,
-							 	"stop_date"=>$end_date,
+							 	"period"=>$period,
 							 	"status"=>"active"					 
 							 );
 							 $this->db->insert("attribution_mechanisms_programs",$new_support);
@@ -254,29 +254,28 @@ class Mechanisms_model extends CI_Model {
 						 }
 						 
 					 } else {
-						 Return  "Support Exists In Database";
+						 return  "Support Exists In Database";
 					 }
 				 } else {
 					 return "Support Not Found";
 				 }
 				 
 			 }else{
-			 	return "Program Doesnot Exist";
+			 	return  "Program Doesnot Exist";
 			 }		
 		}else{
-			return "Organization Unit Not Found";
+			return  "Organization Unit Not Found";
 		}
  
 	 }
-	 public function support_import_errors($organization_name,$mechanism_name,$datim_id,$program_name,$support_type,$start_date, $stop_date,$update) {
+	 public function support_import_errors($organization_name,$mechanism_name,$datim_id,$program_name,$support_type,$period,$update,$period,$datim_id,$mfl_code,$ownership,$typeofsite,$othertypeofsite,$level,$county,$subcounty) {
 		 $support_fail=array(
 		 	"organization_name"=>$organization_name,
 		 	"mechanism_name"=>$mechanism_name,
 		 	"datim_id"=>$datim_id,
 		 	"program_name"=>$program_name,
 		 	"support_type"=>$support_type,
-		 	"start_date"=>$start_date,
-		 	"stop_date"=>$stop_date,
+		 	"period"=>$period,
 		 	"import_error"=>$update
 		 );
 		 $this->db->insert("attribution_support_import_errors",$support_fail);

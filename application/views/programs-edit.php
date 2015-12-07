@@ -547,7 +547,7 @@
                                 type: 'POST',
                                 data: form_data,
                                 success: function (msg) {
-                                    console.log(msg);
+                                    //console.log(msg);
                                     if(!msg){
                     
                                         $('#startdateForm').html('<form id="edit_support" action="#" method="post">\n\

@@ -546,7 +546,7 @@
                                 <?php
                                 if ($orgUnits != '') {
                                     foreach ($orgUnits as $row) {
-                                        echo "<option value='$row->uid'>$row->name</option>";
+                                        echo "<option value='$row->org_uuid'>$row->org_name</option>";
                                     }
                                 }
                                 ?>

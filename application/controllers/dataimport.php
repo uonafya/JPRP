@@ -15,12 +15,14 @@ class Dataimport extends CI_Controller
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('dataimport_model');
+		$this->load->model('user_model');	
     }
 
     function index()
     {
         $data['page'] = 'data-import';
-        $data['agencyname'] = $this->session->userdata('groupname');
+        $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
         $data['orgUnits'] = $this->dataimport_model->get_orgunits();
         $this->load->view('template', $data);
     }
@@ -161,7 +163,8 @@ class Dataimport extends CI_Controller
         }
         $data['page'] = 'import-stats';
         $data['stats'] = $stats_array;
-        $data['agencyname'] = $this->session->userdata('groupname');
+        $data['menu'] = $this->user_model->menu_items($this->session->userdata('userroleid'));
+                 $data['agencyname']=$this->session->userdata('groupname');
         $this->load->view('template', $data);
 
     }

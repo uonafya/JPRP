@@ -28,6 +28,14 @@ class Partner_model extends CI_Model {
             return "error2";  
         }
     }
+	public function get_userrole($uid){
+		$user=$this->db->get_where("userinfo",array("uid"=>$uid));
+		if (sizeof($user->result()==1)) {
+			return $user->row();
+		}
+		return "false";
+	}
+	
     //Get session group id name
     public function getsessiongroupname($groupid){
         $sessionname=$this->db->get_where('usergroup',array('usergroupid'=>$groupid));
@@ -363,5 +371,20 @@ class Partner_model extends CI_Model {
     }
 
 
+
+    //    Get UserName
+    public function get_username($uid){
+        $user=$this->db->get_where("userinfo",array("uid"=>$uid));
+        if (sizeof($user->result()==1)) {
+            $user_id=$user->row()->userinfoid;
+
+            $user_query=$this->db->get_where('users',array('userid'=>$user_id));
+            if(sizeof($user_query->result())==1){
+                return $user_query->row()->username;
+            }
+
+        }
+        return false;
+    }
 
 }
