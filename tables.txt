@@ -10,8 +10,9 @@ CREATE TABLE portal_message
   message_content text,
   "timestamp" timestamp without time zone,
   status character varying(50),
-  delete_status character varying(50),
-  message_subject character varying(200)
+  delete_status_sender character varying(50),
+  message_subject character varying(200),
+  delete_status_receiver character varying(50)
 )
 WITH (
   OIDS=FALSE
